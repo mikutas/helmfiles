@@ -1,0 +1,30 @@
+repositories:
+- name: argo
+  url: https://argoproj.github.io/argo-helm
+
+releases:
+- name: argocd
+  namespace: argocd
+  createNamespace: true
+  chart: argo/argo-cd
+  version: 5.38.1
+  values:
+  - configs:
+      params:
+        "server.insecure": true
+  - server:
+      ingress:
+        enabled: true
+  hooks:
+  - events: ["postuninstall"]
+    showlogs: true
+    command: kubectl
+    args: ["delete", "crd", "appprojects.argoproj.io"]
+  - events: ["postuninstall"]
+    showlogs: true
+    command: kubectl
+    args: ["delete", "crd", "applications.argoproj.io"]
+  - events: ["postuninstall"]
+    showlogs: true
+    command: kubectl
+    args: ["delete", "crd", "applicationsets.argoproj.io"]

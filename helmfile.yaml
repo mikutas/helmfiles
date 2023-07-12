@@ -1,0 +1,7 @@
+helmDefaults:
+  cleanupOnFail: true
+  timeout: 600
+  atomic: true
+
+helmfiles:
+- path: argo-cd/helmfile.yaml
