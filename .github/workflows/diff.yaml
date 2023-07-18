@@ -23,4 +23,4 @@ jobs:
           helmfile -f helmfile.yaml template --selector name=argocd > /tmp/main.yaml
 
       - run: |
-          diff /tmp/main.yaml /tmp/pr.yaml
+          diff /tmp/main.yaml /tmp/pr.yaml --color=always || true
