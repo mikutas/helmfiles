@@ -5,6 +5,8 @@ on: pull_request
 jobs:
   diff-argocd:
     runs-on: ubuntu-latest
+    env:
+      NAME: argocd
     steps:
       - uses: actions/checkout@v3
 
@@ -13,14 +15,18 @@ jobs:
           aqua_version: v2.9.0
 
       - run: |
-          helmfile -f helmfile.yaml template --selector name=argocd > /tmp/pr.yaml
+          helmfile -f helmfile.yaml template --selector name=$NAME > /tmp/pr.yaml
 
       - uses: actions/checkout@v3
         with:
           ref: main
 
       - run: |
-          helmfile -f helmfile.yaml template --selector name=argocd > /tmp/main.yaml
+          helmfile -f helmfile.yaml template --selector name=$NAME > /tmp/main.yaml
 
       - run: |
-          diff /tmp/main.yaml /tmp/pr.yaml --color || true
+          diff /tmp/main.yaml /tmp/pr.yaml --color > diff.yaml
+
+      - run: |
+          NUMBER=$(echo $GITHUB_REF | sed -e 's/[^0-9]//g')
+          gh pr comment $NUMBER --body-file diff.yaml
