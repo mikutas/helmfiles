@@ -12,7 +12,7 @@ jobs:
 
       - uses: aquaproj/aqua-installer@v2.1.2
         with:
-          aqua_version: v2.9.0
+          aqua_version: v2.10.1
 
       - run: |
           helmfile -f helmfile.yaml template --selector name=$NAME > /tmp/pr.yaml
