@@ -25,10 +25,7 @@ jobs:
           helmfile -f helmfile.yaml template --selector name=$NAME > /tmp/main.yaml
 
       - run: |
-          diff /tmp/main.yaml /tmp/pr.yaml --color > diff.yaml
-
-      - run: |
           NUMBER=$(echo $GITHUB_REF | sed -e 's/[^0-9]//g')
-          gh pr comment $NUMBER --body-file diff.yaml
+          diff /tmp/main.yaml /tmp/pr.yaml --color | gh pr comment $NUMBER --body|| true
         env:
           GH_TOKEN: ${{ github.token }}
