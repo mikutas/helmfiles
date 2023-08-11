@@ -5,5 +5,13 @@
     ":prHourlyLimitNone",
     ":timezone(Asia/Tokyo)",
     "github>aquaproj/aqua-renovate-config#1.8.0"
-  ]
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["aquaproj"],
+      "automerge": true,
+      "extends": ["schedule:weekends"]
+    }
+  ],
+  "platformAutomerge": true
 }
