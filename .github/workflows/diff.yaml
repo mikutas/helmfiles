@@ -3,7 +3,10 @@ name: diff
 on: pull_request
 
 jobs:
-  diff-argocd:
+  diff:
+    strategy:
+      matrix:
+        chart: [argocd]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -13,14 +16,14 @@ jobs:
           aqua_version: v2.10.1
 
       - run: |
-          helmfile -f helmfile.yaml template --selector name=argocd > /tmp/pr.yaml
+          helmfile -f helmfile.yaml template --selector name=${{ matrix.chart }} > /tmp/pr.yaml
 
       - uses: actions/checkout@v3
         with:
           ref: main
 
       - run: |
-          helmfile -f helmfile.yaml template --selector name=argocd > /tmp/main.yaml
+          helmfile -f helmfile.yaml template --selector name=${{ matrix.chart }} > /tmp/main.yaml
 
       - run: |
           diff /tmp/main.yaml /tmp/pr.yaml --color=always || true
