@@ -1,0 +1,26 @@
+repositories:
+- name: chaos-mesh
+  url: https://charts.chaos-mesh.org
+
+releases:
+- name: chaos-mesh
+  namespace: chaos-mesh
+  createNamespace: true
+  chart: chaos-mesh/chaos-mesh
+  version: 2.6.1
+  values:
+  - chaosDaemon:
+      # https://chaos-mesh.org/docs/production-installation-using-helm/#k3s
+      runtime: containerd
+      socketPath: /run/k3s/containerd/containerd.sock
+  - dashboard:
+      ingress:
+        apiVersionOverrides: networking.k8s.io/v1
+        enabled: true
+        annotations:
+          # https://k3d.io/v5.4.9/usage/exposing_services/
+          ingress.kubernetes.io/ssl-redirect: "false"
+        hosts: []
+        ingressClassName: traefik
+      # https://chaos-mesh.org/docs/manage-user-permissions/#enable-or-disable-permission-authentication
+      securityMode: false

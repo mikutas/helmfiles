@@ -13,5 +13,8 @@
       "extends": ["schedule:weekends"]
     }
   ],
-  "platformAutomerge": true
+  "platformAutomerge": true,
+  "registryAliases": {
+    "chaos-mesh": "https://charts.chaos-mesh.org"
+  }
 }
