@@ -37,9 +37,19 @@ releases:
     - presync
     showlogs: true
     command: kubectl
+    args: ["create", "ns", "goldilocks"]
+  - events:
+    - presync
+    showlogs: true
+    command: kubectl
     args: ["apply", "-f", "vpa-webhook-cert.yaml"]
   - events:
     - postuninstall
     showlogs: true
     command: kubectl
     args: ["delete", "-f", "vpa-webhook-cert.yaml"]
+  - events:
+    - postuninstall
+    showlogs: true
+    command: kubectl
+    args: ["delete", "ns", "goldilocks"]
