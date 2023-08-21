@@ -1,0 +1,22 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: vpa-webhook-selfsigned-issuer
+  namespace: goldilocks
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vpa-webhook-cert
+  namespace: goldilocks
+spec:
+  dnsNames:
+    - goldilocks-vpa-webhook.goldilocks.svc
+    - goldilocks-vpa-webhook.goldilocks.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: vpa-webhook-selfsigned-issuer
+  secretName: goldilocks-vpa-tls-secret

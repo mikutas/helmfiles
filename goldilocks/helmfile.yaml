@@ -1,0 +1,45 @@
+repositories:
+- name: fairwinds-stable
+  url: https://charts.fairwinds.com/stable
+
+releases:
+- chart: fairwinds-stable/goldilocks
+  name: goldilocks
+  namespace: goldilocks
+  version: 7.1.1
+  values:
+  - dashboard:
+      ingress:
+        enabled: true
+        annotations:
+          # https://k3d.io/v5.4.9/usage/exposing_services/
+          ingress.kubernetes.io/ssl-redirect: "false"
+        hosts:
+        - host: goldilocks.local
+          paths:
+            - path: /
+              type: ImplementationSpecific
+        ingressClassName: traefik
+  - vpa:
+      enabled: true
+      admissionController:
+        # https://github.com/kubernetes/autoscaler/issues/5318
+        extraArgs:
+          client-ca-file: /etc/tls-certs/ca.crt
+          tls-cert-file: /etc/tls-certs/tls.crt
+          tls-private-key: /etc/tls-certs/tls.key
+        generateCertificate: false
+        mutatingWebhookConfiguration:
+          annotations:
+            cert-manager.io/inject-ca-from: goldilocks/vpa-webhook-cert
+  hooks:
+  - events:
+    - presync
+    showlogs: true
+    command: kubectl
+    args: ["apply", "-f", "vpa-webhook-cert.yaml"]
+  - events:
+    - postuninstall
+    showlogs: true
+    command: kubectl
+    args: ["delete", "-f", "vpa-webhook-cert.yaml"]

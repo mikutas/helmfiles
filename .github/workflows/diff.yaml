@@ -10,6 +10,7 @@ jobs:
         - argocd
         - cert-manager
         - chaos-mesh
+        - goldilocks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
