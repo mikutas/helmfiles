@@ -5,4 +5,5 @@ helmDefaults:
 
 helmfiles:
 - path: argo-cd/helmfile.yaml
+- path: cert-manager/helmfile.yaml
 - path: chaos-mesh/helmfile.yaml

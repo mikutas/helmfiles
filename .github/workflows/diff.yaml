@@ -6,7 +6,10 @@ jobs:
   diff:
     strategy:
       matrix:
-        chart: [argocd, chaos-mesh]
+        chart:
+        - argocd
+        - cert-manager
+        - chaos-mesh
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
