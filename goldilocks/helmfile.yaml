@@ -32,6 +32,7 @@ releases:
         mutatingWebhookConfiguration:
           annotations:
             cert-manager.io/inject-ca-from: goldilocks/vpa-webhook-cert
+        secretName: goldilocks-vpa-tls-secret
   hooks:
   - events:
     - presync
