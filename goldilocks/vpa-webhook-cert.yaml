@@ -14,8 +14,8 @@ metadata:
   namespace: goldilocks
 spec:
   dnsNames:
-    - goldilocks-vpa-webhook.goldilocks.svc
-    - goldilocks-vpa-webhook.goldilocks.svc.cluster.local
+    - vpa-webhook.goldilocks.svc
+    - vpa-webhook.goldilocks.svc.cluster.local
   issuerRef:
     kind: Issuer
     name: vpa-webhook-selfsigned-issuer

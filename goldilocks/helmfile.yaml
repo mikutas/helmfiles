@@ -21,6 +21,7 @@ releases:
               type: ImplementationSpecific
         ingressClassName: traefik
   - vpa:
+      fullnameOverride: vpa
       enabled: true
       admissionController:
         # https://github.com/kubernetes/autoscaler/issues/5318
