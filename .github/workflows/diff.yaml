@@ -13,7 +13,7 @@ jobs:
         - goldilocks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: aquaproj/aqua-installer@v2.1.2
         with:
@@ -22,7 +22,7 @@ jobs:
       - run: |
           helmfile -f helmfile.yaml template --selector name=${{ matrix.chart }} > /tmp/pr.yaml
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: main
 
