@@ -8,3 +8,4 @@ helmfiles:
 - path: cert-manager/helmfile.yaml
 - path: chaos-mesh/helmfile.yaml
 - path: goldilocks/helmfile.yaml
+- path: polaris/helmfile.yaml

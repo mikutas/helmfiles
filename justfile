@@ -19,3 +19,6 @@ chaos-mesh:
 
 goldilocks:
 	helmfile -f helmfile.yaml apply --selector name=goldilocks
+
+polaris:
+	helmfile -f helmfile.yaml apply --selector name=polaris

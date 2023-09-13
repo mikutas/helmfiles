@@ -1,0 +1,9 @@
+repositories:
+- name: fairwinds-stable
+  url: https://charts.fairwinds.com/stable
+
+releases:
+- chart: fairwinds-stable/polaris
+  name: polaris
+  namespace: polaris
+  version: 5.14.0
