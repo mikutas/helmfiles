@@ -6,4 +6,4 @@ releases:
 - chart: fairwinds-stable/polaris
   name: polaris
   namespace: polaris
-  version: 5.14.0
+  version: 5.15.0
