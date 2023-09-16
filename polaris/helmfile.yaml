@@ -7,3 +7,9 @@ releases:
   name: polaris
   namespace: polaris
   version: 5.15.0
+  values:
+  - dashboard:
+      ingress:
+        enabled: true
+        hosts:
+        - polaris.local
