@@ -8,6 +8,10 @@ delete-cluster:
 argocd-password:
 	@kubectl view-secret argocd-initial-admin-secret -n argocd --quiet
 
+# https://argoproj.github.io/argo-workflows/access-token/#token-creation
+argowf-token:
+	@echo "Bearer $(kubectl get secret jenkins.service-account-token -o=jsonpath='{.data.token}' -n argo | base64 --decode)"
+
 apply NAME:
 	helmfile -f helmfile.yaml apply --selector name={{ NAME }}
 
