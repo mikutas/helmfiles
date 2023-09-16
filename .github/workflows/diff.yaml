@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         chart:
-        - argocd
+        - argo-cd
         - cert-manager
         - chaos-mesh
         - goldilocks
