@@ -16,7 +16,7 @@ releases:
       ingress:
         enabled: true
         hosts:
-        - argo-cd.local
+        - argocd.local
   hooks:
   - events: ["postuninstall"]
     showlogs: true
