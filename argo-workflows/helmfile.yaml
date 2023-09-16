@@ -1,0 +1,16 @@
+repositories:
+- name: argo
+  url: https://argoproj.github.io/argo-helm
+
+releases:
+- name: argo-workflows
+  namespace: argo-workflows
+  createNamespace: true
+  chart: argo/argo-workflows
+  version: 0.33.3
+  values:
+  - server:
+      ingress:
+        enabled: true
+        hosts:
+        - argowf.local
