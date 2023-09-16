@@ -15,20 +15,8 @@ releases:
         hosts:
         - argowf.local
   hooks:
-  # https://argoproj.github.io/argo-workflows/access-token/#prerequisites
+  # https://argoproj.github.io/argo-workflows/access-token/
   - events: ["postsync"]
     showlogs: true
     command: kubectl
-    args: ["create", "role", "jenkins", "--verb=list,update", "--resource=workflows.argoproj.io", "-n", "argo"]
-  - events: ["postsync"]
-    showlogs: true
-    command: kubectl
-    args: ["create", "sa", "jenkins", "-n", "argo"]
-  - events: ["postsync"]
-    showlogs: true
-    command: kubectl
-    args: ["create", "rolebinding", "jenkins", "--role=jenkins", "--serviceaccount=argo:jenkins", "-n", "argo"]
-  - events: ["postsync"]
-    showlogs: true
-    command: kubectl
-    args: ["apply", "-f", "secret.yaml", "-n", "argo"]
+    args: ["apply", "-f", "rbac.yaml"]
