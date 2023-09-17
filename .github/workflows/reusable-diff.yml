@@ -32,7 +32,7 @@ jobs:
           clean: false
 
       - run: |
-          just template ${{ inputs.release-name }} || true > /tmp/main.yaml
+          just template ${{ inputs.release-name }} > /tmp/main.yaml || true
 
       - run: |
           diff /tmp/main.yaml /tmp/pr.yaml --color=always || true
