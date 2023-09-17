@@ -1,0 +1,15 @@
+on:
+  workflow_call:
+    inputs:
+      release-name:
+        required: true
+        type: string
+
+jobs:
+  polaris:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mikutas/my-aqua-installer@v0.2.0
+
+      - run: |
+          just template ${{ inputs.release-name }} | polaris audit -f pretty --audit-path -

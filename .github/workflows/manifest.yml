@@ -27,9 +27,6 @@ jobs:
         - chaos-mesh
         - goldilocks
         - polaris
-    runs-on: ubuntu-latest
-    steps:
-      - uses: mikutas/my-aqua-installer@v0.2.0
-
-      - run: |
-          just template ${{ matrix.release-name }} | polaris audit -f pretty --audit-path -
+    uses: ./.github/workflows/reusable-polaris.yml
+    with:
+      release-name: ${{ matrix.release-name }}
