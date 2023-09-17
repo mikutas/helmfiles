@@ -15,7 +15,7 @@ jobs:
         - polaris
     runs-on: ubuntu-latest
     steps:
-      - uses: mikutas/my-aqua-installer@v0.1.0
+      - uses: mikutas/my-aqua-installer@v0.2.0
 
       - run: |
           just template ${{ matrix.release-name }} > /tmp/pr.yaml
@@ -42,7 +42,7 @@ jobs:
         - polaris
     runs-on: ubuntu-latest
     steps:
-      - uses: mikutas/my-aqua-installer@v0.1.0
+      - uses: mikutas/my-aqua-installer@v0.2.0
 
       - run: |
           just template ${{ matrix.release-name }} | polaris audit -f pretty --audit-path -
