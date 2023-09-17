@@ -13,22 +13,9 @@ jobs:
         - chaos-mesh
         - goldilocks
         - polaris
-    runs-on: ubuntu-latest
-    steps:
-      - uses: mikutas/my-aqua-installer@v0.2.0
-
-      - run: |
-          just template ${{ matrix.release-name }} > /tmp/pr.yaml
-
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - run: |
-          just template ${{ matrix.release-name }} || true > /tmp/main.yaml
-
-      - run: |
-          diff /tmp/main.yaml /tmp/pr.yaml --color=always || true
+    uses: ./.github/workflows/reusable-diff.yml
+    with:
+      release-name: ${{ matrix.release-name }}
 
   polaris:
     strategy:
