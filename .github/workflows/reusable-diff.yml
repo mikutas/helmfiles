@@ -4,12 +4,23 @@ on:
       release-name:
         required: true
         type: string
+      artifact-dl-enabled:
+        required: false
+        type: boolean
+      artifact-dl-name:
+        required: false
+        type: string
 
 jobs:
   diff:
     runs-on: ubuntu-latest
     steps:
       - uses: mikutas/my-aqua-installer@v0.2.0
+
+      - if: inputs.artifact-dl-enabled
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.artifact-dl-name }}
 
       - run: |
           just template ${{ inputs.release-name }} > /tmp/pr.yaml
