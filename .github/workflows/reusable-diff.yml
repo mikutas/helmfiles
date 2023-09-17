@@ -10,6 +10,9 @@ on:
       artifact-dl-name:
         required: false
         type: string
+      artifact-dl-path:
+        required: false
+        type: string
 
 jobs:
   diff:
@@ -21,6 +24,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.artifact-dl-name }}
+          path: ${{ inputs.artifact-dl-path }}
 
       - run: |
           just template ${{ inputs.release-name }} > /tmp/pr.yaml
