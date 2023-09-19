@@ -4,7 +4,6 @@
     "github>aquaproj/aqua-renovate-config#1.10.0",
     "github>mikutas/my-renovate-config"
   ],
-  "platformAutomerge": true,
   "registryAliases": {
     "chaos-mesh": "https://charts.chaos-mesh.org"
   }
