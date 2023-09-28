@@ -11,5 +11,5 @@ registries:
 packages:
 - name: FairwindsOps/polaris@8.5.1
 - name: casey/just@1.14.0
-- name: helm/helm@v3.12.3
+- name: helm/helm@v3.13.0
 - name: helmfile/helmfile@v0.157.0
