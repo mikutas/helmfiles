@@ -30,3 +30,13 @@ jobs:
     uses: ./.github/workflows/reusable-polaris.yml
     with:
       release-name: ${{ matrix.release-name }}
+
+  status-check:
+    runs-on: ubuntu-latest
+    needs:
+    - diff
+    - polaris
+    permissions: {}
+    if: failure()
+    steps:
+      - run: exit 1
