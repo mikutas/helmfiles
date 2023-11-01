@@ -12,4 +12,4 @@ packages:
 - name: FairwindsOps/polaris@8.5.1
 - name: casey/just@1.15.0
 - name: helm/helm@v3.13.1
-- name: helmfile/helmfile@v0.158.0
+- name: helmfile/helmfile@v0.158.1
