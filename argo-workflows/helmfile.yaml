@@ -7,7 +7,7 @@ releases:
   namespace: argo
   createNamespace: true
   chart: argo/argo-workflows
-  version: 0.33.3
+  version: 0.39.0
   values:
   - server:
       ingress:
