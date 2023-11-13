@@ -1,6 +1,8 @@
 repositories:
 - name: argo
   url: https://argoproj.github.io/argo-helm
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
 
 releases:
 - name: argo-workflows
@@ -9,6 +11,20 @@ releases:
   chart: argo/argo-workflows
   version: 0.39.0
   values:
+  - controller:
+      persistence:
+        archive: true
+        postgresql:
+          host: postgresql.argo.svc.cluster.local
+          port: 5432
+          database: postgres
+          tableName: argo_workflows
+          userNameSecret:
+            name: argo-postgres-config
+            key: username
+          passwordSecret:
+            name: argo-postgres-config
+            key: password
   - server:
       ingress:
         enabled: true
@@ -20,3 +36,25 @@ releases:
     showlogs: true
     command: kubectl
     args: ["apply", "-f", "rbac.yaml"]
+  - events: ["postuninstall"]
+    showlogs: true
+    command: kubectl
+    args: ["delete", "-f", "rbac.yaml"]
+  - events: ["presync"]
+    showlogs: true
+    command: kubectl
+    args: ["apply", "-f", "archive.yaml"]
+  - events: ["postuninstall"]
+    showlogs: true
+    command: kubectl
+    args: ["delete", "-f", "archive.yaml"]
+
+- name: postgresql
+  namespace: argo
+  chart: bitnami/postgresql
+  version: 13.2.5
+  values:
+  - auth:
+      database: postgres
+      username: argo
+      password: argo
