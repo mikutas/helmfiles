@@ -25,6 +25,10 @@ releases:
           passwordSecret:
             name: argo-postgres-config
             key: password
+      workflowDefaults:
+        spec:
+          ttlStrategy:
+            secondsAfterCompletion: 60
   - server:
       ingress:
         enabled: true
