@@ -4,6 +4,13 @@
     "github>aquaproj/aqua-renovate-config#1.12.0",
     "github>mikutas/my-renovate-config"
   ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["postgresql"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    }
+  ],
   "registryAliases": {
     "chaos-mesh": "https://charts.chaos-mesh.org"
   }
