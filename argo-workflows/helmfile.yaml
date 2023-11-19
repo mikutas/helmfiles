@@ -34,24 +34,63 @@ releases:
         enabled: true
         hosts:
         - argowf.local
-  hooks:
-  # https://argoproj.github.io/argo-workflows/access-token/
-  - events: ["postsync"]
-    showlogs: true
-    command: kubectl
-    args: ["apply", "-f", "rbac.yaml"]
-  - events: ["postuninstall"]
-    showlogs: true
-    command: kubectl
-    args: ["delete", "-f", "rbac.yaml"]
-  - events: ["presync"]
-    showlogs: true
-    command: kubectl
-    args: ["apply", "-f", "archive.yaml"]
-  - events: ["postuninstall"]
-    showlogs: true
-    command: kubectl
-    args: ["delete", "-f", "archive.yaml"]
+  - extraObjects:
+    # https://argoproj.github.io/argo-workflows/access-token/#prerequisites
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: jenkins
+        namespace: argo
+      rules:
+      - apiGroups:
+        - argoproj.io
+        resources:
+        - cronworkflows
+        - workflows
+        - workflowtemplates
+        verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: jenkins
+        namespace: argo
+    # https://argoproj.github.io/argo-workflows/access-token/#tip-for-tokens-creation
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: jenkins
+        namespace: argo
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: Role
+        name: jenkins
+      subjects:
+      - kind: ServiceAccount
+        name: jenkins
+        namespace: argo
+    # https://argoproj.github.io/argo-workflows/access-token/#token-creation
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: jenkins.service-account-token
+        namespace: argo
+        annotations:
+          kubernetes.io/service-account.name: jenkins
+      type: kubernetes.io/service-account-token
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: argo-postgres-config
+        namespace: argo
+      type: Opaque
+      data:
+        username: YXJnbwo=
+        password: YXJnbwo=
 
 - name: postgresql
   namespace: argo
