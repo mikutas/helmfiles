@@ -1,6 +1,6 @@
 # https://k3d.io/v5.5.2/usage/exposing_services/
 create-cluster:
-	k3d cluster create -p "8081:80@loadbalancer"
+	k3d cluster create -p "54321:80@loadbalancer"
 
 delete-cluster:
 	k3d cluster delete
