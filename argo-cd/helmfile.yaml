@@ -7,7 +7,7 @@ releases:
   namespace: argo-cd
   createNamespace: true
   chart: argo/argo-cd
-  version: 5.51.2
+  version: 5.51.3
   values:
   - configs:
       params:
