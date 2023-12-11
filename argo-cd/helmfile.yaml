@@ -4,7 +4,7 @@ repositories:
 
 releases:
 - name: argo-cd
-  namespace: argo-cd
+  namespace: argocd
   createNamespace: true
   chart: argo/argo-cd
   version: 5.51.6
@@ -21,12 +21,4 @@ releases:
   - events: ["postuninstall"]
     showlogs: true
     command: kubectl
-    args: ["delete", "crd", "appprojects.argoproj.io"]
-  - events: ["postuninstall"]
-    showlogs: true
-    command: kubectl
-    args: ["delete", "crd", "applications.argoproj.io"]
-  - events: ["postuninstall"]
-    showlogs: true
-    command: kubectl
-    args: ["delete", "crd", "applicationsets.argoproj.io"]
+    args: ["delete", "ns", "argocd"]
