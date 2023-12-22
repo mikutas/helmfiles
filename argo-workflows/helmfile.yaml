@@ -91,6 +91,16 @@ releases:
       data:
         username: YXJnbwo=
         password: YXJnbwo=
+  hooks:
+  - events:
+    - "postsync"
+    command: "kubectl"
+    args: ["apply", "-n", "argo", "-f", "https://github.com/argoproj/argo-workflows/raw/main/manifests/quick-start/base/executor/emissary/executor-role.yaml"]
+  - events:
+    - "postsync"
+    command: "kubectl"
+    args: ["apply", "-n", "argo", "-f", "https://github.com/argoproj/argo-workflows/raw/main/manifests/quick-start/base/executor-default-rolebinding.yaml"]
+
 
 - name: postgresql
   namespace: argo
