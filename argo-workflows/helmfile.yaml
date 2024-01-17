@@ -105,7 +105,7 @@ releases:
 - name: postgresql
   namespace: argo
   chart: bitnami/postgresql
-  version: 13.2.30
+  version: 13.3.0
   values:
   - auth:
       database: postgres
