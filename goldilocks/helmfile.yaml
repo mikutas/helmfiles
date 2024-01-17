@@ -6,7 +6,7 @@ releases:
 - chart: fairwinds-stable/goldilocks
   name: goldilocks
   namespace: goldilocks
-  version: 8.0.0
+  version: 8.0.1
   values:
   - dashboard:
       flags:
