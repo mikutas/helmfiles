@@ -15,7 +15,7 @@ jobs:
   polaris:
     runs-on: ubuntu-latest
     steps:
-      - uses: mikutas/my-aqua-installer@v0.2.0
+      - uses: mikutas/my-aqua-installer@v0.2.1
 
       - if: inputs.artifact-dl-name
         uses: actions/download-artifact@v4
