@@ -6,7 +6,7 @@ delete-cluster:
 	k3d cluster delete
 
 argocd-password:
-	@kubectl view-secret argocd-initial-admin-secret -n argo-cd --quiet
+	@kubectl view-secret argocd-initial-admin-secret -n argocd --quiet
 
 # https://argoproj.github.io/argo-workflows/access-token/#token-creation
 argowf-token:
