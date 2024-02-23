@@ -10,8 +10,5 @@
       "matchUpdateTypes": ["patch"],
       "automerge": true
     }
-  ],
-  "registryAliases": {
-    "chaos-mesh": "https://charts.chaos-mesh.org"
-  }
+  ]
 }
