@@ -13,3 +13,4 @@ packages:
 - name: casey/just@1.27.0
 - name: helm/helm@v3.15.1
 - name: helmfile/helmfile@v0.165.0
+- name: jqlang/jq@jq-1.7.1

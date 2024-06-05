@@ -21,9 +21,7 @@ jobs:
       # debug
       - name: List all changed dirs
         run: |
-          for dir in ${{ steps.changed-files.outputs.all_changed_and_modified_files }}; do
-            echo "$dir was changed"
-          done
+          echo '${{ steps.changed-files.outputs.all_changed_and_modified_files }}' | jq
 
   diff:
     needs: gen-matrix
