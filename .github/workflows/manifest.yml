@@ -6,7 +6,7 @@ jobs:
   gen-matrix:
     runs-on: ubuntu-latest
     outputs:
-      changed-dir: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+      changed-dirs: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
     steps:
       - name: Get whether release-name dir changed
         id: changed-files
@@ -25,18 +25,20 @@ jobs:
 
   diff:
     needs: gen-matrix
+    if: ${{ needs.gen-matrix.outputs.changed-dirs != '[]' }}
     strategy:
       matrix:
-        release-name: ${{ fromJson(needs.gen-matrix.outputs.changed-dir) }}
+        release-name: ${{ fromJson(needs.gen-matrix.outputs.changed-dirs) }}
     uses: ./.github/workflows/reusable-diff.yml
     with:
       release-name: ${{ matrix.release-name }}
 
   polaris:
     needs: gen-matrix
+    if: ${{ needs.gen-matrix.outputs.changed-dirs != '[]' }}
     strategy:
       matrix:
-        release-name: ${{ fromJson(needs.gen-matrix.outputs.changed-dir) }}
+        release-name: ${{ fromJson(needs.gen-matrix.outputs.changed-dirs) }}
     uses: ./.github/workflows/reusable-polaris.yml
     with:
       release-name: ${{ matrix.release-name }}
