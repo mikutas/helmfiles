@@ -105,7 +105,7 @@ releases:
 - name: postgresql
   namespace: argo
   chart: bitnami/postgresql
-  version: 15.5.9
+  version: 15.5.10
   values:
   - auth:
       database: postgres
