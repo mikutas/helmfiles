@@ -9,13 +9,7 @@ releases:
   chart: argo/argo-cd
   version: 7.3.3
   values:
-  - configs:
-      params:
-        "server.insecure": true
-  - server:
-      ingress:
-        enabled: true
-        hostname: argocd.local
+  - values.yaml
   hooks:
   - events: ["postuninstall"]
     showlogs: true
