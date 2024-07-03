@@ -1,8 +1,10 @@
-fullnameOverride: argo-cd
-configs:
-  params:
-    "server.insecure": true
-server:
-  ingress:
-    enabled: true
-    hostname: argocd.local
+argo-cd:
+  fullnameOverride: argo-cd
+  configs:
+    params:
+      "applicationsetcontroller.policy": create-only
+      "server.insecure": true
+  server:
+    ingress:
+      enabled: true
+      hostname: argocd.local

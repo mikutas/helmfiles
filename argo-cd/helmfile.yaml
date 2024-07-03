@@ -1,17 +1,16 @@
 repositories:
-- name: argo
-  url: https://argoproj.github.io/argo-helm
+  - name: argo
+    url: https://argoproj.github.io/argo-helm
 
 releases:
-- name: argo-cd
-  namespace: argocd
-  createNamespace: true
-  chart: argo/argo-cd
-  version: 7.3.4
-  values:
-  - values.yaml
-  hooks:
-  - events: ["postuninstall"]
-    showlogs: true
-    command: kubectl
-    args: ["delete", "ns", "argocd"]
+  - name: argo-cd
+    namespace: argocd
+    createNamespace: true
+    chart: .
+    values:
+      - values.yaml
+    hooks:
+      - events: ["postuninstall"]
+        showlogs: true
+        command: kubectl
+        args: ["delete", "ns", "argocd"]
