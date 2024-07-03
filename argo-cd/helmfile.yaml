@@ -1,7 +1,3 @@
-repositories:
-  - name: argo
-    url: https://argoproj.github.io/argo-helm
-
 releases:
   - name: argo-cd
     namespace: argocd
