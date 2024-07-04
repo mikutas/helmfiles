@@ -1,10 +1,8 @@
+{{- if .Values.enableCustomResources }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
-    helm.sh/hook: post-install
-    helm.sh/hook-delete-policy: hook-failed
   name: {{ .Chart.Name }}
   namespace: {{ .Release.Namespace }}
 spec:
@@ -19,3 +17,4 @@ spec:
   destination:
     server: "https://kubernetes.default.svc"
     namespace: {{ .Release.Namespace }}
+{{- end }}

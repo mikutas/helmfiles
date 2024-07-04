@@ -1,3 +1,5 @@
+enableCustomResources: true
+
 argo-cd:
   fullnameOverride: argo-cd
   configs:

@@ -1,0 +1,2 @@
+apply-custom-resources:
+	helm template . -n argocd --set enableCustomResources=true --show-only templates/appproject.yaml --show-only templates/application.yaml | kubectl apply -f -

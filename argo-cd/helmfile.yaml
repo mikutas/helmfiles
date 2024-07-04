@@ -5,7 +5,12 @@ releases:
     chart: .
     values:
       - values.yaml
+      - enableCustomResources: false
     hooks:
+      - events: ["postsync"]
+        showlogs: true
+        command: just
+        args: ["apply-custom-resources"]
       - events: ["postuninstall"]
         showlogs: true
         command: kubectl

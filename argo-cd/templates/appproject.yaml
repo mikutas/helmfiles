@@ -1,9 +1,8 @@
+{{- if .Values.enableCustomResources }}
+---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  annotations:
-    helm.sh/hook: post-install
-    helm.sh/hook-delete-policy: hook-failed
   name: argo-cd
   namespace: argocd
 spec:
@@ -15,3 +14,4 @@ spec:
     server: '*'
   sourceRepos:
   - '*'
+{{- end }}
