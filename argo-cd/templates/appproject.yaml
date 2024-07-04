@@ -3,8 +3,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: argo-cd
-  namespace: argocd
+  name: {{ .Chart.Name }}
+  namespace: {{ .Release.Namespace }}
 spec:
   clusterResourceWhitelist:
   - group: '*'
