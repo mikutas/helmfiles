@@ -11,6 +11,10 @@ releases:
       - values.yaml
       - enableCustomResources: false
     hooks:
+      - events: ["prepare"]
+        showlogs: true
+        command: helm
+        args: ["dependency", "update"]
       - events: ["postsync"]
         showlogs: true
         command: just
