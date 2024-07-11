@@ -18,6 +18,10 @@ releases:
       - events: ["postsync"]
         showlogs: true
         command: just
+        args: ["patch-secret"]
+      - events: ["postsync"]
+        showlogs: true
+        command: just
         args: ["apply-custom-resources"]
       - events: ["postuninstall"]
         showlogs: true

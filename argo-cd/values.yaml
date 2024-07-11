@@ -3,6 +3,16 @@ enableCustomResources: true
 argo-cd:
   fullnameOverride: argo-cd
   configs:
+    cm:
+      dex.config: |
+        connectors:
+          - type: github
+            id: github
+            name: GitHub
+            config:
+              clientID: $dex.github.clientID
+              clientSecret: $dex.github.clientSecret
+      url: http://argocd.local:54321
     params:
       "applicationsetcontroller.policy": create-only
       "server.insecure": true
