@@ -16,6 +16,8 @@ argo-cd:
     params:
       "applicationsetcontroller.policy": create-only
       "server.insecure": true
+    rbac:
+      policy.default: role:admin
   server:
     ingress:
       enabled: true
