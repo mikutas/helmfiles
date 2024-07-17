@@ -13,11 +13,57 @@ argo-cd:
               clientID: $dex.github.clientID
               clientSecret: $dex.github.clientSecret
       url: http://argocd.local:54321
+    cmp:
+      create: true
+      plugins:
+        helmfile:
+          generate:
+            args:
+              - /helmfile-bin/helmfile -q template
+            command:
+              - /bin/sh
+              - -c
     params:
       "applicationsetcontroller.policy": create-only
       "server.insecure": true
     rbac:
       policy.default: role:admin
+  repoServer:
+    extraContainers:
+      - command:
+          - argocd-cmp-server
+        image: quay.io/argoproj/argocd:v2.11.5
+        name: my-plugin
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            name: my-plugin-config
+            subPath: helmfile.yaml
+          - mountPath: /helmfile-bin
+            name: helmfile-bin
+    initContainers:
+      - args:
+          - /usr/local/bin/helmfile
+          - /helmfile-bin/helmfile
+        command:
+          - cp
+        image: ghcr.io/helmfile/helmfile:v0.166.0
+        name: helmfile
+        volumeMounts:
+          - mountPath: /helmfile-bin
+            name: helmfile-bin
+    volumes:
+      - configMap:
+          name: argocd-cmp-cm
+        name: my-plugin-config
+      - emptyDir: {}
+        name: helmfile-bin
   server:
     ingress:
       enabled: true
