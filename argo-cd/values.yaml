@@ -17,6 +17,8 @@ argo-cd:
       create: true
       plugins:
         helmfile:
+          discover:
+            filename: ./helmfile.yaml
           generate:
             args:
               - /helmfile-bin/helmfile -q template
