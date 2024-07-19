@@ -21,10 +21,10 @@ argo-cd:
             filename: ./helmfile.yaml
           generate:
             args:
-              - /helmfile-bin/helmfile -q template
+              - -q
+              - template
             command:
-              - /bin/sh
-              - -c
+              - helmfile
     params:
       "applicationsetcontroller.policy": create-only
       "server.insecure": true
@@ -32,9 +32,12 @@ argo-cd:
       policy.default: role:admin
   repoServer:
     extraContainers:
-      - command:
-          - argocd-cmp-server
-        image: quay.io/argoproj/argocd:v2.11.5
+      - args:
+          - -c
+          - /cmp-server-bin/argocd-cmp-server
+        command:
+          - /bin/sh
+        image: ghcr.io/helmfile/helmfile:v0.166.0
         name: my-plugin
         securityContext:
           runAsNonRoot: true
@@ -47,25 +50,25 @@ argo-cd:
           - mountPath: /home/argocd/cmp-server/config/plugin.yaml
             name: my-plugin-config
             subPath: helmfile.yaml
-          - mountPath: /helmfile-bin
-            name: helmfile-bin
+          - mountPath: /cmp-server-bin
+            name: cmp-server-bin
     initContainers:
       - args:
-          - /usr/local/bin/helmfile
-          - /helmfile-bin/helmfile
+          - /usr/local/bin/argocd-cmp-server
+          - /cmp-server-bin/argocd-cmp-server
         command:
           - cp
-        image: ghcr.io/helmfile/helmfile:v0.166.0
-        name: helmfile
+        image: quay.io/argoproj/argocd:v2.11.5
+        name: cmp-server-cp
         volumeMounts:
-          - mountPath: /helmfile-bin
-            name: helmfile-bin
+          - mountPath: /cmp-server-bin
+            name: cmp-server-bin
     volumes:
       - configMap:
           name: argocd-cmp-cm
         name: my-plugin-config
       - emptyDir: {}
-        name: helmfile-bin
+        name: cmp-server-bin
   server:
     ingress:
       enabled: true
