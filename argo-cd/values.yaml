@@ -52,6 +52,8 @@ argo-cd:
             subPath: helmfile.yaml
           - mountPath: /cmp-server-bin
             name: cmp-server-bin
+          - mountPath: /helm
+            name: helm-working-dir
     initContainers:
       - args:
           - /usr/local/bin/argocd-cmp-server
