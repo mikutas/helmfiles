@@ -37,6 +37,11 @@ argo-cd:
           - /cmp-server-bin/argocd-cmp-server
         command:
           - /bin/sh
+        env:
+          - name: HELM_CACHE_HOME
+            value: /helm-working-dir
+          - name: HELM_CONFIG_HOME
+            value: /helm-working-dir
         image: ghcr.io/helmfile/helmfile:v0.166.0
         name: my-plugin
         securityContext:
@@ -52,7 +57,7 @@ argo-cd:
             subPath: helmfile.yaml
           - mountPath: /cmp-server-bin
             name: cmp-server-bin
-          - mountPath: /helm
+          - mountPath: /helm-working-dir
             name: helm-working-dir
     initContainers:
       - args:
