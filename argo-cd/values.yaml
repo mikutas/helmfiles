@@ -65,7 +65,7 @@ argo-cd:
           - /cmp-server-bin/argocd-cmp-server
         command:
           - cp
-        image: quay.io/argoproj/argocd:v2.11.5
+        image: quay.io/argoproj/argocd:v2.11.6
         name: cmp-server-cp
         volumeMounts:
           - mountPath: /cmp-server-bin
