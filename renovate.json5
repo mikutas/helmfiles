@@ -9,6 +9,13 @@
       "matchPackageNames": ["postgresql"],
       "matchUpdateTypes": ["patch"],
       "automerge": true
+    },
+    {
+      "groupName": "argo-cd",
+      "matchPackagePatterns": [
+        "argo-cd",
+        "quay.io/argoproj/argocd"
+      ]
     }
   ]
 }
