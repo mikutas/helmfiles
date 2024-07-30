@@ -32,11 +32,8 @@ argo-cd:
       policy.default: role:admin
   repoServer:
     extraContainers:
-      - args:
-          - -c
-          - /cmp-server-bin/argocd-cmp-server
-        command:
-          - /bin/sh
+      - command:
+          - /var/run/argocd/argocd-cmp-server
         env:
           - name: HELM_CACHE_HOME
             value: /helm-working-dir
@@ -55,27 +52,12 @@ argo-cd:
           - mountPath: /home/argocd/cmp-server/config/plugin.yaml
             name: my-plugin-config
             subPath: helmfile.yaml
-          - mountPath: /cmp-server-bin
-            name: cmp-server-bin
           - mountPath: /helm-working-dir
             name: helm-working-dir
-    initContainers:
-      - args:
-          - /usr/local/bin/argocd-cmp-server
-          - /cmp-server-bin/argocd-cmp-server
-        command:
-          - cp
-        image: quay.io/argoproj/argocd:v2.11.7
-        name: cmp-server-cp
-        volumeMounts:
-          - mountPath: /cmp-server-bin
-            name: cmp-server-bin
     volumes:
       - configMap:
           name: argocd-cmp-cm
         name: my-plugin-config
-      - emptyDir: {}
-        name: cmp-server-bin
   server:
     ingress:
       enabled: true
