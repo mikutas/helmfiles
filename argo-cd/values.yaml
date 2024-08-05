@@ -23,6 +23,7 @@ argo-cd:
             args:
               - -q
               - template
+              - --include-crds
             command:
               - helmfile
     params:
