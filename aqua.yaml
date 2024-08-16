@@ -7,7 +7,7 @@
 #   require_checksum: true
 registries:
 - type: standard
-  ref: v4.212.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.213.1 # renovate: depName=aquaproj/aqua-registry
 packages:
 - name: FairwindsOps/polaris@9.2.1
 - name: casey/just@1.34.0
