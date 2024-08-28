@@ -35,4 +35,4 @@ jobs:
           just template ${{ inputs.release-name }} | tee /tmp/main.yaml || true
 
       - run: |
-          diff /tmp/main.yaml /tmp/pr.yaml --color=always || true
+          diff -u /tmp/main.yaml /tmp/pr.yaml --color=always || true
