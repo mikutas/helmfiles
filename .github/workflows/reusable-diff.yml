@@ -36,3 +36,14 @@ jobs:
 
       - run: |
           diff -u /tmp/main.yaml /tmp/pr.yaml --color=always || true
+
+      - id: dyff
+        run: |
+          dyff between /tmp/main.yaml /tmp/pr.yaml
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const { promises: fs } = require('fs');
+            const dyff = await fs.readFile('${{ steps.dyff.outputs.file }}', 'utf8');
+            await core.summary.addRaw(dyff).addEOL().write()
