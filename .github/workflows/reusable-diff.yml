@@ -36,3 +36,6 @@ jobs:
 
       - run: |
           diff -u /tmp/main.yaml /tmp/pr.yaml --color=always || true
+
+      - run: |
+          dyff --color on between /tmp/main.yaml /tmp/pr.yaml
