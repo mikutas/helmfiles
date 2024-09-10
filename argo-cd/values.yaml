@@ -31,6 +31,10 @@ argo-cd:
       "server.insecure": true
     rbac:
       policy.default: role:admin
+    styles: |
+      .sidebar {
+        background-color: #66091c;
+      }
   repoServer:
     extraContainers:
       - command:
