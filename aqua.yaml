@@ -11,7 +11,7 @@ registries:
 packages:
   - name: FairwindsOps/polaris@9.2.1
   - name: casey/just@1.35.0
-  - name: helm/helm@v3.15.4
+  - name: helm/helm@v3.16.1
   - name: helmfile/helmfile@v0.167.1
   - name: homeport/dyff@v1.9.0
   - name: jqlang/jq@jq-1.7.1
