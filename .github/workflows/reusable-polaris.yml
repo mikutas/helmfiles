@@ -1,7 +1,7 @@
 on:
   workflow_call:
     inputs:
-      release-name:
+      changed-dir:
         required: true
         type: string
       artifact-dl-name:
@@ -24,4 +24,4 @@ jobs:
           path: ${{ inputs.artifact-dl-path }}
 
       - run: |
-          just template ${{ inputs.release-name }} | polaris audit -f pretty --audit-path -
+          helmfile -f ${{ inputs.changed-dir }}/helmfile.yaml template | polaris audit -f pretty --audit-path -

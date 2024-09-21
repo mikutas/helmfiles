@@ -14,10 +14,10 @@ jobs:
         with:
           dir_names: "true"
           dir_names_exclude_current_dir: "true"
-          dir_names_max_depth: 1
+          dir_names_max_depth: 2
           matrix: "true"
-          files_ignore: |
-            .github/**
+          files: |
+            apps/**
 
       # debug
       - name: List all changed dirs
@@ -29,20 +29,20 @@ jobs:
     if: ${{ needs.gen-matrix.outputs.changed-dirs != '[]' }}
     strategy:
       matrix:
-        release-name: ${{ fromJson(needs.gen-matrix.outputs.changed-dirs) }}
+        changed-dir: ${{ fromJson(needs.gen-matrix.outputs.changed-dirs) }}
     uses: ./.github/workflows/reusable-diff.yml
     with:
-      release-name: ${{ matrix.release-name }}
+      changed-dir: ${{ matrix.changed-dir }}
 
   polaris:
     needs: gen-matrix
     if: ${{ needs.gen-matrix.outputs.changed-dirs != '[]' }}
     strategy:
       matrix:
-        release-name: ${{ fromJson(needs.gen-matrix.outputs.changed-dirs) }}
+        changed-dir: ${{ fromJson(needs.gen-matrix.outputs.changed-dirs) }}
     uses: ./.github/workflows/reusable-polaris.yml
     with:
-      release-name: ${{ matrix.release-name }}
+      changed-dir: ${{ matrix.changed-dir }}
 
   status-check:
     runs-on: ubuntu-latest

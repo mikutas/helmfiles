@@ -1,7 +1,7 @@
 on:
   workflow_call:
     inputs:
-      release-name:
+      changed-dir:
         required: true
         type: string
       artifact-dl-name:
@@ -24,7 +24,7 @@ jobs:
           path: ${{ inputs.artifact-dl-path }}
 
       - run: |
-          just template ${{ inputs.release-name }} | tee /tmp/pr.yaml
+          helmfile -f ${{ inputs.changed-dir }}/helmfile.yaml template | tee /tmp/pr.yaml
 
       - uses: actions/checkout@v4
         with:
@@ -32,7 +32,7 @@ jobs:
           clean: false
 
       - run: |
-          just template ${{ inputs.release-name }} | tee /tmp/main.yaml || true
+          helmfile -f ${{ inputs.changed-dir }}/helmfile.yaml template | tee /tmp/main.yaml || true
 
       - run: |
           diff -u /tmp/main.yaml /tmp/pr.yaml --color=always || true
