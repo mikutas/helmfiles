@@ -8,7 +8,7 @@ metadata:
 spec:
   project: {{ .Chart.Name }}
   source:
-    path: {{ .Chart.Name }}
+    path: apps/{{ .Chart.Name }}
     repoURL: https://github.com/mikutas/helmfiles
     targetRevision: HEAD
     helm:
