@@ -26,4 +26,4 @@ releases:
       - events: ["postuninstall"]
         showlogs: true
         command: kubectl
-        args: ["delete", "ns", "argocd"]
+        args: ["delete", "ns", "argo-cd"]
