@@ -13,6 +13,10 @@ spec:
       repoURL: {{ .Values.admin.repoURL }}
       revision: {{ .Values.admin.targetRevision }}
       directories:
+      - path: apps/app-projects
+        exclude: true
+      - path: apps/appsets
+        exclude: true
       - path: apps/argo-cd
         exclude: true
       - path: apps/*
