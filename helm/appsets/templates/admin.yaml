@@ -9,14 +9,14 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - git:
-        repoURL: {{ .Values.admin.repoURL }}
-        revision: {{ .Values.admin.targetRevision }}
-        directories:
-          - path: apps/argo-cd
-            exclude: true
-          - path: apps/*
-        pathParamPrefix: chart
+  - git:
+      repoURL: {{ .Values.admin.repoURL }}
+      revision: {{ .Values.admin.targetRevision }}
+      directories:
+      - path: apps/argo-cd
+        exclude: true
+      - path: apps/*
+      pathParamPrefix: chart
   template:
     metadata:
       name: {{ "'{{.chart.path.basename}}'" }}
@@ -29,3 +29,6 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: {{ "'{{.chart.path.basename}}'" }}
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
