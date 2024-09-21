@@ -13,13 +13,13 @@ argowf-token:
 	@echo "Bearer $(kubectl get secret jenkins.service-account-token -o=jsonpath='{.data.token}' -n argo | base64 --decode)"
 
 apply NAME:
-	helmfile -f helmfile.yaml apply --selector name={{ NAME }}
+	helmfile -f apps/{{ NAME }}/helmfile.yaml apply
 
 diff NAME:
-	helmfile -f helmfile.yaml diff --selector name={{ NAME }}
+	helmfile -f apps/{{ NAME }}/helmfile.yaml diff
 
 destroy NAME:
-	helmfile -f helmfile.yaml destroy --selector name={{ NAME }}
+	helmfile -f apps/{{ NAME }}/helmfile.yaml destroy
 
 template NAME:
-	helmfile -f helmfile.yaml template --selector name={{ NAME }}
+	helmfile -f apps/{{ NAME }}/helmfile.yaml template
