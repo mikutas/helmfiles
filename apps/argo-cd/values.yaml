@@ -1,4 +1,5 @@
 enableCustomResources: true
+repoURL: https://github.com/mikutas/helmfiles
 
 argo-cd:
   fullnameOverride: argo-cd
