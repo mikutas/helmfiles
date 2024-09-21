@@ -1,0 +1,6 @@
+projects:
+- name: foo
+  namespace: default
+  group: foo
+  sourceRepos:
+  - '*'

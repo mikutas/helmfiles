@@ -1,0 +1,44 @@
+{{- range $proj := .Values.projects }}
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ $proj.name }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  destinations:
+  - namespace: {{ $proj.namespace }}
+    server: https://kubernetes.default.svc
+  namespaceResourceWhitelist:
+  - group: ''
+    kind: ConfigMap
+  - group: apps
+    kind: Deployment
+  - group: autoscaling
+    kind: HorizontalPodAutoscaler
+  - group: ''
+    kind: Pod
+  - group: apps
+    kind: ReplicaSet
+  - group: argoproj.io
+    kind: Rollout
+  - group: ''
+    kind: Secret
+  - group: ''
+    kind: Service
+  - group: ''
+    kind: ServiceAccount
+  roles:
+  - name: developer
+    groups:
+    - {{ $proj.group }}
+    policies:
+    - p, proj:{{ $proj.name }}:developer, applications, get, {{ $proj.name }}/*, allow
+    - p, proj:{{ $proj.name }}:developer, applications, sync, {{ $proj.name }}/*, allow
+    - p, proj:{{ $proj.name }}:developer, applications, action/*, {{ $proj.name }}/*, allow
+    - p, proj:{{ $proj.name }}:developer, logs, get, {{ $proj.name }}/*, allow
+    - p, proj:{{ $proj.name }}:developer, projects, get, {{ $proj.name }}, allow
+  sourceRepos:
+  {{- range $repo := $proj.sourceRepos }}
+  - {{ $repo | squote }}
+  {{- end }}
+{{- end }}
