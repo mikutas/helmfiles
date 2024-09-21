@@ -28,7 +28,7 @@ argo-cd:
             command:
               - helmfile
     params:
-      "applicationsetcontroller.policy": create-only
+      #"applicationsetcontroller.policy": create-only
       "server.insecure": true
     rbac:
       policy.default: role:admin
