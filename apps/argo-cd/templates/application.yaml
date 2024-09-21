@@ -26,12 +26,9 @@ metadata:
 spec:
   project: {{ .Chart.Name }}
   source:
-    path: helm/app-projects
+    path: apps/app-projects
     repoURL: {{ .Values.repoURL }}
     targetRevision: HEAD
-    helm:
-      valueFiles:
-        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Release.Namespace }}
@@ -44,12 +41,9 @@ metadata:
 spec:
   project: {{ .Chart.Name }}
   source:
-    path: helm/appsets
+    path: apps/appsets
     repoURL: {{ .Values.repoURL }}
     targetRevision: HEAD
-    helm:
-      valueFiles:
-        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Release.Namespace }}

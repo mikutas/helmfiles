@@ -1,0 +1,4 @@
+releases:
+  - name: appsets
+    namespace: argo-cd
+    chart: ../../helm/appsets
