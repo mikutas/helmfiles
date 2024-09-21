@@ -3,23 +3,23 @@ kind: ApplicationSet
 metadata:
   finalizers:
   - resource-finalizer.argocd.argoproj.io
-  name: admin
+  name: linkerd
   namespace: {{ .Release.Namespace }}
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
-      repoURL: {{ .Values.admin.repoURL }}
-      revision: {{ .Values.admin.targetRevision }}
+      repoURL: {{ .Values.linkerd.repoURL }}
+      revision: {{ .Values.linkerd.targetRevision }}
       directories:
-      - path: apps/app-projects
+      - path: booksapp
         exclude: true
-      - path: apps/appsets
+      - path: emojivoto
         exclude: true
-      - path: apps/argo-cd
+      - path: podinfo
         exclude: true
-      - path: apps/*
+      - path: '*'
       pathParamPrefix: chart
   template:
     metadata:
@@ -28,8 +28,8 @@ spec:
       project: admin
       source:
         path: {{ "'{{.chart.path.path}}'" }}
-        repoURL: {{ .Values.admin.repoURL }}
-        targetRevision: {{ .Values.admin.targetRevision }}
+        repoURL: {{ .Values.linkerd.repoURL }}
+        targetRevision: {{ .Values.linkerd.targetRevision }}
       destination:
         server: https://kubernetes.default.svc
         namespace: {{ "'{{.chart.path.basename}}'" }}

@@ -1,3 +1,7 @@
 admin:
   repoURL: https://github.com/mikutas/helmfiles
   targetRevision: HEAD
+
+linkerd:
+  repoURL: https://github.com/mikutas/linkerd-installation
+  targetRevision: HEAD
