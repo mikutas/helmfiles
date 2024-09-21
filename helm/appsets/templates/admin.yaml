@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  finalizers:
+    - resource-finalizer.argocd.argoproj.io
+  name: admin
+  namespace: {{ .Release.Namespace }}
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: {{ .Values.admin.repoURL }}
+        revision: {{ .Values.admin.targetRevision }}
+        directories:
+          - path: apps/argo-cd
+            exclude: true
+          - path: apps/*
+        pathParamPrefix: chart
+  template:
+    metadata:
+      name: {{ "'{{.chart.path.basename}}'" }}
+    spec:
+      project: admin
+      source:
+        path: {{ "'{{.chart.path.path}}'" }}
+        repoURL: {{ .Values.admin.repoURL }}
+        targetRevision: {{ .Values.admin.targetRevision }}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: {{ "'{{.chart.path.basename}}'" }}

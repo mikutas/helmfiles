@@ -35,4 +35,22 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Release.Namespace }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: appsets
+  namespace: {{ .Release.Namespace }}
+spec:
+  project: {{ .Chart.Name }}
+  source:
+    path: helm/appsets
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .Release.Namespace }}
 {{- end }}

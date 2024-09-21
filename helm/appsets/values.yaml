@@ -1,0 +1,3 @@
+admin:
+  repoURL: https://github.com/mikutas/helmfiles
+  targetRevision: HEAD
