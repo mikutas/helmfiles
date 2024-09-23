@@ -1,0 +1,9 @@
+repositories:
+  - name: odigos
+    url: https://odigos-io.github.io/odigos
+
+releases:
+  - name: odigos
+    namespace: odigos
+    chart: odigos/odigos
+    version: 1.0.106
