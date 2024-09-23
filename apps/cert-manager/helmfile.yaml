@@ -8,4 +8,4 @@ releases:
   namespace: cert-manager
   version: v1.15.3
   values:
-  - installCRDs: true
+  - values.yaml
