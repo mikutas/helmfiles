@@ -10,30 +10,29 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - git:
-      repoURL: {{ .Values.linkerd.repoURL }}
-      revision: {{ .Values.linkerd.targetRevision }}
-      directories:
-      - path: booksapp
-        exclude: true
-      - path: emojivoto
-        exclude: true
-      - path: podinfo
-        exclude: true
-      - path: '*'
-      pathParamPrefix: chart
+  - list:
+      elements:
+      - name: linkerd-control-plane
+        namespace: linkerd
+        path: linkerd-control-plane
+      - name: linkerd-crds
+        namespace: linkerd
+        path: linkerd-crds
+      - name: linkerd-viz
+        namespace: linkerd-viz
+        path: linkerd-viz
   template:
     metadata:
-      name: {{ "'{{.chart.path.basename}}'" }}
+      name: {{ "'{{.name}}'" }}
     spec:
       project: admin
       source:
-        path: {{ "'{{.chart.path.path}}'" }}
+        path: {{ "'{{.path}}'" }}
         repoURL: {{ .Values.linkerd.repoURL }}
         targetRevision: {{ .Values.linkerd.targetRevision }}
       destination:
         server: https://kubernetes.default.svc
-        namespace: {{ "'{{.chart.path.basename}}'" }}
+        namespace: {{ "'{{.namespace}}'" }}
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
