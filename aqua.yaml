@@ -13,5 +13,5 @@ packages:
   - name: casey/just@1.36.0
   - name: helm/helm@v3.16.1
   - name: helmfile/helmfile@v0.168.0
-  - name: homeport/dyff@v1.9.1
+  - name: homeport/dyff@v1.9.2
   - name: jqlang/jq@jq-1.7.1
