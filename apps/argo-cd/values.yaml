@@ -33,8 +33,9 @@ argo-cd:
       "server.insecure": true
     rbac:
       policy.csv: |
-        p, role:admin, applications, delete/apps/Deployment/*, argo-cd/*, deny
-        p, role:admin, applications, delete/apps/StatefulSet/*, argo-cd/*, deny
+        p, role:admin, applications, delete/*/Pod/*, argo-cd/*, deny
+#        p, role:admin, applications, delete/apps/Deployment/*, argo-cd/*, deny
+#        p, role:admin, applications, delete/apps/StatefulSet/*, argo-cd/*, deny
       policy.default: role:admin
     styles: |
       .sidebar {
