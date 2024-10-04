@@ -5,6 +5,7 @@ argo-cd:
   fullnameOverride: argo-cd
   configs:
     cm:
+      # https://dexidp.io/docs/connectors/github/
       dex.config: |
         connectors:
           - type: github
