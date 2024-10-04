@@ -32,6 +32,7 @@ argo-cd:
       "applicationsetcontroller.policy": create-update
       "server.insecure": true
     rbac:
+      # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/#default-policy-for-authenticated-users
       policy.default: role:admin
     styles: |
       .sidebar {
