@@ -35,6 +35,7 @@ argo-cd:
       policy.csv: |
         p, role:admin, applications, delete, argo-cd/*, deny
       # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/#default-policy-for-authenticated-users
+      # admin as default is not recommended in real usecase
       policy.default: role:admin
     styles: |
       .sidebar {
