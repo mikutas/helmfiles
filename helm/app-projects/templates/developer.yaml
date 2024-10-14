@@ -36,7 +36,6 @@ spec:
     - p, proj:{{ $proj.name }}:developer, applications, sync, {{ $proj.name }}/*, allow
     - p, proj:{{ $proj.name }}:developer, applications, action/*, {{ $proj.name }}/*, allow
     - p, proj:{{ $proj.name }}:developer, logs, get, {{ $proj.name }}/*, allow
-    - p, proj:{{ $proj.name }}:developer, projects, get, {{ $proj.name }}, allow
   sourceRepos:
   {{- range $repo := $proj.sourceRepos }}
   - {{ $repo | squote }}
