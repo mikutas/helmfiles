@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  finalizers:
+  - resource-finalizer.argocd.argoproj.io
+  name: microservices-demo
+  namespace: {{ .Release.Namespace }}
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - list:
+      elements:
+      - name: microservices-demo
+        namespace: default
+        path: release
+  template:
+    metadata:
+      name: {{ "'{{.name}}'" }}
+    spec:
+      project: foo
+      source:
+        path: {{ "'{{.path}}'" }}
+        directory:
+          exclude: istio-manifests.yaml
+        repoURL: https://github.com/odigos-io/microservices-demo
+        targetRevision: HEAD
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: {{ "'{{.namespace}}'" }}
