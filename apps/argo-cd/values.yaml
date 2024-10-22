@@ -41,6 +41,8 @@ argo-cd:
       .sidebar {
         background-color: #66091c;
       }
+  redisSecretInit:
+    enabled: false
   repoServer:
     extraContainers:
       - command:

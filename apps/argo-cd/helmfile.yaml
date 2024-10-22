@@ -10,6 +10,9 @@ releases:
     values:
       - values.yaml
       - enableCustomResources: false
+      - argo-cd:
+          redisSecretInit:
+            enabled: true
     hooks:
       - events: ["prepare"]
         showlogs: true
