@@ -30,12 +30,18 @@ jobs:
         with:
           ref: main
           clean: false
+          path: .base-branch
 
       - run: |
-          helmfile -f ${{ inputs.changed-dir }}/helmfile.yaml template | tee /tmp/main.yaml || true
+          helmfile -f ./.base-branch/${{ inputs.changed-dir }}/helmfile.yaml template | tee /tmp/main.yaml || true
 
       - run: |
           diff -u /tmp/main.yaml /tmp/pr.yaml --color=always || true
 
-      - run: |
-          dyff --color on between /tmp/main.yaml /tmp/pr.yaml
+      - name: dyff
+        run: |
+          opt=""
+          if [ -e ${{ inputs.changed-dir }}/.dyff-exclude-regexp ]; then
+            opt="--exclude-regexp=\"$(head -n 1 ${{ inputs.changed-dir }}/.dyff-exclude-regexp)\""
+          fi
+          dyff between /tmp/main.yaml /tmp/pr.yaml --color=on $opt || true
