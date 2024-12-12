@@ -12,7 +12,7 @@ spec:
   - list:
       elements:
       - name: microservices-demo
-        namespace: default
+        namespace: microservices-demo
         path: release
   template:
     metadata:
@@ -28,3 +28,6 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: {{ "'{{.namespace}}'" }}
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
