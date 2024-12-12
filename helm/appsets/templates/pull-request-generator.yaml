@@ -16,6 +16,8 @@ spec:
         labels:
         - preview
       requeueAfterSeconds: 1800
+  syncPolicy:
+    applicationsSync: sync
   template:
     metadata:
       name: podinfo-{{ "{{.number}}" }}
