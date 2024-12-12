@@ -6,8 +6,10 @@ metadata:
   namespace: {{ $.Release.Namespace }}
 spec:
   destinations:
-  - namespace: {{ $proj.namespace }}
+  {{- range $ns := $proj.namespaces }}
+  - namespace: {{ $ns }}
     server: https://kubernetes.default.svc
+  {{- end }}
   namespaceResourceWhitelist:
   - group: ''
     kind: ConfigMap
