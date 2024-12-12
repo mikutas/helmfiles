@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: podinfo
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - pullRequest:
+      github:
+        # The GitHub organization or user.
+        owner: mikutas
+        # The Github repository
+        repo: podinfo
+        # Labels is used to filter the PRs that you want to target. (optional)
+        labels:
+        - preview
+      requeueAfterSeconds: 1800
+  template:
+    metadata:
+      name: podinfo-{{ "{{.number}}" }}
+    spec:
+      source:
+        repoURL: https://github.com/mikutas/podinfo.git
+        targetRevision: {{ "'{{.head_sha}}'" }}
+        path: charts/podinfo
+        helm:
+          valuesObject:
+            fullnameOverride: {{ "'{{.number}}'" }}
+            ui:
+              message: "PR #{{ "{{.number}}" }}: sha={{ "{{.head_sha}}" }}"
+      project: foo
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: podinfo
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
