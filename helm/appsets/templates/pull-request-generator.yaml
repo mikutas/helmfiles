@@ -26,7 +26,7 @@ spec:
         path: charts/podinfo
         helm:
           valuesObject:
-            fullnameOverride: {{ "'{{.number}}'" }}
+            fullnameOverride: podinfo-{{ "{{.number}}" }}
             ui:
               message: "PR #{{ "{{.number}}" }}: sha={{ "{{.head_sha}}" }}"
       project: foo
