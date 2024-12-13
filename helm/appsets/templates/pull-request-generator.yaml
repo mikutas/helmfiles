@@ -36,7 +36,7 @@ spec:
               - host: podinfo-{{ "{{.number}}" }}.local
                 paths:
                 - path: /
-                  pathType: ImplementationSpecific
+                  pathType: Prefix
             ui:
               message: "PR #{{ "{{.number}}" }}: sha={{ "{{.head_sha}}" }}"
       project: foo
