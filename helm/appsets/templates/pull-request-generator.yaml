@@ -32,6 +32,11 @@ spec:
             ingress:
               enabled: true
               className: traefik
+              hosts:
+              - host: podinfo-{{ "{{.number}}" }}.local
+                paths:
+                - path: /
+                  pathType: ImplementationSpecific
             ui:
               message: "PR #{{ "{{.number}}" }}: sha={{ "{{.head_sha}}" }}"
       project: foo
