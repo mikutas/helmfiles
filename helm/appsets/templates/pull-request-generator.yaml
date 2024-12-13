@@ -29,6 +29,9 @@ spec:
         helm:
           valuesObject:
             fullnameOverride: podinfo-{{ "{{.number}}" }}
+            ingress:
+              enabled: true
+              className: traefik
             ui:
               message: "PR #{{ "{{.number}}" }}: sha={{ "{{.head_sha}}" }}"
       project: foo
