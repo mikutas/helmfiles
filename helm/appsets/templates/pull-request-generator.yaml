@@ -43,6 +43,3 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: podinfo
-      syncPolicy:
-        syncOptions:
-        - CreateNamespace=true
