@@ -29,6 +29,7 @@ argo-cd:
             command:
               - helmfile
     params:
+      "applicationsetcontroller.enable.policy.override": true
       "applicationsetcontroller.policy": create-update
       "server.insecure": true
     rbac:
