@@ -38,3 +38,6 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: podinfo
+      syncPolicy:
+        automated:
+          prune: true
