@@ -1,4 +1,4 @@
 releases:
   - name: app-projects
     namespace: argo-cd
-    chart: ../../helm/app-projects
+    chart: ../../charts/app-projects
