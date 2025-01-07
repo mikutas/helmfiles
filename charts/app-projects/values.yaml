@@ -3,6 +3,7 @@ projects:
   namespaces:
   - microservices-demo
   - podinfo
-  group: foo
+  groups:
+  - foo
   sourceRepos:
   - '*'

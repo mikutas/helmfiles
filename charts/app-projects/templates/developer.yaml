@@ -34,7 +34,9 @@ spec:
   roles:
   - name: developer
     groups:
-    - {{ $proj.group }}
+    {{- range $group := $proj.groups }}
+    - {{ $group }}
+    {{- end }}
     policies:
     - p, proj:{{ $proj.name }}:developer, applications, get, {{ $proj.name }}/*, allow
     - p, proj:{{ $proj.name }}:developer, applications, sync, {{ $proj.name }}/*, allow
