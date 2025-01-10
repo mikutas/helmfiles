@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   finalizers:
-  - resource-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io
   name: microservices-demo
   namespace: {{ .Release.Namespace }}
 spec:

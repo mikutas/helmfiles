@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   finalizers:
-  - resource-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io
   name: linkerd
   namespace: {{ .Release.Namespace }}
 spec:
