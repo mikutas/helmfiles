@@ -6,4 +6,4 @@ releases:
   - name: odigos
     namespace: odigos
     chart: odigos/odigos
-    version: 1.0.139
+    version: 1.0.143
