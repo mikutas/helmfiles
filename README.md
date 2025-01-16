@@ -1,6 +1,6 @@
 # helmfiles
 
-## local cluster
+## Create local cluster
 
 ```sh
 just create-cluster
@@ -8,4 +8,10 @@ just create-cluster
 
 ```sh
 just delete-cluster
+```
+
+## Install Argo CD
+
+```sh
+just apply argo-cd
 ```
