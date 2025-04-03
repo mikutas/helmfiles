@@ -23,7 +23,18 @@ jobs:
           name: ${{ inputs.artifact-dl-name }}
           path: ${{ inputs.artifact-dl-path }}
 
-      - run: |
+      - uses: andstor/file-existence-action@v3
+        id: chart-yaml
+        with:
+          files: ${{ inputs.changed-dir }}/Chart.yaml
+
+      - if: ${{ steps.chart-yaml.outputs.files_exists == 'true' }}
+        run: |
+          helm dependency update ${{ inputs.changed-dir }}
+          helm template ${{ inputs.changed-dir }} > /tmp/pr.yaml
+
+      - if: ${{ steps.chart-yaml.outputs.files_exists == 'false' }}
+        run: |
           helmfile -f ${{ inputs.changed-dir }}/helmfile.yaml template | tee /tmp/pr.yaml
 
       - uses: actions/checkout@v4
@@ -32,7 +43,13 @@ jobs:
           clean: false
           path: .base-branch
 
-      - run: |
+      - if: ${{ steps.chart-yaml.outputs.files_exists == 'true' }}
+        run: |
+          helm dependency update ./.base-branch/${{ inputs.changed-dir }}
+          helm template ./.base-branch/${{ inputs.changed-dir }} > /tmp/main.yaml || true
+
+      - if: ${{ steps.chart-yaml.outputs.files_exists == 'false' }}
+        run: |
           helmfile -f ./.base-branch/${{ inputs.changed-dir }}/helmfile.yaml template | tee /tmp/main.yaml || true
 
       - run: |
