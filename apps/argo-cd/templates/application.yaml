@@ -17,6 +17,24 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Release.Namespace }}
+  ignoreDifferences:
+    - group: "*"
+      kind: "*"
+      jsonPointers:
+        - /metadata/labels/helm.sh~1chart
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/template/metadata/annotations/checksum~1cmd-params
+        - /spec/template/metadata/annotations/checksum~1cm
+        - /spec/template/metadata/annotations/checksum~1cmp-cm
+        - /spec/template/metadata/labels/helm.sh~1chart
+    - group: apps
+      kind: StatefulSet
+      jsonPointers:
+        - /spec/template/metadata/annotations/checksum~1cmd-params
+        - /spec/template/metadata/annotations/checksum~1cm
+        - /spec/template/metadata/labels/helm.sh~1chart
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
