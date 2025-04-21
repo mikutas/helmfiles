@@ -1,1 +1,1 @@
-metadata.labels.helm.sh/chart
+metadata.labels.helm.sh/chart|spec.template.metadata.annotations.checksum
