@@ -31,5 +31,6 @@ jobs:
           name: ${{ inputs.artifact-dl-name }}
           path: ${{ inputs.artifact-dl-path }}
 
-      - run: |
+      - name: polaris audit
+        run: |
           polaris audit -f pretty --audit-path ${{ inputs.artifact-dl-path }}
