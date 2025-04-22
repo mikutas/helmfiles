@@ -15,6 +15,13 @@ jobs:
   diff:
     runs-on: ubuntu-latest
     steps:
+      - name: get aqua.yaml
+        run: |
+          curl -LO https://raw.githubusercontent.com/mikutas/helmfiles/refs/heads/main/aqua.yaml
+          cat aqua.yaml
+          mv aqua.yaml ../
+
+      # actions/checkout -> aquaproj/aqua-installer
       - uses: mikutas/my-aqua-installer@main
 
       - if: inputs.artifact-dl-name
