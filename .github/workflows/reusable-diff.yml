@@ -10,10 +10,15 @@ on:
       artifact-dl-path:
         required: false
         type: string
+    outputs:
+      artifact-ul-name:
+        value: ${{ jobs.diff.outputs.artifact-ul-name }}
 
 jobs:
   diff:
     runs-on: ubuntu-latest
+    outputs:
+      artifact-ul-name: ${{ steps.replace-slash.outputs.name }}
     steps:
       - name: get aqua.yaml
         run: |
@@ -58,6 +63,16 @@ jobs:
       - if: ${{ steps.chart-yaml.outputs.files_exists == 'false' }}
         run: |
           helmfile -f ./.base-branch/${{ inputs.changed-dir }}/helmfile.yaml template | tee /tmp/main.yaml || true
+
+      - id: replace-slash
+        run: |
+          echo "name=$(echo ${{ inputs.changed-dir }} | sed 's/\//_/g')" >> $GITHUB_OUTPUT
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.replace-slash.outputs.name }}
+          path: |
+            /tmp/pr.yaml
 
       - run: |
           diff -u /tmp/main.yaml /tmp/pr.yaml --color=always || true
