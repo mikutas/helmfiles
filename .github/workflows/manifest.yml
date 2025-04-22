@@ -35,14 +35,16 @@ jobs:
       changed-dir: ${{ matrix.changed-dir }}
 
   polaris:
-    needs: gen-matrix
-    if: ${{ needs.gen-matrix.outputs.changed-dirs != '[]' }}
+    needs:
+      - gen-matrix
+      - diff
     strategy:
       matrix:
         changed-dir: ${{ fromJson(needs.gen-matrix.outputs.changed-dirs) }}
     uses: ./.github/workflows/reusable-polaris.yml
     with:
       changed-dir: ${{ matrix.changed-dir }}
+      artifact-dl-name: ${{ needs.diff.outputs.artifact-ul-name }}
 
   status-check:
     runs-on: ubuntu-latest
