@@ -1,0 +1,39 @@
+on:
+  workflow_call:
+    inputs:
+      changed-dir:
+        required: true
+        type: string
+      artifact-dl-name:
+        required: true
+        type: string
+      artifact-dl-path:
+        required: false
+        type: string
+        default: manifest
+
+jobs:
+  kyverno:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get aqua.yaml
+        run: |
+          curl -LO https://raw.githubusercontent.com/mikutas/helmfiles/refs/heads/main/aqua.yaml
+          cat aqua.yaml
+          mv aqua.yaml ../
+
+      - uses: mikutas/my-aqua-installer@main
+
+      - run: mkdir ${{ inputs.artifact-dl-path }}
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-dl-name }}
+          path: ${{ inputs.artifact-dl-path }}
+
+      - name: kyverno apply
+        run: |
+          kyverno apply https://github.com/kyverno/policies/best-practices-cel \
+          --git-branch main \
+          --table \
+          --resource ${{ inputs.artifact-dl-path }} || true
