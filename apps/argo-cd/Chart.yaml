@@ -1,4 +1,3 @@
-# hoge
 apiVersion: v2
 name: argo-cd
 description: A Helm chart for Kubernetes
