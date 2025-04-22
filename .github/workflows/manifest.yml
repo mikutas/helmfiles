@@ -46,6 +46,19 @@ jobs:
       changed-dir: ${{ matrix.changed-dir }}
       artifact-dl-name: ${{ needs.diff.outputs.artifact-ul-name }}
 
+  kyverno:
+    needs:
+      - gen-matrix
+      - diff
+    if: ${{ needs.gen-matrix.outputs.changed-dirs != '[]' }}
+    strategy:
+      matrix:
+        changed-dir: ${{ fromJson(needs.gen-matrix.outputs.changed-dirs) }}
+    uses: ./.github/workflows/reusable-kyverno.yml
+    with:
+      changed-dir: ${{ matrix.changed-dir }}
+      artifact-dl-name: ${{ needs.diff.outputs.artifact-ul-name }}
+
   status-check:
     runs-on: ubuntu-latest
     needs:
