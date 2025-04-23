@@ -1,1 +1,1 @@
-metadata.labels.helm.sh/chart|spec.template.metadata.annotations.checksum
+metadata.labels.helm.sh/chart|metadata.labels.app.kubernetes.io/version|spec.template.metadata.annotations.checksum
