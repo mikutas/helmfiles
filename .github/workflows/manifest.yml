@@ -44,7 +44,6 @@ jobs:
     uses: ./.github/workflows/reusable-polaris.yml
     with:
       changed-dir: ${{ matrix.changed-dir }}
-      artifact-dl-name: ${{ needs.diff.outputs.artifact-ul-name }}
 
   kyverno:
     needs:
@@ -57,7 +56,6 @@ jobs:
     uses: ./.github/workflows/reusable-kyverno.yml
     with:
       changed-dir: ${{ matrix.changed-dir }}
-      artifact-dl-name: ${{ needs.diff.outputs.artifact-ul-name }}
 
   status-check:
     runs-on: ubuntu-latest

@@ -10,15 +10,10 @@ on:
       artifact-dl-path:
         required: false
         type: string
-    outputs:
-      artifact-ul-name:
-        value: ${{ jobs.diff.outputs.artifact-ul-name }}
 
 jobs:
   diff:
     runs-on: ubuntu-latest
-    outputs:
-      artifact-ul-name: ${{ steps.replace-slash.outputs.name }}
     steps:
       - name: get aqua.yaml
         run: |

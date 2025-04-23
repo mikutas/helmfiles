@@ -4,9 +4,6 @@ on:
       changed-dir:
         required: true
         type: string
-      artifact-dl-name:
-        required: true
-        type: string
       artifact-dl-path:
         required: false
         type: string
@@ -26,9 +23,13 @@ jobs:
 
       - run: mkdir ${{ inputs.artifact-dl-path }}
 
+      - id: replace-slash
+        run: |
+          echo "name=$(echo ${{ inputs.changed-dir }} | sed 's/\//_/g')" >> $GITHUB_OUTPUT
+
       - uses: actions/download-artifact@v4
         with:
-          name: ${{ inputs.artifact-dl-name }}
+          name: ${{ steps.replace-slash.outputs.name }}
           path: ${{ inputs.artifact-dl-path }}
 
       - name: polaris audit
