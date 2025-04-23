@@ -14,6 +14,18 @@ argo-cd:
             config:
               clientID: $dex.github.clientID
               clientSecret: $dex.github.clientSecret
+      resource.customizations.ignoreDifferences.all: |
+        jsonPointers:
+          - /metadata/labels/helm.sh~1chart
+          - /metadata/labels/app.kubernetes.io~1version
+      resource.customizations.ignoreDifferences.apps_Deployment: |
+        jsonPointers:
+          - /spec/template/metadata/labels/helm.sh~1chart
+          - /spec/template/metadata/labels/app.kubernetes.io~1version
+      resource.customizations.ignoreDifferences.apps_StatefulSet: |
+        jsonPointers:
+          - /spec/template/metadata/labels/helm.sh~1chart
+          - /spec/template/metadata/labels/app.kubernetes.io~1version
       url: http://argocd.local:54321
     cmp:
       create: true
