@@ -65,7 +65,7 @@ argo-cd:
             value: /helm-working-dir
           - name: HELM_CONFIG_HOME
             value: /helm-working-dir
-        image: ghcr.io/helmfile/helmfile:v0.171.0
+        image: ghcr.io/helmfile/helmfile:v1.0.0
         name: my-plugin
         securityContext:
           runAsNonRoot: true
