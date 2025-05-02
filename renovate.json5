@@ -5,8 +5,13 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["postgresql"],
-      "matchUpdateTypes": ["patch"],
+      "matchPackageNames": [
+        "odigos",
+        "postgresql"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
       "automerge": true
     }
   ]
