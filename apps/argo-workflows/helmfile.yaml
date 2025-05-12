@@ -6,7 +6,7 @@ repositories:
 
 releases:
 - name: argo-workflows
-  namespace: argo
+  namespace: argo-workflows
   createNamespace: true
   chart: argo/argo-workflows
   version: 0.45.14
@@ -15,7 +15,7 @@ releases:
       persistence:
         archive: true
         postgresql:
-          host: postgresql.argo.svc.cluster.local
+          host: postgresql.argo-workflows.svc.cluster.local
           port: 5432
           database: postgres
           tableName: argo_workflows
@@ -40,7 +40,7 @@ releases:
       kind: Role
       metadata:
         name: jenkins
-        namespace: argo
+        namespace: argo-workflows
       rules:
       - apiGroups:
         - argoproj.io
@@ -58,13 +58,13 @@ releases:
       kind: ServiceAccount
       metadata:
         name: jenkins
-        namespace: argo
+        namespace: argo-workflows
     # https://argoproj.github.io/argo-workflows/access-token/#tip-for-tokens-creation
     - apiVersion: rbac.authorization.k8s.io/v1
       kind: RoleBinding
       metadata:
         name: jenkins
-        namespace: argo
+        namespace: argo-workflows
       roleRef:
         apiGroup: rbac.authorization.k8s.io
         kind: Role
@@ -72,13 +72,13 @@ releases:
       subjects:
       - kind: ServiceAccount
         name: jenkins
-        namespace: argo
+        namespace: argo-workflows
     # https://argoproj.github.io/argo-workflows/access-token/#token-creation
     - apiVersion: v1
       kind: Secret
       metadata:
         name: jenkins.service-account-token
-        namespace: argo
+        namespace: argo-workflows
         annotations:
           kubernetes.io/service-account.name: jenkins
       type: kubernetes.io/service-account-token
@@ -86,7 +86,7 @@ releases:
       kind: Secret
       metadata:
         name: argo-postgres-config
-        namespace: argo
+        namespace: argo-workflows
       type: Opaque
       data:
         username: YXJnbwo=
@@ -103,7 +103,7 @@ releases:
 
 
 - name: postgresql
-  namespace: argo
+  namespace: argo-workflows
   chart: bitnami/postgresql
   version: 16.7.2
   values:
