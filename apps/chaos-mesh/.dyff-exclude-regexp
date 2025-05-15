@@ -1,0 +1,1 @@
+metadata.labels.helm.sh/chart|metadata.labels.app.kubernetes.io/version|data.ca.crt|data.ca.key|data.tls.crt|data.tls.key
