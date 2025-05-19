@@ -25,6 +25,7 @@ spec:
       trafficRouting:
         alb:
           ingress: {{ include "pingpong.fullname" . }}
+          rootService: {{ include "pingpong.fullname" . }}-stable
           servicePort: {{ .Values.service.port }}
       {{- end }}
   workloadRef:
