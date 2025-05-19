@@ -17,7 +17,7 @@ image:
 imagePullSecrets: []
 # This is to override the chart name.
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: pingpong
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
@@ -131,6 +131,7 @@ affinity: {}
 
 # dependency
 podinfo:
+  fullnameOverride: pingpong
   hpa:
     enabled: false
   ingress:
