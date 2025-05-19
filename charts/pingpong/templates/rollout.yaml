@@ -31,4 +31,4 @@ spec:
   workloadRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ .Release.Name }}-podinfo
+    name: {{ include "pingpong.fullname" . }}
