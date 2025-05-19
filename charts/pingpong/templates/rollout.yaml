@@ -21,11 +21,11 @@ spec:
         - pause: {}
         - setCanaryScale:
             weight: 100
-      {{- if .Values.podinfo.ingress.enabled }}
+      {{- if .Values.ingress.enabled }}
       trafficRouting:
         alb:
-          ingress: hoge
-          servicePort: 9898
+          ingress: {{ include "pingpong.fullname" . }}
+          servicePort: {{ .Values.service.port }}
       {{- end }}
   workloadRef:
     apiVersion: apps/v1
