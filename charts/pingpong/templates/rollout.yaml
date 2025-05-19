@@ -18,9 +18,9 @@ spec:
         pongService: {{ include "pingpong.fullname" . }}-pong
       steps:
         - setWeight: 0
-        - pause: {}
         - setCanaryScale:
             weight: 100
+        - pause: {}
       {{- if .Values.ingress.enabled }}
       trafficRouting:
         alb:
