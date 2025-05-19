@@ -47,7 +47,7 @@ Selector labels
 */}}
 {{- define "pingpong.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "pingpong.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+#app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
