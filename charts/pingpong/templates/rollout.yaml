@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ include "pingpong.fullname" . }}
+  labels:
+    {{- include "pingpong.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "pingpong.selectorLabels" . | nindent 6 }}
+  strategy:
+    canary:
+      pingPong:
+        pingService: {{ include "pingpong.fullname" . }}-ping
+        pongService: {{ include "pingpong.fullname" . }}-pong
+      steps:
+        - setWeight: 0
+        - pause: {}
+        - setCanaryScale:
+            weight: 100
+      {{- if .Values.podinfo.ingress.enabled }}
+      trafficRouting:
+        alb:
+          ingress: hoge
+          servicePort: 9898
+      {{- end }}
+  workloadRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Release.Name }}-podinfo
