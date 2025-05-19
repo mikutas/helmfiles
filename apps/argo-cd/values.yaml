@@ -88,6 +88,14 @@ argo-cd:
           name: argocd-cmp-cm
         name: my-plugin-config
   server:
+    extensions:
+      enabled: true
+      extensionList:
+        - name: rollout-extension
+          env:
+            - name: EXTENSION_URL
+              # renovate: datasource=github-releases depName=argoproj-labs/rollout-extension packageName=argoproj-labs/rollout-extension
+              value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar
     ingress:
       enabled: true
       hostname: argocd.local
