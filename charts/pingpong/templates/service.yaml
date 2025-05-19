@@ -2,22 +2,6 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "pingpong.fullname" . }}-stable
-  labels:
-    {{- include "pingpong.labels" . | nindent 4 }}
-spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    {{- include "pingpong.selectorLabels" . | nindent 4 }}
----
-apiVersion: v1
-kind: Service
-metadata:
   name: {{ include "pingpong.fullname" . }}-ping
   labels:
     {{- include "pingpong.labels" . | nindent 4 }}

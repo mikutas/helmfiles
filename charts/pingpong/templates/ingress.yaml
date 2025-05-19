@@ -37,7 +37,7 @@ spec:
               service:
                 name: {{ include "pingpong.fullname" $ }}-stable
                 port:
-                  number: {{ $.Values.service.port }}
+                  name: use-annotation
           {{- end }}
     {{- end }}
 {{- end }}
