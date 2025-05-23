@@ -35,9 +35,9 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ include "pingpong.fullname" $ }}-stable
+                name: {{ include "pingpong.fullname" $ }}-{{ .backend.service.suffix }}
                 port:
-                  name: use-annotation
+                  name: {{ .backend.service.port }}
           {{- end }}
     {{- end }}
 {{- end }}

@@ -64,11 +64,35 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/conditions.pingpong-bg-preview: |
+      [
+        {"field":"http-header","httpHeaderConfig":{"httpHeaderName": "AccessService", "values":["Preview"]}}
+      ]
   hosts:
     - host: pingpong-example.local
       paths:
         - path: /
           pathType: Prefix
+          backend:
+            service:
+              suffix: bg-preview
+              port: http
+    - host: pingpong-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              suffix: bg-active
+              port: http
+    - host: pingpong-example.local
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              suffix: stable
+              port: use-annotation
 
   tls: []
   #  - secretName: chart-example-tls
