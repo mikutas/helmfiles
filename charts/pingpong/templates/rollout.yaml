@@ -16,6 +16,7 @@ spec:
       pingPong:
         pingService: {{ include "pingpong.fullname" . }}-ping
         pongService: {{ include "pingpong.fullname" . }}-pong
+      scaleDownDelayRevisionLimit: 1
       steps:
         - setWeight: 0
         - setCanaryScale:
