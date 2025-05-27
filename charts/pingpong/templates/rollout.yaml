@@ -17,7 +17,7 @@ spec:
       activeService: pingpong-bg-active
       autoPromotionEnabled: false
       previewService: pingpong-bg-preview
-      scaleDownDelayRevisionLimit: 2
+      scaleDownDelayRevisionLimit: 1
       scaleDownDelaySeconds: 3600
     {{- end }}
     {{- if eq .Values.strategy "canary" }}
@@ -25,7 +25,7 @@ spec:
       pingPong:
         pingService: {{ include "pingpong.fullname" . }}-ping
         pongService: {{ include "pingpong.fullname" . }}-pong
-      scaleDownDelayRevisionLimit: 2
+      scaleDownDelayRevisionLimit: 1
       scaleDownDelaySeconds: 3600
       steps:
         - setWeight: 0
