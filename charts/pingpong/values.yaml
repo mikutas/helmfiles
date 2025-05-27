@@ -148,6 +148,8 @@ tolerations: []
 
 affinity: {}
 
+strategy: canary
+
 # dependency
 podinfo:
   fullnameOverride: pingpong

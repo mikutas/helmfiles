@@ -12,11 +12,21 @@ spec:
     matchLabels:
       {{- include "pingpong.selectorLabels" . | nindent 6 }}
   strategy:
+    {{- if eq .Values.strategy "blueGreen" }}
+    blueGreen:
+      activeService: pingpong-bg-active
+      autoPromotionEnabled: false
+      previewService: pingpong-bg-preview
+      scaleDownDelayRevisionLimit: 2
+      scaleDownDelaySeconds: 3600
+    {{- end }}
+    {{- if eq .Values.strategy "canary" }}
     canary:
       pingPong:
         pingService: {{ include "pingpong.fullname" . }}-ping
         pongService: {{ include "pingpong.fullname" . }}-pong
-      scaleDownDelayRevisionLimit: 1
+      scaleDownDelayRevisionLimit: 2
+      scaleDownDelaySeconds: 3600
       steps:
         - setWeight: 0
         - setCanaryScale:
@@ -29,6 +39,7 @@ spec:
           rootService: {{ include "pingpong.fullname" . }}-stable
           servicePort: {{ .Values.service.port }}
       {{- end }}
+    {{- end }}
   workloadRef:
     apiVersion: apps/v1
     kind: Deployment
