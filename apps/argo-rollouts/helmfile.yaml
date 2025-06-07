@@ -7,4 +7,4 @@ releases:
     namespace: argo-rollouts
     createNamespace: true
     chart: argo/argo-rollouts
-    version: 2.39.5
+    version: 2.39.6
