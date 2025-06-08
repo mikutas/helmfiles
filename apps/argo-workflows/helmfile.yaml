@@ -9,7 +9,7 @@ releases:
   namespace: argo-workflows
   createNamespace: true
   chart: argo/argo-workflows
-  version: 0.45.15
+  version: 0.45.18
   values:
   - controller:
       persistence:
