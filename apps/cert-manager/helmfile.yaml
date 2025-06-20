@@ -9,3 +9,11 @@ releases:
   version: v1.18.1
   values:
   - values.yaml
+
+- chart: jetstack/trust-manager
+  name: trust-manager
+  namespace: cert-manager
+  version: v0.17.1
+  set:
+  - name: app.trust.namespace
+    value: cert-manager
