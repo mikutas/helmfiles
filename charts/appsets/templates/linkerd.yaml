@@ -15,12 +15,15 @@ spec:
       - name: linkerd-control-plane
         namespace: linkerd
         path: linkerd-control-plane
+        isControlPlane: "true"
       - name: linkerd-crds
         namespace: linkerd
         path: linkerd-crds
+        isControlPlane: "false"
       - name: linkerd-viz
         namespace: linkerd-viz
         path: linkerd-viz
+        isControlPlane: "false"
   template:
     metadata:
       name: {{ "'{{.name}}'" }}
@@ -34,6 +37,9 @@ spec:
         server: https://kubernetes.default.svc
         namespace: {{ "'{{.namespace}}'" }}
       syncPolicy:
+        managedNamespaceMetadata:
+          labels:
+            linkerd.io/is-control-plane: {{ "'{{.isControlPlane}}'" }}
         syncOptions:
         - CreateNamespace=true
       ignoreDifferences:
