@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "name=$(echo ${{ inputs.changed-dir }} | sed 's/\//_/g')" >> $GITHUB_OUTPUT
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: ${{ steps.replace-slash.outputs.name }}
           path: ${{ inputs.artifact-dl-path }}
