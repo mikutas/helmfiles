@@ -32,9 +32,23 @@ jobs:
           name: ${{ steps.replace-slash.outputs.name }}
           path: ${{ inputs.artifact-dl-path }}
 
+      - uses: actions/checkout@v4
+        with:
+          repository: kyverno/policies
+          ref: .policies
+
+      - name: kyverno apply (table)
+        run: |
+          kyverno apply \
+          .policies/best-practices-cel \
+          --continue-on-fail \
+          --table \
+          --resource ${{ inputs.artifact-dl-path }} || true
+
       - name: kyverno apply
         run: |
-          kyverno apply https://github.com/kyverno/policies/best-practices-cel \
-          --git-branch main \
-          --table \
+          kyverno apply \
+          .policies/best-practices-cel \
+          --continue-on-fail \
+          --detailed-results \
           --resource ${{ inputs.artifact-dl-path }} || true
