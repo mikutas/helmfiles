@@ -32,7 +32,7 @@ jobs:
           name: ${{ steps.replace-slash.outputs.name }}
           path: ${{ inputs.artifact-dl-path }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           repository: kyverno/policies
           ref: .policies
