@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: kyverno/policies
-          ref: .policies
+          path: .policies
 
       - name: kyverno apply (table)
         run: |
