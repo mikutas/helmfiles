@@ -15,4 +15,4 @@ packages:
   - name: helmfile/helmfile@v1.1.9
   - name: homeport/dyff@v1.10.2
   - name: jqlang/jq@jq-1.8.1
-  - name: kyverno/kyverno@v1.15.2
+  - name: kyverno/kyverno@v1.16.0
