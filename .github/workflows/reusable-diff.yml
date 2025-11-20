@@ -44,7 +44,7 @@ jobs:
         run: |
           helmfile -f ${{ inputs.changed-dir }}/helmfile.yaml template | tee /tmp/pr.yaml
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: main
           clean: false
