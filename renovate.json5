@@ -5,8 +5,10 @@
   ],
   "customManagers": [
     {
-    "customType": "regex",
-    "fileMatch": ["k3d-default\\.ya?ml"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/k3d-default\\.ya?ml/"
+      ],
       "matchStrings": [
         "image:\\s*docker\\.io/rancher/k3s:(?<currentValue>v\\d+\\.\\d+\\.\\d+-k3s\\d+)"
       ],
