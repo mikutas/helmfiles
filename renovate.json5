@@ -1,29 +1,31 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>mikutas/my-renovate-config"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'github>mikutas/my-renovate-config',
   ],
-  "customManagers": [
+  customManagers: [
     {
-    "customType": "regex",
-    "fileMatch": ["k3d-default\\.ya?ml"],
-      "matchStrings": [
-        "image:\\s*docker\\.io/rancher/k3s:(?<currentValue>v\\d+\\.\\d+\\.\\d+-k3s\\d+)"
+      customType: 'regex',
+      managerFilePatterns: [
+        '/k3d-default\\.ya?ml/',
       ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "docker.io/rancher/k3s"
-    }
+      matchStrings: [
+        'image:\\s*docker\\.io/rancher/k3s:(?<currentValue>v\\d+\\.\\d+\\.\\d+-k3s\\d+)',
+      ],
+      datasourceTemplate: 'docker',
+      depNameTemplate: 'docker.io/rancher/k3s',
+    },
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "matchPackageNames": [
-        "odigos",
-        "postgresql"
+      matchPackageNames: [
+        'odigos',
+        'postgresql',
       ],
-      "matchUpdateTypes": [
-        "patch"
+      matchUpdateTypes: [
+        'patch',
       ],
-      "automerge": true
-    }
-  ]
+      automerge: true,
+    },
+  ],
 }
