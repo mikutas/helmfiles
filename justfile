@@ -1,9 +1,9 @@
 # https://k3d.io/v5.5.2/usage/exposing_services/
 create-cluster:
-	k3d cluster create -p "54321:80@loadbalancer"
+	k3d cluster create --config k3d-default.yaml
 
 delete-cluster:
-	k3d cluster delete
+	k3d cluster delete --config k3d-default.yaml
 
 argocd-password:
 	@kubectl view-secret argocd-initial-admin-secret -n argo-cd --quiet
