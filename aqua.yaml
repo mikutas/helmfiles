@@ -16,3 +16,4 @@ packages:
   - name: homeport/dyff@v1.10.2
   - name: jqlang/jq@jq-1.8.1
   - name: kyverno/kyverno@v1.16.0
+  - name: reviewdog/reviewdog@v0.21.0

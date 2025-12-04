@@ -35,12 +35,22 @@ jobs:
       - uses: actions/checkout@v6
         with:
           repository: kyverno/policies
-          path: .policies
+          path: .sample-policies
+
+      - name: Customize allowed image registries
+        run: |
+          yq '.spec.rules[0].validate.cel.expressions[0].expression = "variables.allContainers.all(container, container.image.startsWith(\"cr.l5d.io/\") || container.image.startsWith(\"ecr-public.aws.com/\") || container.image.startsWith(\"ghcr.io/\") || container.image.startsWith(\"public.ecr.aws/\") || container.image.startsWith(\"quay.io/\") || container.image.startsWith(\"registry.k8s.io/\"))"' \
+          .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries.yaml > \
+          .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries-customized.yaml
+          dyff between --color=on \
+          .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries.yaml \
+          .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries-customized.yaml
+          rm .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries.yaml
 
       - name: kyverno apply (table)
         run: |
           kyverno apply \
-          .policies/best-practices-cel \
+          .sample-policies/best-practices-cel \
           --continue-on-fail \
           --table \
           --resource ${{ inputs.artifact-dl-path }} || true
@@ -48,7 +58,51 @@ jobs:
       - name: kyverno apply
         run: |
           kyverno apply \
-          .policies/best-practices-cel \
+          .sample-policies/best-practices-cel \
           --continue-on-fail \
           --detailed-results \
           --resource ${{ inputs.artifact-dl-path }} || true
+
+      - name: kyverno apply (json)
+        env:
+          ARTIFACT_DL_PATH: ${{ inputs.artifact-dl-path }}
+        run: |
+          kyverno apply \
+          .sample-policies/best-practices-cel \
+          --continue-on-fail \
+          --policy-report \
+          --output-format json \
+          --resource ${{ env.ARTIFACT_DL_PATH }} | tee /tmp/policy-report.json
+
+      - name: Reviewdog requires .git directory
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Reviewdog
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cat /tmp/policy-report.json | jq '[.results[] | select(.result!="pass")]' | jq '
+          {
+            source: { name: "Kyverno", url: "https://kyverno.io/" },
+            diagnostics: . | map(
+            {
+              message: ("[Policy: " + .policy + "] " + .message),
+              location: {
+                path: (.resources[0].kind + "/" + .resources[0].name),
+                range: {
+                  start: { line: 1 }
+                }
+              },
+              severity: (
+                if .result == "fail" then "ERROR"
+                elif .result == "warn" then "WARNING"
+                else "INFO"
+                end
+              )
+            })
+          }
+          ' > report.rdjson
+          # reviewdogは基本的に終了コード0だが GitHub limitation for annotation が発生した場合1になるため、|| trueを付ける
+          cat report.rdjson | reviewdog -name kyverno -f=rdjson -filter-mode=nofilter -reporter=github-pr-annotations || true
