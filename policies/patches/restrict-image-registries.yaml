@@ -1,0 +1,26 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-image-registries
+spec:
+  rules:
+  - name: validate-registries
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+          operations:
+          - CREATE
+          - UPDATE
+    validate:
+      cel:
+        variables:
+          - name: allContainers
+            expression: "object.spec.containers + object.spec.?initContainers.orValue([]) + object.spec.?ephemeralContainers.orValue([])"
+          - name: allowed_registries
+            expression: "['cr.l5d.io', 'ecr-public.aws.com', 'ghcr.io', 'public.ecr.aws', 'quay.io', 'registry.k8s.io']"
+        expressions:
+          - expression: variables.allContainers.all(container,
+                variables.allowed_registries.exists(registry, container.image.startsWith(registry + '/')))
+            message: "Unknown image registry."

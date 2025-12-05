@@ -7,7 +7,7 @@ on:
       artifact-dl-path:
         required: false
         type: string
-        default: manifest
+        default: .manifest
 
 jobs:
   kyverno:
@@ -21,6 +21,11 @@ jobs:
 
       - uses: mikutas/my-aqua-installer@main
 
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
       - run: mkdir ${{ inputs.artifact-dl-path }}
 
       - id: replace-slash
@@ -32,25 +37,20 @@ jobs:
           name: ${{ steps.replace-slash.outputs.name }}
           path: ${{ inputs.artifact-dl-path }}
 
-      - uses: actions/checkout@v6
-        with:
-          repository: kyverno/policies
-          path: .sample-policies
-
-      - name: Customize allowed image registries
+      - name: Show policy patches
         run: |
-          yq '.spec.rules[0].validate.cel.expressions[0].expression = "variables.allContainers.all(container, container.image.startsWith(\"cr.l5d.io/\") || container.image.startsWith(\"ecr-public.aws.com/\") || container.image.startsWith(\"ghcr.io/\") || container.image.startsWith(\"public.ecr.aws/\") || container.image.startsWith(\"quay.io/\") || container.image.startsWith(\"registry.k8s.io/\"))"' \
-          .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries.yaml > \
-          .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries-customized.yaml
-          dyff between --color=on \
-          .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries.yaml \
-          .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries-customized.yaml
-          rm .sample-policies/best-practices-cel/restrict-image-registries/restrict-image-registries.yaml
+          yq 'del(.patches)' policies/kustomization.yaml >/tmp/kustomization.yaml
+          dyff between --color=on <(kustomize build /tmp/) <(kustomize build policies)
+
+      - name: Save kyverno policies
+        run: |
+          mkdir .policies
+          kustomize build policies | tee .policies/kyverno-policies.yaml
 
       - name: kyverno apply (table)
         run: |
           kyverno apply \
-          .sample-policies/best-practices-cel \
+          .policies/kyverno-policies.yaml \
           --continue-on-fail \
           --table \
           --resource ${{ inputs.artifact-dl-path }} || true
@@ -58,7 +58,7 @@ jobs:
       - name: kyverno apply
         run: |
           kyverno apply \
-          .sample-policies/best-practices-cel \
+          .policies/kyverno-policies.yaml \
           --continue-on-fail \
           --detailed-results \
           --resource ${{ inputs.artifact-dl-path }} || true
@@ -68,16 +68,11 @@ jobs:
           ARTIFACT_DL_PATH: ${{ inputs.artifact-dl-path }}
         run: |
           kyverno apply \
-          .sample-policies/best-practices-cel \
+          .policies/kyverno-policies.yaml \
           --continue-on-fail \
           --policy-report \
           --output-format json \
           --resource ${{ env.ARTIFACT_DL_PATH }} | tee /tmp/policy-report.json
-
-      - name: Reviewdog requires .git directory
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
       - name: Reviewdog
         env:
