@@ -2,21 +2,22 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/check-deprecated-apis/check-deprecated-apis.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/disallow-cri-sock-mount/disallow-cri-sock-mount.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/disallow-default-namespace/disallow-default-namespace.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/disallow-empty-ingress-host/disallow-empty-ingress-host.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/disallow-helm-tiller/disallow-helm-tiller.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/disallow-latest-tag/disallow-latest-tag.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/require-drop-all/require-drop-all.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/require-drop-cap-net-raw/require-drop-cap-net-raw.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/require-labels/require-labels.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/require-pod-requests-limits/require-pod-requests-limits.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/require-probes/require-probes.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/require-ro-rootfs/require-ro-rootfs.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/restrict-image-registries/restrict-image-registries.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/restrict-node-port/restrict-node-port.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/refs/heads/main/best-practices-cel/restrict-service-external-ips/restrict-service-external-ips.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/check-deprecated-apis/check-deprecated-apis.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/disallow-cri-sock-mount/disallow-cri-sock-mount.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/disallow-default-namespace/disallow-default-namespace.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/disallow-empty-ingress-host/disallow-empty-ingress-host.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/disallow-helm-tiller/disallow-helm-tiller.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/disallow-latest-tag/disallow-latest-tag.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/require-drop-all/require-drop-all.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/require-drop-cap-net-raw/require-drop-cap-net-raw.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/require-labels/require-labels.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/require-pod-requests-limits/require-pod-requests-limits.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/require-probes/require-probes.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/require-ro-rootfs/require-ro-rootfs.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/restrict-image-registries/restrict-image-registries.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/restrict-node-port/restrict-node-port.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/restrict-service-external-ips/restrict-service-external-ips.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/main/other-cel/topologyspreadconstraints-policy/topologyspreadconstraints-policy.yaml
 
 patches:
   - path: patches/restrict-image-registries.yaml
@@ -24,3 +25,8 @@ patches:
       group: kyverno.io
       kind: ClusterPolicy
       name: restrict-image-registries
+  - path: patches/topologyspreadconstraints-policy.yaml
+    target:
+      group: kyverno.io
+      kind: ClusterPolicy
+      name: topologyspreadconstraints-policy
