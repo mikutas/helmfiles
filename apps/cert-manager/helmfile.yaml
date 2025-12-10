@@ -13,7 +13,7 @@ releases:
 - chart: jetstack/trust-manager
   name: trust-manager
   namespace: cert-manager
-  version: v0.20.2
+  version: v0.20.3
   set:
   - name: app.trust.namespace
     value: cert-manager
