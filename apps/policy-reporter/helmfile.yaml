@@ -4,7 +4,7 @@ repositories:
 
 releases:
   - name: policy-reporter
-    namespace: kyverno
+    namespace: policy-reporter
     chart: policy-reporter/policy-reporter
     version: 3.7.0
     values:
