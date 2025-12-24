@@ -13,7 +13,7 @@ packages:
   - name: casey/just@1.45.0
   - name: helm/helm@v3.19.4
   - name: helmfile/helmfile@v1.2.1
-  - name: homeport/dyff@v1.10.2
+  - name: homeport/dyff@v1.10.3
   - name: jqlang/jq@jq-1.8.1
   - name: kubernetes-sigs/kustomize@kustomize/v5.8.0
   - name: kyverno/kyverno@v1.16.1
