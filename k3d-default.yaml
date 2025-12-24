@@ -5,6 +5,6 @@ metadata:
   name: k3s-default
 servers: 1
 agents: 0
-image: docker.io/rancher/k3s:v1.33.5-k3s1
+image: docker.io/rancher/k3s:v1.35.0-k3s1
 ports:
   - port: 54321:80
