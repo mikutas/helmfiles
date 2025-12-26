@@ -7,7 +7,7 @@ releases:
   namespace: chaos-mesh
   createNamespace: true
   chart: chaos-mesh/chaos-mesh
-  version: 2.8.0
+  version: 2.8.1
   values:
   - chaosDaemon:
       # https://chaos-mesh.org/docs/production-installation-using-helm/#k3s
