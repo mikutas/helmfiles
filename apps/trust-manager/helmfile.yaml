@@ -1,0 +1,11 @@
+repositories:
+  - name: jetstack
+    url: https://charts.jetstack.io
+
+releases:
+  - chart: jetstack/trust-manager
+    name: trust-manager
+    namespace: cert-manager
+    version: v0.20.3
+    values:
+      - values.yaml

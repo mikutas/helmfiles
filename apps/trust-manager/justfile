@@ -1,0 +1,2 @@
+create-previous-trust-anchor:
+	kubectl get secret -n cert-manager linkerd-trust-anchor -o yaml | sed -e s/linkerd-trust-anchor/linkerd-previous-anchor/ | egrep -v '^  *(resourceVersion|uid)' | kubectl apply -f -
