@@ -23,3 +23,6 @@ destroy NAME:
 
 template NAME:
 	helmfile -f apps/{{ NAME }}/helmfile.yaml template
+
+argocd-login:
+    @argocd login argocd.local:54321 --sso --insecure --grpc-web --plaintext
