@@ -9,14 +9,3 @@ releases:
     version: v1.19.2
     values:
       - values.yaml
-
-  - chart: jetstack/trust-manager
-    name: trust-manager
-    namespace: cert-manager
-    version: v0.20.3
-    values:
-      - app:
-          trust:
-            namespace: cert-manager
-      - commonAnnotations:
-          argocd.argoproj.io/sync-wave: "5"
