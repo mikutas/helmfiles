@@ -39,7 +39,7 @@ extraObjects:
   kind: Issuer
   metadata:
     annotations:
-      argocd.argoproj.io/sync-wave: "5"
+      argocd.argoproj.io/sync-wave: "10"
     # This is the name of the Issuer resource; it's the way
     # Certificate resources can find this issuer.
     name: linkerd-trust-root-issuer
@@ -51,7 +51,7 @@ extraObjects:
   kind: Certificate
   metadata:
     annotations:
-      argocd.argoproj.io/sync-wave: "5"
+      argocd.argoproj.io/sync-wave: "11"
     # This is the name of the Certificate resource, but the Secret
     # we save the certificate into can be different.
     name: linkerd-trust-anchor
@@ -87,7 +87,7 @@ extraObjects:
   kind: ClusterIssuer
   metadata:
     annotations:
-      argocd.argoproj.io/sync-wave: "5"
+      argocd.argoproj.io/sync-wave: "20"
     # This is the name of the Issuer resource; it's the way
     # Certificate resources can find this issuer.
     name: linkerd-identity-issuer
@@ -101,7 +101,7 @@ extraObjects:
   kind: Certificate
   metadata:
     annotations:
-      argocd.argoproj.io/sync-wave: "5"
+      argocd.argoproj.io/sync-wave: "21"
     # This is the name of the Certificate resource, but the Secret
     # we save the certificate into can be different.
     name: linkerd-identity-issuer
