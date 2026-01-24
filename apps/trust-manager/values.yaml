@@ -1,12 +1,7 @@
-app:
-  trust:
-    namespace: cert-manager
-
 extraObjects:
 # https://linkerd.io/2-edge/tasks/automatically-rotating-control-plane-tls-credentials/#save-the-signing-key-pair-as-a-secret
 # kubectl get secret -n cert-manager linkerd-trust-anchor -o yaml | sed -e s/linkerd-trust-anchor/linkerd-previous-anchor/ | egrep -v '^  *(resourceVersion|uid)' | kubectl apply -f -
-- |
-  apiVersion: trust.cert-manager.io/v1alpha1
+- apiVersion: trust.cert-manager.io/v1alpha1
   kind: Bundle
   metadata:
     annotations:
