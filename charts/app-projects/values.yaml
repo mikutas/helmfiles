@@ -6,6 +6,7 @@ projects:
   - podinfo
   - prometheus
   - promethues # typo直るまで
+  - tracing
   groups:
   - demo
   sourceRepos:
