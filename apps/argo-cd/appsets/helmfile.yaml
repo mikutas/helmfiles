@@ -1,4 +1,4 @@
 releases:
   - name: appsets
     namespace: argo-cd
-    chart: ../../charts/appsets
+    chart: ../../../charts/appsets
