@@ -10,27 +10,30 @@ spec:
   - namespace: {{ $ns }}
     server: https://kubernetes.default.svc
   {{- end }}
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
   namespaceResourceWhitelist:
   - group: ''
     kind: ConfigMap
-  - group: apps
-    kind: Deployment
-  - group: autoscaling
-    kind: HorizontalPodAutoscaler
-  - group: networking.k8s.io
-    kind: Ingress
   - group: ''
     kind: Pod
-  - group: apps
-    kind: ReplicaSet
-  - group: argoproj.io
-    kind: Rollout
   - group: ''
     kind: Secret
   - group: ''
     kind: Service
   - group: ''
     kind: ServiceAccount
+  - group: apps
+    kind: '*'
+  - group: autoscaling
+    kind: HorizontalPodAutoscaler
+  - group: batch
+    kind: '*'
+  - group: networking.k8s.io
+    kind: Ingress
+  - group: argoproj.io
+    kind: Rollout
   - group: odigos.io
     kind: '*'
   roles:
