@@ -1,4 +1,0 @@
-releases:
-  - name: kyverno-policies
-    namespace: kyverno-policies
-    chart: ../../policies
