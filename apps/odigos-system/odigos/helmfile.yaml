@@ -4,6 +4,6 @@ repositories:
 
 releases:
   - name: odigos
-    namespace: odigos
+    namespace: odigos-system
     chart: odigos/odigos
     version: 1.15.2
