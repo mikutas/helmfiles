@@ -5,6 +5,7 @@ projects:
   - odigos-system
   - podinfo
   - prometheus
+  - promethues # typo直るまで
   groups:
   - demo
   sourceRepos:
