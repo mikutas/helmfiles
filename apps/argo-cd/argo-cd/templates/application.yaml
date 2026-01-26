@@ -8,7 +8,7 @@ metadata:
 spec:
   project: {{ .Chart.Name }}
   source:
-    path: apps/{{ .Chart.Name }}
+    path: apps/argo-cd/{{ .Chart.Name }}
     repoURL: {{ .Values.repoURL }}
     targetRevision: HEAD
     helm:
@@ -38,7 +38,7 @@ metadata:
 spec:
   project: {{ .Chart.Name }}
   source:
-    path: apps/app-projects
+    path: apps/argo-cd/app-projects
     repoURL: {{ .Values.repoURL }}
     targetRevision: HEAD
   destination:
@@ -53,7 +53,7 @@ metadata:
 spec:
   project: {{ .Chart.Name }}
   source:
-    path: apps/appsets
+    path: apps/argo-cd/appsets
     repoURL: {{ .Values.repoURL }}
     targetRevision: HEAD
   destination:
