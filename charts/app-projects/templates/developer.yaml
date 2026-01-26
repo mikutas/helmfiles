@@ -31,6 +31,8 @@ spec:
     kind: Service
   - group: ''
     kind: ServiceAccount
+  - group: odigos.io
+    kind: '*'
   roles:
   - name: developer
     groups:
