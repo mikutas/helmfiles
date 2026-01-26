@@ -13,13 +13,9 @@ spec:
       repoURL: {{ .Values.admin.repoURL }}
       revision: {{ .Values.admin.targetRevision }}
       directories:
-      - path: apps/app-projects
+      - path: apps/argo-cd/*
         exclude: true
-      - path: apps/appsets
-        exclude: true
-      - path: apps/argo-cd
-        exclude: true
-      - path: apps/*
+      - path: apps/*/*
       pathParamPrefix: chart
   template:
     metadata:
@@ -32,7 +28,7 @@ spec:
         targetRevision: {{ .Values.admin.targetRevision }}
       destination:
         server: https://kubernetes.default.svc
-        namespace: {{ "'{{.chart.path.basename}}'" }}
+        namespace: {{ "'{{index .chart.path.segments 1}}'" }}
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
