@@ -12,17 +12,11 @@ argocd-password:
 argowf-token:
 	@echo "Bearer $(kubectl get secret jenkins.service-account-token -o=jsonpath='{.data.token}' -n argo | base64 --decode)"
 
-apply NAME:
-	helmfile -f apps/{{ NAME }}/helmfile.yaml apply
+apply NAMESPACE_NAME:
+	helmfile -f apps/{{ NAMESPACE_NAME }}/helmfile.yaml apply
 
-diff NAME:
-	helmfile -f apps/{{ NAME }}/helmfile.yaml diff
-
-destroy NAME:
-	helmfile -f apps/{{ NAME }}/helmfile.yaml destroy
-
-template NAME:
-	helmfile -f apps/{{ NAME }}/helmfile.yaml template
+template NAMESPACE_NAME:
+	helmfile -f apps/{{ NAMESPACE_NAME }}/helmfile.yaml template
 
 argocd-login:
     @argocd login argocd.local:54321 --sso --insecure --grpc-web --plaintext

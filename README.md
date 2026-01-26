@@ -13,5 +13,5 @@ just delete-cluster
 ## Install Argo CD
 
 ```sh
-just apply argo-cd
+just apply argo-cd/argo-cd
 ```
