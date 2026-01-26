@@ -1,6 +1,6 @@
 releases:
   - name: pingpong
     namespace: pingpong
-    chart: ../../charts/pingpong
+    chart: ../../../charts/pingpong
     values:
       - values.yaml
