@@ -12,7 +12,7 @@ spec:
   - list:
       elements:
       - name: microservices-demo
-        namespace: microservices-demo
+        namespace: default # https://github.com/odigos-io/microservices-demo/blob/master/release/kubernetes-manifests.yaml
         path: release
   template:
     metadata:
