@@ -34,7 +34,7 @@ spec:
               className: traefik
             ui:
               message: "PR #{{ "{{.number}}" }}: sha={{ "{{.head_sha}}" }}"
-      project: foo
+      project: demo
       destination:
         server: https://kubernetes.default.svc
         namespace: podinfo
