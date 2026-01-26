@@ -1,9 +1,8 @@
 projects:
 - name: demo
   namespaces:
-  - microservices-demo
+  - default
   - podinfo
-  - simple-demo
   groups:
   - demo
   sourceRepos:
