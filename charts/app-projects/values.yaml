@@ -1,9 +1,10 @@
 projects:
-- name: foo
+- name: demo
   namespaces:
   - microservices-demo
   - podinfo
+  - simple-demo
   groups:
-  - foo
+  - demo
   sourceRepos:
   - '*'
