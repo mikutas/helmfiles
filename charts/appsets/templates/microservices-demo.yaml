@@ -23,7 +23,7 @@ spec:
     metadata:
       name: {{ "'{{.name}}'" }}
     spec:
-      project: foo
+      project: demo
       source:
         path: {{ "'{{.path}}'" }}
         directory:
