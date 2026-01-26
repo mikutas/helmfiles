@@ -15,10 +15,12 @@ spec:
         namespace: default # https://github.com/odigos-io/microservices-demo/blob/master/release/kubernetes-manifests.yaml
         repo: https://github.com/odigos-io/microservices-demo
         path: release
+        exclude: istio-manifests.yaml
       - name: simple-demo
         namespace: default
         repo: https://github.com/odigos-io/simple-demo
         path: kubernetes
+        exclude: kustomization.yaml
   template:
     metadata:
       name: {{ "'{{.name}}'" }}
@@ -27,7 +29,7 @@ spec:
       source:
         path: {{ "'{{.path}}'" }}
         directory:
-          exclude: istio-manifests.yaml
+          exclude: {{ "'{{.exclude}}'" }}
         repoURL: {{ "'{{.repo}}'" }}
         targetRevision: HEAD
       destination:
