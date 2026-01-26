@@ -2,7 +2,9 @@ projects:
 - name: demo
   namespaces:
   - default
+  - odigos-system
   - podinfo
+  - prometheus
   groups:
   - demo
   sourceRepos:
