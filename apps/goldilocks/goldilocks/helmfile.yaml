@@ -3,9 +3,9 @@ repositories:
   url: https://charts.fairwinds.com/stable
 
 releases:
-- chart: fairwinds-stable/goldilocks
-  name: goldilocks
+- name: goldilocks
   namespace: goldilocks
+  chart: fairwinds-stable/goldilocks
   version: 10.2.0
   values:
   - dashboard:
@@ -36,24 +36,7 @@ releases:
           annotations:
             cert-manager.io/inject-ca-from: goldilocks/vpa-webhook-cert
         secretName: goldilocks-vpa-tls-secret
-  hooks:
-  # - events:
-  #   - presync
-  #   showlogs: true
-  #   command: kubectl
-  #   args: ["create", "ns", "goldilocks"]
-  - events:
-    - presync
-    showlogs: true
-    command: kubectl
-    args: ["apply", "-f", "vpa-webhook-cert.yaml"]
-  - events:
-    - postuninstall
-    showlogs: true
-    command: kubectl
-    args: ["delete", "-f", "vpa-webhook-cert.yaml"]
-  - events:
-    - postuninstall
-    showlogs: true
-    command: kubectl
-    args: ["delete", "ns", "goldilocks"]
+
+- name: vpa-webhook-cert
+  namespace: goldilocks
+  chart: ./vpa-webhook-cert
