@@ -1,0 +1,54 @@
+apiVersion: policies.kyverno.io/v1beta1
+kind: MutatingPolicy
+metadata:
+  name: add-tolerations
+  annotations:
+    policies.kyverno.io/description: >-
+      Pod tolerations are used to schedule on Nodes which have
+      a matching taint. This policy adds the toleration `mikutas.com/role=service:NoSchedule`
+      if existing tolerations do not contain the key `mikutas.com/role`.
+spec:
+  matchConstraints:
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: In
+          values:
+            - argo-cd
+            - argo-rollouts
+            - kyverno
+  matchConditions:
+    - name: skip-if-toleration-exists
+      expression: |
+        !has(object.spec.tolerations) ||
+        object.spec.tolerations == null ||
+        !object.spec.tolerations.exists(t, t.key == "mikutas.com/role")
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: |
+          (!has(object.spec.tolerations) || object.spec.tolerations == null) ?
+            [
+              JSONPatch{
+                op: "add",
+                path: "/spec/tolerations",
+                value: [dyn({
+                  "key": "mikutas.com/role",
+                  "operator": "Equal",
+                  "value": "service",
+                  "effect": "NoSchedule"
+                })]
+              }
+            ] :
+            [
+              JSONPatch{
+                op: "add",
+                path: "/spec/tolerations/-",
+                value: dyn({
+                  "key": "mikutas.com/role",
+                  "operator": "Equal",
+                  "value": "service",
+                  "effect": "NoSchedule"
+                })
+              }
+            ]
