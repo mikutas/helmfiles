@@ -16,7 +16,6 @@ spec:
           values:
             - argo-cd
             - argo-rollouts
-            - kyverno
   matchConditions:
     - name: skip-if-toleration-exists
       expression: |
