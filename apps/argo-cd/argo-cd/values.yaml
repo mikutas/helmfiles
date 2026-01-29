@@ -55,7 +55,7 @@ argo-cd:
       policy.default: role:admin
     styles: |
       .sidebar {
-        background-color: #66091c;
+        background-color: #59CBFB;
       }
   redisSecretInit:
     enabled: false
