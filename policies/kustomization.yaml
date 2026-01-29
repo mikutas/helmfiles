@@ -2,6 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  # mutate
+  - https://raw.githubusercontent.com/kyverno/policies/main/other-mpol/add-tolerations/add-tolerations.yaml
+  # validate
   - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/check-deprecated-apis/check-deprecated-apis.yaml
   - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/disallow-cri-sock-mount/disallow-cri-sock-mount.yaml
   - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/disallow-default-namespace/disallow-default-namespace.yaml
@@ -20,6 +23,11 @@ resources:
   - https://raw.githubusercontent.com/kyverno/policies/main/other-cel/topologyspreadconstraints-policy/topologyspreadconstraints-policy.yaml
 
 patches:
+  - path: patches/add-tolerations.yaml
+    target:
+      group: policies.kyverno.io
+      kind: MutatingPolicy
+      name: add-tolerations
   - path: patches/restrict-image-registries.yaml
     target:
       group: kyverno.io
