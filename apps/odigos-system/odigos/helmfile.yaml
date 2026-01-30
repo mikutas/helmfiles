@@ -6,4 +6,4 @@ releases:
   - name: odigos
     namespace: odigos-system
     chart: odigos/odigos
-    version: 1.16.4
+    version: 1.16.5
