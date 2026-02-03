@@ -72,7 +72,10 @@ jobs:
           --continue-on-fail \
           --policy-report \
           --output-format json \
-          --resource ${{ env.ARTIFACT_DL_PATH }} | tee /tmp/policy-report.json
+          -o mutated-generated/ \
+          --resource ${{ env.ARTIFACT_DL_PATH }} | \
+          sed 's/Mutation:\|Mutation has been applied successfully.//' | \
+          tee /tmp/policy-report.json
 
       - name: Reviewdog
         env:
