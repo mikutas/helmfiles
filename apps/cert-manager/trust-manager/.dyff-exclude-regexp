@@ -1,1 +1,1 @@
-metadata.labels.helm.sh/chart|metadata.labels.app.kubernetes.io/version
+metadata.labels.helm.sh/chart|metadata.labels.app.kubernetes.io/version|.*schema.openAPIV3Schema.*description
