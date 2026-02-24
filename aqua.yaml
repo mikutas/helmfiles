@@ -9,7 +9,7 @@ registries:
   - type: standard
     ref: v4.474.0 # renovate: depName=aquaproj/aqua-registry
 packages:
-  - name: FairwindsOps/polaris@10.1.4
+  - name: FairwindsOps/polaris@10.1.5
   - name: casey/just@1.46.0
   - name: helm/helm@v3.20.0
   - name: helmfile/helmfile@v1.3.1
