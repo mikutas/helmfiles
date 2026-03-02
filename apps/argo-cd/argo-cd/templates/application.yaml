@@ -31,6 +31,9 @@ spec:
       jsonPointers:
         - /spec/template/metadata/annotations/checksum~1cmd-params
         - /spec/template/metadata/annotations/checksum~1cm
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
