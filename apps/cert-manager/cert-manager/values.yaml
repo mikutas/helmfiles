@@ -1,5 +1,12 @@
 installCRDs: true
 
+serviceAccount:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+
+deploymentAnnotations:
+  argocd.argoproj.io/sync-wave: "-1"
+
 webhook:
   deploymentAnnotations:
     argocd.argoproj.io/sync-wave: "6"
