@@ -1,5 +1,13 @@
 installCRDs: true
 
+webhook:
+  deploymentAnnotations:
+    argocd.argoproj.io/sync-wave: "6"
+
+cainjector:
+  deploymentAnnotations:
+    argocd.argoproj.io/sync-wave: "5"
+
 extraObjects:
 # https://linkerd.io/2-edge/tasks/automatically-rotating-control-plane-tls-credentials/#3-configure-cert-manager-to-create-the-trust-anchor
 - |
@@ -48,7 +56,3 @@ extraObjects:
     privateKey:
       rotationPolicy: Always
       algorithm: ECDSA
-
-webhook:
-  deploymentAnnotations:
-    argocd.argoproj.io/sync-wave: "5"
