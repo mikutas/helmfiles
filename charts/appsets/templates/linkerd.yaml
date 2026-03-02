@@ -42,6 +42,7 @@ spec:
             linkerd.io/is-control-plane: {{ "'{{.isControlPlane}}'" }}
         syncOptions:
         - CreateNamespace=true
+        - ServerSideApply=true
       ignoreDifferences:
       - kind: Secret
         jsonPointers:
