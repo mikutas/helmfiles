@@ -6,5 +6,9 @@ nodes:
     image: kindest/node:v1.34.3
   - role: worker
     image: kindest/node:v1.34.3
+    labels:
+      role: platform
   - role: worker
     image: kindest/node:v1.34.3
+    labels:
+      role: app
