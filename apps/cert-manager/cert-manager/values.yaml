@@ -48,3 +48,7 @@ extraObjects:
     privateKey:
       rotationPolicy: Always
       algorithm: ECDSA
+
+webhook:
+  deploymentAnnotations:
+    argocd.argoproj.io/sync-wave: "5"
