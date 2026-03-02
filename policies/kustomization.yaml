@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   # mutate
-  - https://raw.githubusercontent.com/kyverno/policies/main/other-mpol/add-tolerations/add-tolerations.yaml
+  #- https://raw.githubusercontent.com/kyverno/policies/main/other-mpol/add-tolerations/add-tolerations.yaml
   # validate
   - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/check-deprecated-apis/check-deprecated-apis.yaml
   - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-cel/disallow-cri-sock-mount/disallow-cri-sock-mount.yaml
