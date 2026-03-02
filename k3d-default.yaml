@@ -4,7 +4,16 @@ kind: Simple
 metadata:
   name: k3s-default
 servers: 1
-agents: 0
+agents: 2
 image: docker.io/rancher/k3s:v1.34.4-k3s1
 ports:
   - port: 54321:80
+options:
+  k3s:
+    nodeLabels:
+      - label: role=platform
+        nodeFilters:
+          - agent:0
+      - label: role=app
+        nodeFilters:
+          - agent:1
