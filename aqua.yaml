@@ -12,7 +12,7 @@ packages:
   - name: FairwindsOps/polaris@10.1.6
   - name: casey/just@1.47.0
   - name: helm/helm@v3.20.0
-  - name: helmfile/helmfile@v1.4.1
+  - name: helmfile/helmfile@v1.4.2
   - name: homeport/dyff@v1.11.2
   - name: jqlang/jq@jq-1.8.1
   - name: kubernetes-sigs/kustomize@kustomize/v5.8.1
