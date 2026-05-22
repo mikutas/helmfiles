@@ -6,6 +6,6 @@ releases:
   - chart: jetstack/trust-manager
     name: trust-manager
     namespace: cert-manager
-    version: v0.22.0
+    version: v0.22.1
     values:
       - values.yaml
