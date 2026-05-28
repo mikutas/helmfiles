@@ -16,19 +16,18 @@ spec:
       - path: apps/argo-cd/*
         exclude: true
       - path: apps/*/*
-      pathParamPrefix: chart
   template:
     metadata:
-      name: {{ "'{{.chart.path.basename}}'" }}
+      name: {{ "'{{.path.basename}}'" }}
     spec:
       project: admin
       source:
-        path: {{ "'{{.chart.path.path}}'" }}
+        path: {{ "'{{.path.path}}'" }}
         repoURL: {{ .Values.admin.repoURL }}
         targetRevision: {{ .Values.admin.targetRevision }}
       destination:
         server: https://kubernetes.default.svc
-        namespace: {{ "'{{index .chart.path.segments 1}}'" }}
+        namespace: {{ "'{{index .path.segments 1}}'" }}
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
