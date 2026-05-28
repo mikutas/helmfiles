@@ -30,3 +30,12 @@ spec:
         syncOptions:
         - CreateNamespace=true
         - ServerSideApply=true
+  templatePatch: |
+    spec:
+      syncPolicy:
+        {{ "{{- if .autoSync }}" }}
+        automated: {}
+        {{ "{{- end }}" }}
+        syncOptions:
+        - CreateNamespace=true
+        - ServerSideApply=true
