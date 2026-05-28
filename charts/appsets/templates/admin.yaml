@@ -12,10 +12,8 @@ spec:
   - git:
       repoURL: {{ .Values.admin.repoURL }}
       revision: {{ .Values.admin.targetRevision }}
-      directories:
-      - path: apps/argo-cd/*
-        exclude: true
-      - path: apps/*/*
+      files:
+      - path: apps/*/*/appconfig.yaml
   template:
     metadata:
       name: {{ "'{{.path.basename}}'" }}
