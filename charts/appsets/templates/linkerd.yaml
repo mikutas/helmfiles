@@ -24,6 +24,10 @@ spec:
         namespace: linkerd-viz
         path: linkerd-viz
         isControlPlane: "false"
+      - name: linkerd-e2e
+        namespace: linkerd-e2e
+        path: linkerd-e2e
+        isControlPlane: "false"
   template:
     metadata:
       name: {{ "'{{.name}}'" }}
