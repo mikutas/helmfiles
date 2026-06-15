@@ -3,17 +3,17 @@ apiVersion: k3d.io/v1alpha5
 kind: Simple
 metadata:
   name: k3s-default
-servers: 1
-agents: 2
+# servers: 1
+# agents: 2
 image: docker.io/rancher/k3s:v1.35.5-k3s1
 ports:
   - port: 54321:80
-options:
-  k3s:
-    nodeLabels:
-      - label: role=platform
-        nodeFilters:
-          - agent:0
-      - label: role=app
-        nodeFilters:
-          - agent:1
+# options:
+#   k3s:
+#     nodeLabels:
+#       - label: role=platform
+#         nodeFilters:
+#           - agent:0
+#       - label: role=app
+#         nodeFilters:
+#           - agent:1
