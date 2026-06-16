@@ -34,7 +34,10 @@
         "linkerd-control-plane",
         "linkerd-viz"
       ],
-      "groupName": "linkerd"
+      "groupName": "linkerd",
+      "addLabels": [
+        "linkerd"
+      ]
     },
     {
       "matchPackageNames": [
