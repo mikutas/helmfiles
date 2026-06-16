@@ -33,6 +33,9 @@ jobs:
       - name: Install linkerd-crds
         run: just sync linkerd/linkerd-crds
 
+      - name: Wait
+        run: kubectl wait deploy -n cert-manager trust-manager --for condition=available --timeout 3m
+
       - name: Label linkerd namespace
         run: kubectl label ns linkerd linkerd.io/is-control-plane=true
 
