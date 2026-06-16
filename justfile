@@ -17,6 +17,9 @@ argowf-token:
 apply NAMESPACE_NAME +FLAGS="":
 	helmfile -f apps/{{ NAMESPACE_NAME }}/helmfile.yaml apply {{ FLAGS }}
 
+sync NAMESPACE_NAME +FLAGS="":
+	helmfile -f apps/{{ NAMESPACE_NAME }}/helmfile.yaml sync {{ FLAGS }}
+
 template NAMESPACE_NAME +FLAGS="":
 	helmfile -f apps/{{ NAMESPACE_NAME }}/helmfile.yaml template {{ FLAGS }}
 

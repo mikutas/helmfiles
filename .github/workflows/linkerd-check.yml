@@ -15,13 +15,13 @@ jobs:
         run: just create-cluster
 
       - name: Install cert-manager
-        run: just apply cert-manager/cert-manager --selector name=cert-manager
+        run: just sync cert-manager/cert-manager --selector name=cert-manager
 
       - name: Create linkerd-trust-anchor Issuer/Certificate
-        run: just apply cert-manager/cert-manager --selector name=linkerd-tls-credentials
+        run: just sync cert-manager/cert-manager --selector name=linkerd-tls-credentials
 
       - name: Install trust-manager
-        run: just apply cert-manager/trust-manager
+        run: just sync cert-manager/trust-manager
 
       - name: Transfer Gateway API CRD ownership to linkerd-crds
         run: |
@@ -31,13 +31,13 @@ jobs:
           done
 
       - name: Install linkerd-crds
-        run: just apply linkerd/linkerd-crds
+        run: just sync linkerd/linkerd-crds
 
       - name: Label linkerd namespace
         run: kubectl label ns linkerd linkerd.io/is-control-plane=true
 
       - name: Install linkerd-control-plane
-        run: just apply linkerd/linkerd-control-plane
+        run: just sync linkerd/linkerd-control-plane
 
       - name: Wait
         run: kubectl wait deploy -A -l app.kubernetes.io/part-of=Linkerd --for condition=available --timeout 3m
