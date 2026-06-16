@@ -29,7 +29,13 @@
   ],
   "packageRules": [
     {
+      "matchDepNames": ["linkerd/linkerd2"],
+      // https://docs.renovatebot.com/modules/versioning/
+      "versioning": "regex:(?<compatibility>stable|edge)-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?"
+    },
+    {
       "matchPackageNames": [
+        "linkerd2", // CLI
         "linkerd-crds",
         "linkerd-control-plane",
         "linkerd-viz"
