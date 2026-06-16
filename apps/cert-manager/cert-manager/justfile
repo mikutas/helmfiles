@@ -1,0 +1,4 @@
+create-previous-anchor:
+	kubectl -n cert-manager get secret linkerd-trust-anchor -o json \
+	| jq '{apiVersion: .apiVersion, kind: .kind, metadata: {name: "linkerd-previous-anchor", namespace: .metadata.namespace}, type: .type, data: .data}' \
+	| kubectl apply -f -

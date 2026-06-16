@@ -1,3 +1,5 @@
+import 'apps/cert-manager/cert-manager/justfile'
+
 # https://k3d.io/v5.5.2/usage/exposing_services/
 create-cluster:
 	k3d cluster create --config k3d-default.yaml
