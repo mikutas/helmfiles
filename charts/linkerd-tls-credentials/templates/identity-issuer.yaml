@@ -1,4 +1,5 @@
-# https://linkerd.io/2-edge/tasks/automatically-rotating-control-plane-tls-credentials/#4-configure-cert-manager-to-create-the-identity-issuer-certificate
+{{- /* https://linkerd.io/2-edge/tasks/automatically-rotating-control-plane-tls-credentials/#4-configure-cert-manager-to-create-the-identity-issuer-certificate */}}
+{{- if not .Values.createTrustAnchor }}
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -44,3 +45,4 @@ spec:
   privateKey:
     rotationPolicy: Always
     algorithm: ECDSA
+{{- end }}

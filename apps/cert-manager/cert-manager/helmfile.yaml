@@ -9,3 +9,9 @@ releases:
     version: v1.20.2
     values:
       - values.yaml
+
+  - chart: ../../../charts/linkerd-tls-credentials
+    name: linkerd-tls-credentials
+    namespace: cert-manager
+    values:
+      - createTrustAnchor: true

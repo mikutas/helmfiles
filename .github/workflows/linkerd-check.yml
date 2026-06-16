@@ -1,0 +1,46 @@
+name: linkerd-check
+
+on: pull_request
+
+jobs:
+  linkerd-check:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'linkerd')
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - uses: mikutas/my-aqua-installer@main
+
+      - name: Create cluster
+        run: just create-cluster
+
+      - name: Install cert-manager
+        run: just apply cert-manager/cert-manager --selector name=cert-manager
+
+      - name: Create linkerd-trust-anchor Issuer/Certificate
+        run: just apply cert-manager/cert-manager --selector name=linkerd-tls-credentials
+
+      - name: Install trust-manager
+        run: just apply cert-manager/trust-manager
+
+      - name: Transfer Gateway API CRD ownership to linkerd-crds
+        run: |
+          for crd in $(kubectl get crd -o name | grep gateway.networking.k8s.io); do
+            kubectl annotate $crd meta.helm.sh/release-name=linkerd-crds meta.helm.sh/release-namespace=linkerd --overwrite
+            kubectl label $crd app.kubernetes.io/managed-by=Helm --overwrite
+          done
+
+      - name: Install linkerd-crds
+        run: just apply linkerd/linkerd-crds
+
+      - name: Label linkerd namespace
+        run: kubectl label ns linkerd linkerd.io/is-control-plane=true
+
+      - name: Install linkerd-control-plane
+        run: just apply linkerd/linkerd-control-plane
+
+      - name: Wait
+        run: kubectl wait deploy -A -l app.kubernetes.io/part-of=Linkerd --for condition=available --timeout 3m
+
+      - name: Run linkerd check
+        run: linkerd check

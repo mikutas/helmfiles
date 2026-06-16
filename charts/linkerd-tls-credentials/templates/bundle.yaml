@@ -1,4 +1,5 @@
-# https://linkerd.io/2-edge/tasks/automatically-rotating-control-plane-tls-credentials/#5-configure-cert-manager-to-create-a-trust-bundle-for-linkerd-to-use
+{{- /* https://linkerd.io/2-edge/tasks/automatically-rotating-control-plane-tls-credentials/#5-configure-cert-manager-to-create-a-trust-bundle-for-linkerd-to-use */}}
+{{- if not .Values.createTrustAnchor }}
 apiVersion: trust.cert-manager.io/v1alpha1
 kind: Bundle
 metadata:
@@ -37,3 +38,4 @@ spec:
     namespaceSelector:
       matchLabels:
         linkerd.io/is-control-plane: "true"
+{{- end }}

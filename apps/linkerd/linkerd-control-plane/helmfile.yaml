@@ -16,4 +16,6 @@ releases:
 
 - name: linkerd-tls-credentials
   namespace: linkerd
-  chart: ../../../charts/tls-credentials
+  chart: ../../../charts/linkerd-tls-credentials
+  values:
+    - createTrustAnchor: false
