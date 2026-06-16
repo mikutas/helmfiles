@@ -32,6 +32,10 @@ spec:
         - ServerSideApply=true
   templatePatch: |
     spec:
+      {{ "{{- with .ignoreDifferences }}" }}
+      ignoreDifferences:
+        {{- toYaml .ignoreDifferences | nindent 8 }}
+      {{ "{{- end }}" }}
       syncPolicy:
         {{ "{{- if .autoSync }}" }}
         automated: {}

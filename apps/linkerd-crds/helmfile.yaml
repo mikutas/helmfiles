@@ -1,0 +1,13 @@
+repositories:
+- name: linkerd
+  url: https://helm.linkerd.io/stable
+- name: linkerd-edge
+  url: https://helm.linkerd.io/edge
+
+releases:
+- name: linkerd-crds
+  namespace: linkerd
+  createNamespace: true
+  chart: linkerd-edge/linkerd-crds
+  # https://github.com/linkerd/linkerd2/blob/edge-25.8.1/charts/linkerd-crds/Chart.yaml
+  version: 2025.8.1
