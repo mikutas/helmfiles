@@ -35,10 +35,10 @@
     },
     {
       "matchPackageNames": [
-        "linkerd2", // CLI
-        "linkerd-crds",
-        "linkerd-control-plane",
-        "linkerd-viz"
+        "/linkerd2/", // CLI
+        "/linkerd-crds/",
+        "/linkerd-control-plane/",
+        "/linkerd-viz/"
       ],
       "groupName": "linkerd",
       "addLabels": [
