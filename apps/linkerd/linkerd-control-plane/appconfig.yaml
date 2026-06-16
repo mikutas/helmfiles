@@ -1,0 +1,26 @@
+syncPolicy:
+  autoSync: false
+  managedNamespaceMetadata:
+    labels:
+      linkerd.io/is-control-plane: "true"
+ignoreDifferences:
+  - kind: Secret
+    jsonPointers:
+    - /data/tls.crt
+    - /data/tls.key
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+    jqPathExpressions:
+    - .webhooks[]?.clientConfig.caBundle
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+    jqPathExpressions:
+    - .webhooks[]?.clientConfig.caBundle
+  - group: batch
+    kind: CronJob
+    jsonPointers:
+    - /spec/schedule
+  - group: apiregistration.k8s.io
+    kind: APIService
+    jsonPointers:
+    - /spec/caBundle

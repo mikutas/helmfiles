@@ -1,0 +1,39 @@
+# https://linkerd.io/2-edge/tasks/automatically-rotating-control-plane-tls-credentials/#5-configure-cert-manager-to-create-a-trust-bundle-for-linkerd-to-use
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+  # This is the name of the Bundle and _also_ the name of the
+  # ConfigMap in which we'll write the trust bundle.
+  name: linkerd-identity-trust-roots
+spec:
+  # This tells trust-manager where to find the public keys to copy into
+  # the trust bundle.
+  sources:
+    # This is the Secret that cert-manager will update when it rotates
+    # the trust anchor.
+    - secret:
+        name: "linkerd-trust-anchor"
+        key: "tls.crt"
+
+    # This is the Secret that we will use to hold the previous trust
+    # anchor; we'll manually update this Secret after we're finished
+    # restarting things.
+    # ドキュメントの手順を再現する場合は、ClusterIssuerとCertificateをselective syncしてから以下のコマンドを実行し、その後Bundleをselective syncする
+    # （過去のアンカーの立場にあたるSecretを同じ中身で作成する）
+    # ゼロからのインストールかつArgo CDで一気にSyncする前提でコメントアウトしている
+    # - secret:
+    #     name: "linkerd-previous-anchor"
+    #     key: "tls.crt"
+
+  # This tells trust-manager the key to use when writing the trust
+  # bundle into the ConfigMap. The target stanza doesn't have a way
+  # to specify the name of the namespace, but thankfully Linkerd puts
+  # a unique label on the control plane's namespace.
+  target:
+    configMap:
+      key: "ca-bundle.crt"
+    namespaceSelector:
+      matchLabels:
+        linkerd.io/is-control-plane: "true"

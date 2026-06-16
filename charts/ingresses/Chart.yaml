@@ -1,0 +1,5 @@
+apiVersion: v2
+name: ingresses
+description: A Helm chart for creating multiple Ingress resources
+type: application
+version: 0.1.0

@@ -1,1 +1,4 @@
-autoSync: false
+syncPolicy:
+  autoSync: false
+  managedNamespaceMetadata: null
+ignoreDifferences: null

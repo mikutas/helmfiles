@@ -32,9 +32,17 @@ spec:
         - ServerSideApply=true
   templatePatch: |
     spec:
+      {{ "{{- with .ignoreDifferences }}" }}
+      ignoreDifferences:
+        {{ "{{- toYaml . | nindent 8 }}" }}
+      {{ "{{- end }}" }}
       syncPolicy:
-        {{ "{{- if .autoSync }}" }}
+        {{ "{{- if .syncPolicy.autoSync }}" }}
         automated: {}
+        {{ "{{- end }}" }}
+        {{ "{{- with .syncPolicy.managedNamespaceMetadata }}" }}
+        managedNamespaceMetadata:
+          {{ "{{- toYaml . | nindent 10 }}" }}
         {{ "{{- end }}" }}
         syncOptions:
         - CreateNamespace=true

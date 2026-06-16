@@ -1,0 +1,22 @@
+repositories:
+- name: linkerd
+  url: https://helm.linkerd.io/stable
+- name: linkerd-edge
+  url: https://helm.linkerd.io/edge
+
+releases:
+- name: linkerd-viz
+  namespace: linkerd-viz
+  createNamespace: true
+  chart: linkerd-edge/linkerd-viz
+  # https://github.com/linkerd/linkerd2/blob/edge-25.8.1/viz/charts/linkerd-viz/Chart.yaml
+  version: 2025.8.1
+  values:
+  - dashboard:
+      enforcedHostRegexp: linkerd-viz.local
+
+- name: ingress
+  namespace: linkerd-viz
+  chart: ../../../charts/ingresses
+  values:
+  - ingress.values.yaml
