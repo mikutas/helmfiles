@@ -18,4 +18,5 @@ packages:
   - name: k3d-io/k3d@v5.9.0
   - name: kubernetes-sigs/kustomize@kustomize/v5.8.1
   - name: kyverno/kyverno@v1.18.1
+  - name: linkerd/linkerd2@edge-25.8.1
   - name: reviewdog/reviewdog@v0.21.0
