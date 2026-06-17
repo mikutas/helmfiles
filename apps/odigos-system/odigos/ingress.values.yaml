@@ -1,0 +1,13 @@
+ingresses:
+- name: ui-ingress
+  rules:
+  - host: odigos.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ui
+            port:
+              number: 3000

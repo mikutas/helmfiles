@@ -7,3 +7,9 @@ releases:
     namespace: odigos-system
     chart: odigos/odigos
     version: 1.29.0
+
+  - name: ingress
+    namespace: odigos-system
+    chart: ../../../charts/ingresses
+    values:
+    - ingress.values.yaml
