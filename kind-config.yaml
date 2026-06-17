@@ -4,11 +4,11 @@ name: app-1-cluster
 nodes:
   - role: control-plane
     image: kindest/node:v1.35.5
-  - role: worker
-    image: kindest/node:v1.35.5
-    labels:
-      role: platform
-  - role: worker
-    image: kindest/node:v1.35.5
-    labels:
-      role: app
+  # - role: worker
+  #   image: kindest/node:v1.35.5
+  #   labels:
+  #     role: platform
+  # - role: worker
+  #   image: kindest/node:v1.35.5
+  #   labels:
+  #     role: app
