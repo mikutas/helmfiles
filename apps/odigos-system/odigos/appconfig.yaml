@@ -1,4 +1,15 @@
 syncPolicy:
   autoSync: false
   managedNamespaceMetadata: null
-ignoreDifferences: null
+ignoreDifferences:
+  - group: ""
+    kind: ConfigMap
+    name: odigos-deployment
+    jsonPointers:
+      - /data/odigos-deployment-id
+  - group: apps
+    kind: DaemonSet
+    name: odiglet
+    jqPathExpressions:
+      - .spec.template.spec.containers[].env[].valueFrom.resourceFieldRef.divisor
+      - .spec.template.spec.initContainers[].env[].valueFrom.resourceFieldRef.divisor
