@@ -1,3 +1,4 @@
+.claude/worktrees/
 .envrc
 Chart.lock
 **/charts/*.tgz
