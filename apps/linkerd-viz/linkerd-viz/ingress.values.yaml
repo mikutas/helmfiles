@@ -2,8 +2,6 @@ ingresses:
 - name: web-ingress
   annotations:
     ingress.kubernetes.io/custom-request-headers: l5d-dst-override:web.linkerd-viz.svc.cluster.local:8084
-    ingress.kubernetes.io/ssl-redirect: "false"
-  className: traefik
   rules:
   - host: linkerd-viz.local
     http:

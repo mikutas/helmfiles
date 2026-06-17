@@ -1,11 +1,11 @@
 import 'apps/cert-manager/cert-manager/justfile'
 
-# https://k3d.io/v5.5.2/usage/exposing_services/
 create-cluster:
-	k3d cluster create --config k3d-default.yaml
+	kind create cluster --config kind-config.yaml
+	just sync traefik/traefik
 
 delete-cluster:
-	k3d cluster delete --config k3d-default.yaml
+	kind delete cluster --name app-1-cluster
 
 argocd-password:
 	@kubectl view-secret argocd-initial-admin-secret -n argo-cd --quiet
@@ -24,4 +24,4 @@ template NAMESPACE_NAME +FLAGS="":
 	helmfile -f apps/{{ NAMESPACE_NAME }}/helmfile.yaml template {{ FLAGS }}
 
 argocd-login:
-    @argocd login argocd.local:54321 --sso --insecure --grpc-web --plaintext
+    @argocd login argocd.local:80 --sso --insecure --grpc-web --plaintext

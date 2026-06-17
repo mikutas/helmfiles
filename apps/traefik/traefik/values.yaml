@@ -1,0 +1,14 @@
+tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    operator: Exists
+    effect: NoSchedule
+nodeSelector:
+  node-role.kubernetes.io/control-plane: ""
+ports:
+  web:
+    hostPort: 80
+service:
+  type: ClusterIP
+ingressClass:
+  enabled: true
+  isDefaultClass: true
