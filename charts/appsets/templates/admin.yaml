@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
   name: admin
   namespace: {{ .Release.Namespace }}
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - git:
-      repoURL: {{ .Values.admin.repoURL }}
-      revision: {{ .Values.admin.targetRevision }}
-      files:
-      - path: apps/*/*/appconfig.yaml
+    - git:
+        repoURL: {{ .Values.admin.repoURL }}
+        revision: {{ .Values.admin.targetRevision }}
+        files:
+          - path: apps/*/*/appconfig.yaml
   template:
     metadata:
       name: {{ "'{{.path.basename}}'" }}
@@ -28,8 +28,8 @@ spec:
         namespace: {{ "'{{index .path.segments 1}}'" }}
       syncPolicy:
         syncOptions:
-        - CreateNamespace=true
-        - ServerSideApply=true
+          - CreateNamespace=true
+          - ServerSideApply=true
   templatePatch: |
     spec:
       {{ "{{- with .ignoreDifferences }}" }}
@@ -45,5 +45,5 @@ spec:
           {{ "{{- toYaml . | nindent 10 }}" }}
         {{ "{{- end }}" }}
         syncOptions:
-        - CreateNamespace=true
-        - ServerSideApply=true
+          - CreateNamespace=true
+          - ServerSideApply=true

@@ -2,25 +2,25 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
   name: microservices-demo
   namespace: {{ .Release.Namespace }}
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - list:
-      elements:
-      - name: microservices-demo
-        namespace: default # https://github.com/odigos-io/microservices-demo/blob/master/release/kubernetes-manifests.yaml
-        repo: https://github.com/odigos-io/microservices-demo
-        path: release
-        exclude: istio-manifests.yaml
-      - name: simple-demo
-        namespace: default
-        repo: https://github.com/odigos-io/simple-demo
-        path: kubernetes
-        exclude: kustomization.yaml
+    - list:
+        elements:
+          - name: microservices-demo
+            namespace: default # https://github.com/odigos-io/microservices-demo/blob/master/release/kubernetes-manifests.yaml
+            repo: https://github.com/odigos-io/microservices-demo
+            path: release
+            exclude: istio-manifests.yaml
+          - name: simple-demo
+            namespace: default
+            repo: https://github.com/odigos-io/simple-demo
+            path: kubernetes
+            exclude: kustomization.yaml
   template:
     metadata:
       name: {{ "'{{.name}}'" }}
@@ -37,4 +37,4 @@ spec:
         namespace: {{ "'{{.namespace}}'" }}
       syncPolicy:
         syncOptions:
-        - CreateNamespace=true
+          - CreateNamespace=true

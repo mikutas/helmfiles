@@ -7,48 +7,48 @@ metadata:
 spec:
   destinations:
   {{- range $ns := $proj.namespaces }}
-  - namespace: {{ $ns }}
-    server: https://kubernetes.default.svc
+    - namespace: {{ $ns }}
+      server: https://kubernetes.default.svc
   {{- end }}
   clusterResourceWhitelist:
-  - group: ''
-    kind: Namespace
+    - group: ''
+      kind: Namespace
   namespaceResourceWhitelist:
-  - group: ''
-    kind: ConfigMap
-  - group: ''
-    kind: Pod
-  - group: ''
-    kind: Secret
-  - group: ''
-    kind: Service
-  - group: ''
-    kind: ServiceAccount
-  - group: apps
-    kind: '*'
-  - group: autoscaling
-    kind: HorizontalPodAutoscaler
-  - group: batch
-    kind: '*'
-  - group: networking.k8s.io
-    kind: Ingress
-  - group: argoproj.io
-    kind: Rollout
-  - group: odigos.io
-    kind: '*'
+    - group: ''
+      kind: ConfigMap
+    - group: ''
+      kind: Pod
+    - group: ''
+      kind: Secret
+    - group: ''
+      kind: Service
+    - group: ''
+      kind: ServiceAccount
+    - group: apps
+      kind: '*'
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+    - group: batch
+      kind: '*'
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: argoproj.io
+      kind: Rollout
+    - group: odigos.io
+      kind: '*'
   roles:
-  - name: developer
-    groups:
-    {{- range $group := $proj.groups }}
-    - {{ $group }}
-    {{- end }}
-    policies:
-    - p, proj:{{ $proj.name }}:developer, applications, get, {{ $proj.name }}/*, allow
-    - p, proj:{{ $proj.name }}:developer, applications, sync, {{ $proj.name }}/*, allow
-    - p, proj:{{ $proj.name }}:developer, applications, action/*, {{ $proj.name }}/*, allow
-    - p, proj:{{ $proj.name }}:developer, logs, get, {{ $proj.name }}/*, allow
+    - name: developer
+      groups:
+        {{- range $group := $proj.groups }}
+        - {{ $group }}
+        {{- end }}
+      policies:
+        - p, proj:{{ $proj.name }}:developer, applications, get, {{ $proj.name }}/*, allow
+        - p, proj:{{ $proj.name }}:developer, applications, sync, {{ $proj.name }}/*, allow
+        - p, proj:{{ $proj.name }}:developer, applications, action/*, {{ $proj.name }}/*, allow
+        - p, proj:{{ $proj.name }}:developer, logs, get, {{ $proj.name }}/*, allow
   sourceRepos:
   {{- range $repo := $proj.sourceRepos }}
-  - {{ $repo | squote }}
+    - {{ $repo | squote }}
   {{- end }}
 {{- end }}

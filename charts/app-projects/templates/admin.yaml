@@ -6,10 +6,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: '*'
+      kind: '*'
   destinations:
-  - namespace: '*'
-    server: '*'
+    - namespace: '*'
+      server: '*'
   sourceRepos:
-  - '*'
+    - '*'
