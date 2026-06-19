@@ -1,21 +1,21 @@
 repositories:
-- name: linkerd
-  url: https://helm.linkerd.io/stable
-- name: linkerd-edge
-  url: https://helm.linkerd.io/edge
+  - name: linkerd
+    url: https://helm.linkerd.io/stable
+  - name: linkerd-edge
+    url: https://helm.linkerd.io/edge
 
 releases:
-- name: linkerd-control-plane
-  namespace: linkerd
-  createNamespace: false
-  chart: linkerd-edge/linkerd-control-plane
-  # https://github.com/linkerd/linkerd2/blob/edge-25.8.1/charts/linkerd-control-plane/Chart.yaml
-  version: 2025.8.1
-  values:
-    - values.yaml
+  - name: linkerd-control-plane
+    namespace: linkerd
+    createNamespace: false
+    chart: linkerd-edge/linkerd-control-plane
+    # https://github.com/linkerd/linkerd2/blob/edge-25.8.1/charts/linkerd-control-plane/Chart.yaml
+    version: 2025.8.1
+    values:
+      - values.yaml
 
-- name: linkerd-tls-credentials
-  namespace: linkerd
-  chart: ../../../charts/linkerd-tls-credentials
-  values:
-    - createTrustAnchor: false
+  - name: linkerd-tls-credentials
+    namespace: linkerd
+    chart: ../../../charts/linkerd-tls-credentials
+    values:
+      - createTrustAnchor: false

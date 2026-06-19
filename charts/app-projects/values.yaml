@@ -1,13 +1,13 @@
 projects:
-- name: demo
-  namespaces:
-  - default
-  - odigos-system
-  - podinfo
-  - prometheus
-  - promethues # typo直るまで
-  - tracing
-  groups:
-  - demo
-  sourceRepos:
-  - '*'
+  - name: demo
+    namespaces:
+      - default
+      - odigos-system
+      - podinfo
+      - prometheus
+      - promethues # typo直るまで
+      - tracing
+    groups:
+      - demo
+    sourceRepos:
+      - '*'

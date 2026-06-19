@@ -1,15 +1,15 @@
 repositories:
-- name: fairwinds-stable
-  url: https://charts.fairwinds.com/stable
+  - name: fairwinds-stable
+    url: https://charts.fairwinds.com/stable
 
 releases:
-- chart: fairwinds-stable/polaris
-  name: polaris
-  namespace: polaris
-  version: 6.0.0
-  values:
-  - dashboard:
-      ingress:
-        enabled: true
-        hosts:
-        - polaris.local
+  - chart: fairwinds-stable/polaris
+    name: polaris
+    namespace: polaris
+    version: 6.0.0
+    values:
+      - dashboard:
+          ingress:
+            enabled: true
+            hosts:
+              - polaris.local

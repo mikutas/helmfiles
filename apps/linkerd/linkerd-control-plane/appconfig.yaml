@@ -6,25 +6,25 @@ syncPolicy:
 ignoreDifferences:
   - kind: Secret
     jsonPointers:
-    - /data/tls.crt
-    - /data/tls.key
+      - /data/tls.crt
+      - /data/tls.key
   - group: admissionregistration.k8s.io
     kind: MutatingWebhookConfiguration
     jqPathExpressions:
-    - .webhooks[]?.clientConfig.caBundle
+      - .webhooks[]?.clientConfig.caBundle
   - group: admissionregistration.k8s.io
     kind: ValidatingWebhookConfiguration
     jqPathExpressions:
-    - .webhooks[]?.clientConfig.caBundle
+      - .webhooks[]?.clientConfig.caBundle
   - group: apps
     kind: Deployment
     jsonPointers:
-    - /spec/template/metadata/annotations/checksum~1config
+      - /spec/template/metadata/annotations/checksum~1config
   - group: batch
     kind: CronJob
     jsonPointers:
-    - /spec/schedule
+      - /spec/schedule
   - group: apiregistration.k8s.io
     kind: APIService
     jsonPointers:
-    - /spec/caBundle
+      - /spec/caBundle

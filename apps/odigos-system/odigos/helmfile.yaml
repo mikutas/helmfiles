@@ -12,4 +12,4 @@ releases:
     namespace: odigos-system
     chart: ../../../charts/ingresses
     values:
-    - ingress.values.yaml
+      - ingress.values.yaml

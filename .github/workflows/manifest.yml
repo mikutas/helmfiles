@@ -60,7 +60,7 @@ jobs:
   status-check:
     runs-on: ubuntu-latest
     needs:
-    - gen-matrix
+      - gen-matrix
     permissions: {}
     if: failure()
     steps:

@@ -1,113 +1,113 @@
 repositories:
-- name: argo
-  url: https://argoproj.github.io/argo-helm
-- name: bitnami
-  url: https://charts.bitnami.com/bitnami
+  - name: argo
+    url: https://argoproj.github.io/argo-helm
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
 
 releases:
-- name: argo-workflows
-  namespace: argo-workflows
-  createNamespace: true
-  chart: argo/argo-workflows
-  version: 1.0.16
-  values:
-  - controller:
-      persistence:
-        archive: true
-        postgresql:
-          host: postgresql.argo-workflows.svc.cluster.local
-          port: 5432
+  - name: argo-workflows
+    namespace: argo-workflows
+    createNamespace: true
+    chart: argo/argo-workflows
+    version: 1.0.16
+    values:
+      - controller:
+          persistence:
+            archive: true
+            postgresql:
+              host: postgresql.argo-workflows.svc.cluster.local
+              port: 5432
+              database: postgres
+              tableName: argo_workflows
+              userNameSecret:
+                name: argo-postgres-config
+                key: username
+              passwordSecret:
+                name: argo-postgres-config
+                key: password
+          workflowDefaults:
+            spec:
+              ttlStrategy:
+                secondsAfterCompletion: 60
+      - server:
+          ingress:
+            enabled: true
+            hosts:
+              - argowf.local
+      - extraObjects:
+          # https://argoproj.github.io/argo-workflows/access-token/#prerequisites
+          - apiVersion: rbac.authorization.k8s.io/v1
+            kind: Role
+            metadata:
+              name: jenkins
+              namespace: argo-workflows
+            rules:
+              - apiGroups:
+                  - argoproj.io
+                resources:
+                  - cronworkflows
+                  - workflows
+                  - workflowtemplates
+                verbs:
+                  - get
+                  - list
+                  - patch
+                  - update
+                  - watch
+          - apiVersion: v1
+            kind: ServiceAccount
+            metadata:
+              name: jenkins
+              namespace: argo-workflows
+          # https://argoproj.github.io/argo-workflows/access-token/#tip-for-tokens-creation
+          - apiVersion: rbac.authorization.k8s.io/v1
+            kind: RoleBinding
+            metadata:
+              name: jenkins
+              namespace: argo-workflows
+            roleRef:
+              apiGroup: rbac.authorization.k8s.io
+              kind: Role
+              name: jenkins
+            subjects:
+              - kind: ServiceAccount
+                name: jenkins
+                namespace: argo-workflows
+          # https://argoproj.github.io/argo-workflows/access-token/#token-creation
+          - apiVersion: v1
+            kind: Secret
+            metadata:
+              name: jenkins.service-account-token
+              namespace: argo-workflows
+              annotations:
+                kubernetes.io/service-account.name: jenkins
+            type: kubernetes.io/service-account-token
+          - apiVersion: v1
+            kind: Secret
+            metadata:
+              name: argo-postgres-config
+              namespace: argo-workflows
+            type: Opaque
+            data:
+              username: YXJnbwo=
+              password: YXJnbwo=
+    hooks:
+      - events:
+          - "postsync"
+        command: "kubectl"
+        args: ["apply", "-n", "argo", "-f", "https://github.com/argoproj/argo-workflows/raw/main/manifests/quick-start/base/executor/emissary/executor-role.yaml"]
+      - events:
+          - "postsync"
+        command: "kubectl"
+        args: ["apply", "-n", "argo", "-f", "https://github.com/argoproj/argo-workflows/raw/main/manifests/quick-start/base/executor-default-rolebinding.yaml"]
+
+
+  - name: postgresql
+    namespace: argo-workflows
+    chart: bitnami/postgresql
+    version: 18.7.6
+    values:
+      - auth:
           database: postgres
-          tableName: argo_workflows
-          userNameSecret:
-            name: argo-postgres-config
-            key: username
-          passwordSecret:
-            name: argo-postgres-config
-            key: password
-      workflowDefaults:
-        spec:
-          ttlStrategy:
-            secondsAfterCompletion: 60
-  - server:
-      ingress:
-        enabled: true
-        hosts:
-        - argowf.local
-  - extraObjects:
-    # https://argoproj.github.io/argo-workflows/access-token/#prerequisites
-    - apiVersion: rbac.authorization.k8s.io/v1
-      kind: Role
-      metadata:
-        name: jenkins
-        namespace: argo-workflows
-      rules:
-      - apiGroups:
-        - argoproj.io
-        resources:
-        - cronworkflows
-        - workflows
-        - workflowtemplates
-        verbs:
-        - get
-        - list
-        - patch
-        - update
-        - watch
-    - apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: jenkins
-        namespace: argo-workflows
-    # https://argoproj.github.io/argo-workflows/access-token/#tip-for-tokens-creation
-    - apiVersion: rbac.authorization.k8s.io/v1
-      kind: RoleBinding
-      metadata:
-        name: jenkins
-        namespace: argo-workflows
-      roleRef:
-        apiGroup: rbac.authorization.k8s.io
-        kind: Role
-        name: jenkins
-      subjects:
-      - kind: ServiceAccount
-        name: jenkins
-        namespace: argo-workflows
-    # https://argoproj.github.io/argo-workflows/access-token/#token-creation
-    - apiVersion: v1
-      kind: Secret
-      metadata:
-        name: jenkins.service-account-token
-        namespace: argo-workflows
-        annotations:
-          kubernetes.io/service-account.name: jenkins
-      type: kubernetes.io/service-account-token
-    - apiVersion: v1
-      kind: Secret
-      metadata:
-        name: argo-postgres-config
-        namespace: argo-workflows
-      type: Opaque
-      data:
-        username: YXJnbwo=
-        password: YXJnbwo=
-  hooks:
-  - events:
-    - "postsync"
-    command: "kubectl"
-    args: ["apply", "-n", "argo", "-f", "https://github.com/argoproj/argo-workflows/raw/main/manifests/quick-start/base/executor/emissary/executor-role.yaml"]
-  - events:
-    - "postsync"
-    command: "kubectl"
-    args: ["apply", "-n", "argo", "-f", "https://github.com/argoproj/argo-workflows/raw/main/manifests/quick-start/base/executor-default-rolebinding.yaml"]
-
-
-- name: postgresql
-  namespace: argo-workflows
-  chart: bitnami/postgresql
-  version: 18.7.6
-  values:
-  - auth:
-      database: postgres
-      username: argo
-      password: argo
+          username: argo
+          password: argo
