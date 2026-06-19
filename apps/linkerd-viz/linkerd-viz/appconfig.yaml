@@ -1,4 +1,20 @@
 syncPolicy:
   automated: false
   managedNamespaceMetadata: null
-ignoreDifferences: null
+ignoreDifferences:
+  - kind: Secret
+    jsonPointers:
+      - /data/tls.crt
+      - /data/tls.key
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+    jqPathExpressions:
+      - .webhooks[]?.clientConfig.caBundle
+  - group: apiregistration.k8s.io
+    kind: APIService
+    jsonPointers:
+      - /spec/caBundle
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+      - /spec/template/metadata/annotations/checksum~1config
