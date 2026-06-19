@@ -16,6 +16,10 @@ ignoreDifferences:
     kind: ValidatingWebhookConfiguration
     jqPathExpressions:
       - .webhooks[]?.clientConfig.caBundle
+  - group: apiregistration.k8s.io
+    kind: APIService
+    jsonPointers:
+      - /spec/caBundle
   - group: apps
     kind: Deployment
     jsonPointers:
@@ -24,7 +28,3 @@ ignoreDifferences:
     kind: CronJob
     jsonPointers:
       - /spec/schedule
-  - group: apiregistration.k8s.io
-    kind: APIService
-    jsonPointers:
-      - /spec/caBundle
