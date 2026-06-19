@@ -6,7 +6,7 @@ releases:
 - chart: fairwinds-stable/polaris
   name: polaris
   namespace: polaris
-  version: 5.19.0
+  version: 6.0.0
   values:
   - dashboard:
       ingress:
