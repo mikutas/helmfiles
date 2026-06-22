@@ -16,6 +16,8 @@ spec:
           - path: apps/*/*/appconfig.yaml
   template:
     metadata:
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: .;../../../charts
       name: {{ "'{{.path.basename}}'" }}
     spec:
       project: admin
