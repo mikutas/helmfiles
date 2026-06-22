@@ -1,5 +1,6 @@
 syncPolicy:
-  automated: false
+  automated:
+    enabled: false
   managedNamespaceMetadata:
     labels:
       linkerd.io/is-control-plane: "true"
