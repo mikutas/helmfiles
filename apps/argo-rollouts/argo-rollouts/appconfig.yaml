@@ -1,4 +1,4 @@
 syncPolicy:
   automated: true
   managedNamespaceMetadata: null
-ignoreDifferences: null
+ignoreDifferences: []
