@@ -7,3 +7,5 @@ releases:
     namespace: metrics-server
     chart: metrics-server/metrics-server
     version: 3.13.1
+    values:
+      - values.yaml
