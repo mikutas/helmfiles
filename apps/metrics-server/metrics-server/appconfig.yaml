@@ -1,0 +1,5 @@
+syncPolicy:
+  automated:
+    enabled: true
+  managedNamespaceMetadata: null
+ignoreDifferences: []
