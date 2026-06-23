@@ -39,10 +39,8 @@ spec:
         {{ "{{- toYaml . | nindent 8 }}" }}
       {{ "{{- end }}" }}
       syncPolicy:
-        {{ "{{- with .syncPolicy.automated }}" }}
         automated:
-          enabled: {{ "{{ .enabled }}" }}
-        {{ "{{- end }}" }}
+          enabled: {{ "{{ .syncPolicy.automated.enabled }}" }}
         {{ "{{- with .syncPolicy.managedNamespaceMetadata }}" }}
         managedNamespaceMetadata:
           {{ "{{- toYaml . | nindent 10 }}" }}
