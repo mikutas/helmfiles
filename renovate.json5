@@ -5,6 +5,17 @@
   ],
   "customManagers": [
     {
+      // rollout-extension
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-.]+?)(?: depName=(?<depName>.+?))(?: packageName=(?<packageName>.+?))?(?: registryUrl=(?<registryUrl>.+?))?\\s.*(?<currentValue>\\d+\\.\\d+\\.\\d+(?:[a-z-]+)?).*"
+      ]
+    },
+    {
+      // k3d
       "customType": "regex",
       "managerFilePatterns": [
         "/k3d-default\\.ya?ml/"
@@ -16,6 +27,7 @@
       "depNameTemplate": "docker.io/rancher/k3s"
     },
     {
+      // kind
       "customType": "regex",
       "managerFilePatterns": [
         "/kind.*\\.ya?ml/"
