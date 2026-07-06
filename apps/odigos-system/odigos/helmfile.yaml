@@ -6,7 +6,7 @@ releases:
   - name: odigos
     namespace: odigos-system
     chart: odigos/odigos
-    version: 1.30.2
+    version: 1.31.1
 
   - name: ingress
     namespace: odigos-system
