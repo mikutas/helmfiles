@@ -1,6 +1,3 @@
-apply-custom-resources:
-	helm template . -n argo-cd --set enableCustomResources=true --show-only templates/appproject.yaml --show-only templates/application.yaml | kubectl apply -f -
-
 patch-secret:
 	kubectl patch secret -n argo-cd argocd-secret -p="{\"data\":{\"dex.github.clientID\": \"$CLIENT_ID\"}}"
 	kubectl patch secret -n argo-cd argocd-secret -p="{\"data\":{\"dex.github.clientSecret\": \"$CLIENT_SECRET\"}}"

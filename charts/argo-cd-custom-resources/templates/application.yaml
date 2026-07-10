@@ -1,21 +1,16 @@
-{{- if .Values.enableCustomResources }}
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   annotations:
-    argocd.argoproj.io/manifest-generate-paths: .
-  name: {{ .Chart.Name }}
+    argocd.argoproj.io/manifest-generate-paths: .;../../../charts/argo-cd-custom-resources
+  name: argo-cd
   namespace: {{ .Release.Namespace }}
 spec:
-  project: {{ .Chart.Name }}
+  project: argo-cd
   source:
-    path: apps/argo-cd/{{ .Chart.Name }}
+    path: apps/argo-cd/argo-cd
     repoURL: {{ .Values.repoURL }}
     targetRevision: HEAD
-    helm:
-      valueFiles:
-        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Release.Namespace }}
@@ -43,7 +38,7 @@ metadata:
   name: app-projects
   namespace: {{ .Release.Namespace }}
 spec:
-  project: {{ .Chart.Name }}
+  project: argo-cd
   source:
     path: apps/argo-cd/app-projects
     repoURL: {{ .Values.repoURL }}
@@ -60,7 +55,7 @@ metadata:
   name: appsets
   namespace: {{ .Release.Namespace }}
 spec:
-  project: {{ .Chart.Name }}
+  project: argo-cd
   source:
     path: apps/argo-cd/appsets
     repoURL: {{ .Values.repoURL }}
@@ -68,4 +63,3 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Release.Namespace }}
-{{- end }}

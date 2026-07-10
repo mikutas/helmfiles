@@ -6,27 +6,23 @@ releases:
   - name: argo-cd
     namespace: argo-cd
     createNamespace: true
-    chart: .
+    chart: argo/argo-cd
+    version: 10.1.3
     values:
       - values.yaml
-      - enableCustomResources: false
-      - argo-cd:
-          redisSecretInit:
-            enabled: true
     hooks:
-      - events: ["prepare"]
-        showlogs: true
-        command: helm
-        args: ["dependency", "update"]
       - events: ["postsync"]
         showlogs: true
         command: just
         args: ["patch-secret"]
-      - events: ["postsync"]
-        showlogs: true
-        command: just
-        args: ["apply-custom-resources"]
       - events: ["postuninstall"]
         showlogs: true
         command: kubectl
         args: ["delete", "ns", "argo-cd"]
+
+  - name: argo-cd-custom-resources
+    namespace: argo-cd
+    chart: ../../../charts/argo-cd-custom-resources
+    needs: ["argo-cd/argo-cd"]
+    values:
+      - repoURL: https://github.com/mikutas/helmfiles

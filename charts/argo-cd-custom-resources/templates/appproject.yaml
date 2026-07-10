@@ -1,9 +1,7 @@
-{{- if .Values.enableCustomResources }}
----
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: {{ .Chart.Name }}
+  name: argo-cd
   namespace: {{ .Release.Namespace }}
 spec:
   clusterResourceWhitelist:
@@ -14,4 +12,3 @@ spec:
     server: '*'
   sourceRepos:
   - '*'
-{{- end }}

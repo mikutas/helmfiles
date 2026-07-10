@@ -1,108 +1,104 @@
-enableCustomResources: true
-repoURL: https://github.com/mikutas/helmfiles
-
-argo-cd:
-  fullnameOverride: argo-cd
-  configs:
-    cm:
-      # https://dexidp.io/docs/connectors/github/
-      dex.config: |
-        connectors:
-          - type: github
-            id: github
-            name: GitHub
-            config:
-              clientID: $dex.github.clientID
-              clientSecret: $dex.github.clientSecret
-      # kind環境はクラウドプロバイダーがないためIngressのstatus.loadBalancer.ingressが
-      # 空のままとなり、Argo CDがProgressingと判定し続けるためHealthyに固定する
-      resource.customizations.health.networking.k8s.io_Ingress: |
-        hs = {}
-        hs.status = "Healthy"
-        hs.message = ""
-        return hs
-      resource.customizations.ignoreDifferences.all: |
-        jsonPointers:
-          - /metadata/labels/helm.sh~1chart
-          - /metadata/labels/app.kubernetes.io~1version
-      resource.customizations.ignoreDifferences.apps_Deployment: |
-        jsonPointers:
-          - /spec/template/metadata/labels/helm.sh~1chart
-          - /spec/template/metadata/labels/app.kubernetes.io~1version
-      resource.customizations.ignoreDifferences.apps_StatefulSet: |
-        jsonPointers:
-          - /spec/template/metadata/labels/helm.sh~1chart
-          - /spec/template/metadata/labels/app.kubernetes.io~1version
-      resource.customizations.ignoreDifferences.apiextensions.k8s.io_CustomResourceDefinition: |
-        jsonPointers:
-          - /spec/preserveUnknownFields
-      url: http://argocd.local
-    cmp:
-      create: true
-      plugins:
-        helmfile:
-          discover:
-            filename: ./helmfile.yaml
-          generate:
-            args:
-              - -q
-              - template
-              - --include-crds
-            command:
-              - helmfile
-    params:
-      "applicationsetcontroller.enable.policy.override": true
-      "applicationsetcontroller.policy": create-update
-      "server.insecure": true
-    rbac:
-      policy.csv: |
-        p, role:admin, applications, delete, argo-cd/*, deny
-      # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/#default-policy-for-authenticated-users
-      # admin as default is not recommended in real usecase
-      policy.default: role:admin
-    styles: |
-      .sidebar {
-        background-color: #59CBFB;
-      }
-  redisSecretInit:
-    enabled: false
-  repoServer:
-    extraContainers:
-      - command:
-          - /var/run/argocd/argocd-cmp-server
+fullnameOverride: argo-cd
+configs:
+  cm:
+    # https://dexidp.io/docs/connectors/github/
+    dex.config: |
+      connectors:
+        - type: github
+          id: github
+          name: GitHub
+          config:
+            clientID: $dex.github.clientID
+            clientSecret: $dex.github.clientSecret
+    # kind環境はクラウドプロバイダーがないためIngressのstatus.loadBalancer.ingressが
+    # 空のままとなり、Argo CDがProgressingと判定し続けるためHealthyに固定する
+    resource.customizations.health.networking.k8s.io_Ingress: |
+      hs = {}
+      hs.status = "Healthy"
+      hs.message = ""
+      return hs
+    resource.customizations.ignoreDifferences.all: |
+      jsonPointers:
+        - /metadata/labels/helm.sh~1chart
+        - /metadata/labels/app.kubernetes.io~1version
+    resource.customizations.ignoreDifferences.apps_Deployment: |
+      jsonPointers:
+        - /spec/template/metadata/labels/helm.sh~1chart
+        - /spec/template/metadata/labels/app.kubernetes.io~1version
+    resource.customizations.ignoreDifferences.apps_StatefulSet: |
+      jsonPointers:
+        - /spec/template/metadata/labels/helm.sh~1chart
+        - /spec/template/metadata/labels/app.kubernetes.io~1version
+    resource.customizations.ignoreDifferences.apiextensions.k8s.io_CustomResourceDefinition: |
+      jsonPointers:
+        - /spec/preserveUnknownFields
+    url: http://argocd.local
+  cmp:
+    create: true
+    plugins:
+      helmfile:
+        discover:
+          filename: ./helmfile.yaml
+        generate:
+          args:
+            - -q
+            - template
+            - --include-crds
+          command:
+            - helmfile
+  params:
+    "applicationsetcontroller.enable.policy.override": true
+    "applicationsetcontroller.policy": create-update
+    "server.insecure": true
+  rbac:
+    policy.csv: |
+      p, role:admin, applications, delete, argo-cd/*, deny
+    # https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/#default-policy-for-authenticated-users
+    # admin as default is not recommended in real usecase
+    policy.default: role:admin
+  styles: |
+    .sidebar {
+      background-color: #59CBFB;
+    }
+redisSecretInit:
+  enabled: false
+repoServer:
+  extraContainers:
+    - command:
+        - /var/run/argocd/argocd-cmp-server
+      env:
+        - name: HELM_CACHE_HOME
+          value: /helm-working-dir
+        - name: HELM_CONFIG_HOME
+          value: /helm-working-dir
+      image: ghcr.io/helmfile/helmfile:v1.7.0
+      name: my-plugin
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      volumeMounts:
+        - mountPath: /var/run/argocd
+          name: var-files
+        - mountPath: /home/argocd/cmp-server/plugins
+          name: plugins
+        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+          name: my-plugin-config
+          subPath: helmfile.yaml
+        - mountPath: /helm-working-dir
+          name: helm-working-dir
+  volumes:
+    - configMap:
+        name: argocd-cmp-cm
+      name: my-plugin-config
+server:
+  extensions:
+    enabled: true
+    extensionList:
+      - name: rollout-extension
         env:
-          - name: HELM_CACHE_HOME
-            value: /helm-working-dir
-          - name: HELM_CONFIG_HOME
-            value: /helm-working-dir
-        image: ghcr.io/helmfile/helmfile:v1.7.0
-        name: my-plugin
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 999
-        volumeMounts:
-          - mountPath: /var/run/argocd
-            name: var-files
-          - mountPath: /home/argocd/cmp-server/plugins
-            name: plugins
-          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-            name: my-plugin-config
-            subPath: helmfile.yaml
-          - mountPath: /helm-working-dir
-            name: helm-working-dir
-    volumes:
-      - configMap:
-          name: argocd-cmp-cm
-        name: my-plugin-config
-  server:
-    extensions:
-      enabled: true
-      extensionList:
-        - name: rollout-extension
-          env:
-            - name: EXTENSION_URL
-              # renovate: datasource=github-releases depName=argoproj-labs/rollout-extension packageName=argoproj-labs/rollout-extension
-              value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar
-    ingress:
-      enabled: true
-      hostname: argocd.local
+          - name: EXTENSION_URL
+            # renovate: datasource=github-releases depName=argoproj-labs/rollout-extension packageName=argoproj-labs/rollout-extension
+            value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar
+  ingress:
+    enabled: true
+    hostname: argocd.local
