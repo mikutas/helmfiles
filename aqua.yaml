@@ -17,6 +17,6 @@ packages:
   - name: jqlang/jq@jq-1.8.2
   - name: kubernetes-sigs/kind@v0.32.0
   - name: kubernetes-sigs/kustomize@kustomize/v5.8.1
-  - name: kyverno/kyverno@v1.18.1
+  - name: kyverno/kyverno@v1.18.2
   - name: linkerd/linkerd2@edge-25.8.1
   - name: reviewdog/reviewdog@v0.21.0
