@@ -98,7 +98,7 @@ server:
         env:
           - name: EXTENSION_URL
             # renovate: datasource=github-releases depName=argoproj-labs/rollout-extension packageName=argoproj-labs/rollout-extension
-            value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar
+            value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.4.0/extension.tar
   ingress:
     enabled: true
     hostname: argocd.local
