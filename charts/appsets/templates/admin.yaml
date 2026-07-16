@@ -41,7 +41,7 @@ spec:
       syncPolicy:
         automated:
           enabled: {{ "{{ .syncPolicy.automated.enabled }}" }}
-        {{ "{{- with .syncPolicy.managedNamespaceMetadata }}" }}
+        {{ "{{- with get .syncPolicy \"managedNamespaceMetadata\" }}" }}
         managedNamespaceMetadata:
           {{ "{{- toYaml . | nindent 10 }}" }}
         {{ "{{- end }}" }}
