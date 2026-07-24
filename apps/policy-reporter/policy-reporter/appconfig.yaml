@@ -1,4 +1,4 @@
+ignoreDifferences: []
 syncPolicy:
   automated:
     enabled: false
-ignoreDifferences: []

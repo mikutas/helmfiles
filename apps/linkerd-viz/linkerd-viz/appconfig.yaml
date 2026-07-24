@@ -1,6 +1,3 @@
-syncPolicy:
-  automated:
-    enabled: false
 ignoreDifferences:
   - kind: Secret
     jsonPointers:
@@ -18,3 +15,6 @@ ignoreDifferences:
     kind: Deployment
     jsonPointers:
       - /spec/template/metadata/annotations/checksum~1config
+syncPolicy:
+  automated:
+    enabled: false

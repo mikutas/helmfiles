@@ -1,9 +1,3 @@
-syncPolicy:
-  automated:
-    enabled: false
-  managedNamespaceMetadata:
-    labels:
-      linkerd.io/is-control-plane: "true"
 ignoreDifferences:
   - kind: Secret
     jsonPointers:
@@ -29,3 +23,9 @@ ignoreDifferences:
     kind: CronJob
     jsonPointers:
       - /spec/schedule
+syncPolicy:
+  automated:
+    enabled: false
+  managedNamespaceMetadata:
+    labels:
+      linkerd.io/is-control-plane: "true"
