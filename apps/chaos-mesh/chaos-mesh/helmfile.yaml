@@ -7,7 +7,7 @@ releases:
     namespace: chaos-mesh
     createNamespace: true
     chart: chaos-mesh/chaos-mesh
-    version: 2.8.3
+    version: 2.8.4
     values:
       - dashboard:
           ingress:
