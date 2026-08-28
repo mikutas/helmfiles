@@ -15,7 +15,7 @@ packages:
   - name: helmfile/helmfile@v1.7.4
   - name: homeport/dyff@v1.12.0
   - name: jqlang/jq@jq-1.8.2
-  - name: kubernetes-sigs/kind@v0.32.0
+  - name: kubernetes-sigs/kind@v0.33.0
   - name: kubernetes-sigs/kustomize@kustomize/v5.8.1
   - name: kyverno/kyverno@v1.19.0
   - name: linkerd/linkerd2@edge-25.8.1
