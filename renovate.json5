@@ -67,6 +67,18 @@
         "patch"
       ],
       "automerge": true
+    },
+    {
+      "matchDepNames": [
+        "podinfo"
+      ],
+      "groupName": "podinfo"
+    },
+    {
+      "matchPackageNames": [
+        "ghcr.io/stefanprodan/podinfo"
+      ],
+      "groupName": "podinfo"
     }
   ]
 }
