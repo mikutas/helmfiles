@@ -7,8 +7,7 @@ create-cluster:
 delete-cluster:
 	kind delete cluster --name app-1-cluster
 
-# 初回インストール時のみ argo-cd release を先に redisSecretInit 有効化した状態で適用してから、
-# CRD(AppProject/Application)を生成する argo-cd-custom-resources release を適用する
+# 初回インストール時のみ argo-cd release を先に redisSecretInit 有効化した状態で適用してから、CRD(AppProject/Application)を生成する argo-cd-custom-resources release を適用する
 argocd-install:
 	just sync argo-cd/argo-cd -l name=argo-cd --set redisSecretInit.enabled=true
 	just sync argo-cd/argo-cd -l name=argo-cd-custom-resources
