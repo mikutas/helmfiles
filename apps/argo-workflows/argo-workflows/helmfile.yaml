@@ -105,7 +105,7 @@ releases:
   - name: postgresql
     namespace: argo-workflows
     chart: bitnami/postgresql
-    version: 18.11.1
+    version: 18.11.3
     values:
       - auth:
           database: postgres
