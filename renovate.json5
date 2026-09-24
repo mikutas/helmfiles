@@ -60,8 +60,19 @@
     },
     {
       "matchPackageNames": [
-        "odigos",
-        "postgresql"
+        "/argo-workflows/",
+        "/goldilocks/",
+        "/odigos/"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    },
+    {
+      "matchPackageNames": [
+        "/postgresql/"
       ],
       "matchUpdateTypes": [
         "patch"
