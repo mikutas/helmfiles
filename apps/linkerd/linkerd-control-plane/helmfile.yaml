@@ -10,7 +10,7 @@ releases:
     createNamespace: false
     chart: linkerd-edge/linkerd-control-plane
     # https://github.com/linkerd/linkerd2/blob/edge-25.8.1/charts/linkerd-control-plane/Chart.yaml
-    version: 2025.8.1
+    version: 2025.12.3
     values:
       - values.yaml
 
