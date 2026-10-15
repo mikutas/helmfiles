@@ -79,3 +79,17 @@ jobs:
             opt="--exclude-regexp=\"$(head -n 1 ${{ inputs.changed-dir }}/.dyff-exclude-regexp)\""
           fi
           dyff between /tmp/main.yaml /tmp/pr.yaml --color=on $opt || true
+
+      - name: dyff (github format)
+        run: |
+          opt=""
+          if [ -e ${{ inputs.changed-dir }}/.dyff-exclude-regexp ]; then
+            opt="--exclude-regexp=\"$(head -n 1 ${{ inputs.changed-dir }}/.dyff-exclude-regexp)\""
+          fi
+          dyff between /tmp/main.yaml /tmp/pr.yaml --output=github --color=off $opt > /tmp/dyff.txt || true
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ${{ steps.replace-slash.outputs.name }}_dyff
+          path: |
+            /tmp/dyff.txt
