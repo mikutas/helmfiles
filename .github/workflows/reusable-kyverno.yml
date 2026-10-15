@@ -77,6 +77,12 @@ jobs:
           sed 's/Mutation:\|Mutation has been applied successfully.//' | \
           tee /tmp/policy-report.json
 
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ${{ steps.replace-slash.outputs.name }}_kyverno
+          path: |
+            /tmp/policy-report.json
+
       - name: Reviewdog
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
