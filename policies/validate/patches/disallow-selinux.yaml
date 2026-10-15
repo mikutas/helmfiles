@@ -1,0 +1,6 @@
+apiVersion: policies.kyverno.io/v1alpha1
+kind: ValidatingPolicy
+metadata:
+  name: disallow-selinux
+  annotations:
+    policies.kyverno.io/category: Security

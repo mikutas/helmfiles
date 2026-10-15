@@ -39,8 +39,9 @@ jobs:
 
       - name: Show policy patches
         run: |
-          yq 'del(.patches)' policies/kustomization.yaml >/tmp/kustomization.yaml
-          dyff between --color=on <(kustomize build /tmp/) <(kustomize build policies)
+          cp -r policies /tmp/policies-unpatched
+          yq -i 'del(.patches)' /tmp/policies-unpatched/validate/kustomization.yaml
+          dyff between --color=on <(kustomize build /tmp/policies-unpatched) <(kustomize build policies)
 
       - name: Save kyverno policies
         run: |

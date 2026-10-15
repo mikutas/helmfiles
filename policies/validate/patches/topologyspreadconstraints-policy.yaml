@@ -1,0 +1,26 @@
+apiVersion: policies.kyverno.io/v1alpha1
+kind: ValidatingPolicy
+metadata:
+  name: topologyspreadconstraints-policy
+  annotations:
+    policies.kyverno.io/category: Reliability
+    policies.kyverno.io/description: >-
+      Deployments to a Kubernetes cluster with multiple availability zones often need to
+      distribute those replicas to align with those zones to ensure site-level failures
+      do not impact availability. This policy ensures topologySpreadConstraints are defined,
+      to spread pods over nodes and zones. Deployments or Statefulsets with less than 2
+      replicas are skipped.
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["deployments", "statefulsets"]
+      - apiGroups: ["argoproj.io"]
+        apiVersions: ["v1alpha1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["rollouts"]
+  matchConditions:
+    - name: "replicas-must-be-2-or-more"
+      expression: "!has(object.spec.replicas) || object.spec.replicas >= 2"

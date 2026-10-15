@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# upstreamのpods用ポリシーとは別オブジェクトとして、pods/ephemeralcontainers専用のポリシーを作る。
+# 1つのポリシーにpodsとpods/ephemeralcontainersを併記するとKyverno v1.19.1のCanAutoGenがfalseになり、
+# Pod-controller(Deployment等)へのautogenが無効化されてしまうため(https://github.com/kyverno/kyverno/pull/17427 で修正済みだがv1.19.1には未反映)。
+# pods用ポリシー側はautogenが有効なまま。ephemeral containerはPod-controllerのテンプレートに存在せず、
+# 稼働中のPodにサブリソース経由で追加されるため、こちらはautogen不要。
+# namespaceSelectorなどのカスタマイズは親kustomizationのpatchesがpods用・pods/ephemeralcontainers用の両方に適用する。
+#
+# この回避策が不要になる条件: 上記PR(kyverno/kyverno#17427)を含むKyvernoリリースをデプロイしたとき(2026-09-28時点で未リリース、release-1.19にも未backport)。
+# 不要になったら、このディレクトリと親kustomizationの./ephemeralcontainers参照を削除し、
+# 親kustomizationのpatchesのtarget.nameから-ephemeralcontainersの分を外し、
+# 対応する6つのpatches/*.yamlにspec.matchConstraints.resourceRulesで"pods"と"pods/ephemeralcontainers"を併記するpatchを戻して1本に統合する。
+#
+# 対象はコンテナ単位のsecurityContextを検査するポリシーのみ(ephemeral containerで設定可能なフィールドが対象)。
+resources:
+  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-capabilities/disallow-capabilities.yaml # securityContext.capabilities
+  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-host-process/disallow-host-process.yaml # securityContext.windowsOptions.hostProcess
+  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-privileged-containers/disallow-privileged-containers.yaml # securityContext.privileged
+  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-proc-mount/disallow-proc-mount.yaml # securityContext.procMount
+  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-selinux/disallow-selinux.yaml # securityContext.seLinuxOptions
+  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/restrict-seccomp/restrict-seccomp.yaml # securityContext.seccompProfile
+
+nameSuffix: -ephemeralcontainers
+
+patches:
+  - target:
+      group: policies.kyverno.io
+      kind: ValidatingPolicy
+    patch: |-
+      - op: replace
+        path: /spec/matchConstraints/resourceRules/0/resources
+        value:
+          - pods/ephemeralcontainers

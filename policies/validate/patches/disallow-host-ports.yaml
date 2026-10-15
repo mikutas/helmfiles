@@ -1,0 +1,22 @@
+apiVersion: policies.kyverno.io/v1alpha1
+kind: ValidatingPolicy
+metadata:
+  name: disallow-host-ports
+  annotations:
+    policies.kyverno.io/category: Security
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        # ephemeral containerはK8s API側のallowedEphemeralContainerFieldsで
+        # portsが常にfalse(禁止)扱いのため、実質的にephemeralcontainersを追加する意味が無い
+        resources: ["pods"]
+    # ValidatingPolicyはadmission webhookに加えてbackground scanからも評価される
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - kube-system # aws-nodeがhostPort 61678(metrics)を使用

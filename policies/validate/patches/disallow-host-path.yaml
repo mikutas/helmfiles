@@ -1,0 +1,22 @@
+apiVersion: policies.kyverno.io/v1alpha1
+kind: ValidatingPolicy
+metadata:
+  name: disallow-host-path
+  annotations:
+    policies.kyverno.io/category: Security
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        # spec.volumesはPod spec直下の作成時にしか決まらない値で、
+        # ephemeralcontainersサブリソース経由の更新では変更できないためephemeralcontainersは追加していない
+        resources: ["pods"]
+    # ValidatingPolicyはadmission webhookに加えてbackground scanからも評価される
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - kube-system # aws-node/kube-proxy/ebs-csi-nodeがhostPathボリュームを使用
