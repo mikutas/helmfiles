@@ -19,4 +19,4 @@ packages:
   - name: kubernetes-sigs/kustomize@kustomize/v5.8.3
   - name: kyverno/kyverno@v1.19.2
   - name: linkerd/linkerd2@edge-25.12.3
-  - name: reviewdog/reviewdog@v0.21.2
+  - name: reviewdog/reviewdog@v0.21.3
