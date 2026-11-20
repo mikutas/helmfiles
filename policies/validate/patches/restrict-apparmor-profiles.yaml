@@ -1,0 +1,15 @@
+apiVersion: policies.kyverno.io/v1alpha1
+kind: ValidatingPolicy
+metadata:
+  name: restrict-apparmor-profiles
+  annotations:
+    policies.kyverno.io/category: Security
+spec:
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        # 上流はpodsのみ。kubectl debugなどで追加するephemeral containerのappArmorProfileも検査する。
+        # podsと併記してもKyverno v1.20.0以降はPod-controllerへのautogenが効く(kyverno/kyverno#17427)
+        resources: ["pods", "pods/ephemeralcontainers"]

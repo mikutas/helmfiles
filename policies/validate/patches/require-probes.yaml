@@ -7,3 +7,31 @@ metadata:
 spec:
   validationActions:
     - Audit
+  # 上流はDeployment等をmatchConstraintsに直接列挙しているためautogenが効かない。
+  # Podだけを対象にして、autogen（上流のspec.autogen.podControllersで指定済み）にPod controller用の式を生成させる。
+  matchConstraints:
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["pods"]
+  # 上流のcontrollersはKind名（Deployment等）で書かれている。Kind名はautogenでKind表記のresourceRulesになり、
+  # apiserverのmatcherは小文字複数形のresourceと完全一致で比較するため、Deployment等が評価されない。
+  # 小文字複数形のリソース名で上書きする。
+  autogen:
+    podControllers:
+      controllers:
+        - deployments
+        - statefulsets
+        - daemonsets
+        - jobs
+        - cronjobs
+        - replicasets
+  variables:
+    # 通常のinitContainers（linkerd-initなど、起動して終了するコンテナ）にはprobeを設定できないため対象外にする。
+    # restartPolicy: Always のinitContainers（native sidecar、linkerd-proxyなど）はprobeを持てるので対象に含める。
+    # ephemeralContainers（kubectl debugで追加するコンテナ）もprobeを設定できないため対象外にする。
+    - name: allContainers
+      expression: >-
+        object.spec.containers +
+        object.spec.?initContainers.orValue([]).filter(container, container.?restartPolicy.orValue('') == 'Always')
