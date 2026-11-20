@@ -2,47 +2,38 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/check-deprecated-apis/check-deprecated-apis.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/disallow-cri-sock-mount/disallow-cri-sock-mount.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/disallow-default-namespace/disallow-default-namespace.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/disallow-empty-ingress-host/disallow-empty-ingress-host.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/disallow-latest-tag/disallow-latest-tag.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/require-labels/require-labels.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/require-pod-requests-limits/require-pod-requests-limits.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/require-probes/require-probes.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/require-ro-rootfs/require-ro-rootfs.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/restrict-node-port/restrict-node-port.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/best-practices-vpol/restrict-service-external-ips/restrict-service-external-ips.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/other-vpol/topologyspreadconstraints-policy/topologyspreadconstraints-policy.yaml
-  # pod-security-vpol/baseline配下はPSS baseline相当12項目のうち10項目をカバー
-  # 残り2項目はkyverno/policies側に借用元が無く未対応:
-  # - AppArmor Profile: ClusterPolicy版(pod-security/baseline/restrict-apparmor-profiles)はあるが、ValidatingPolicy(pod-security-vpol)未移植
-  # - Host Probes and Host Lifecycle: ClusterPolicy/CEL/ValidatingPolicyいずれの形式でも未実装
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-capabilities/disallow-capabilities.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-host-namespaces/disallow-host-namespaces.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-host-path/disallow-host-path.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-host-ports/disallow-host-ports.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-host-process/disallow-host-process.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-privileged-containers/disallow-privileged-containers.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-proc-mount/disallow-proc-mount.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/disallow-selinux/disallow-selinux.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/restrict-seccomp/restrict-seccomp.yaml
-  - https://raw.githubusercontent.com/kyverno/policies/main/pod-security-vpol/baseline/restrict-sysctls/restrict-sysctls.yaml
-  - ./ephemeralcontainers
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/disallow-cri-sock-mount/disallow-cri-sock-mount.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/disallow-default-namespace/disallow-default-namespace.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/disallow-empty-ingress-host/disallow-empty-ingress-host.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/disallow-latest-tag/disallow-latest-tag.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/require-labels/require-labels.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/require-pod-requests-limits/require-pod-requests-limits.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/require-probes/require-probes.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/require-ro-rootfs/require-ro-rootfs.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/restrict-image-registries/restrict-image-registries.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/restrict-node-port/restrict-node-port.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/best-practices-vpol/restrict-service-external-ips/restrict-service-external-ips.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/other-vpol/topologyspreadconstraints-policy/topologyspreadconstraints-policy.yaml
+  # pod-security-vpol/baseline配下でPSS baseline相当の12項目をすべてカバー
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/disallow-capabilities/disallow-capabilities.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/disallow-host-namespaces/disallow-host-namespaces.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/disallow-host-path/disallow-host-path.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/disallow-host-ports/disallow-host-ports.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/disallow-host-probes/disallow-host-probes.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/disallow-host-process/disallow-host-process.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/disallow-privileged-containers/disallow-privileged-containers.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/disallow-proc-mount/disallow-proc-mount.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/disallow-selinux/disallow-selinux.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/restrict-apparmor-profiles/restrict-apparmor-profiles.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/restrict-seccomp/restrict-seccomp.yaml
+  - https://raw.githubusercontent.com/kyverno/policies/85554e1ef32b5b1dc83f22d0e26c11917df748b5/pod-security-vpol/baseline/restrict-sysctls/restrict-sysctls.yaml
 
-# 名前に-ephemeralcontainersが付くものは./ephemeralcontainersが生成するpods/ephemeralcontainers専用ポリシーで、
-# pods用と同じカスタマイズを両方に適用している(この分離が不要になる条件はephemeralcontainers/kustomization.yaml参照)
 patches:
-  - path: patches/check-deprecated-apis.yaml
-    target:
-      group: policies.kyverno.io
-      kind: ValidatingPolicy
-      name: check-deprecated-apis
   - path: patches/disallow-capabilities.yaml
     target:
       group: policies.kyverno.io
       kind: ValidatingPolicy
-      name: disallow-capabilities|disallow-capabilities-ephemeralcontainers
+      name: disallow-capabilities
   - path: patches/disallow-container-sock-mounts.yaml
     target:
       group: policies.kyverno.io
@@ -73,11 +64,16 @@ patches:
       group: policies.kyverno.io
       kind: ValidatingPolicy
       name: disallow-host-ports
+  - path: patches/disallow-host-probes.yaml
+    target:
+      group: policies.kyverno.io
+      kind: ValidatingPolicy
+      name: disallow-host-probes
   - path: patches/disallow-host-process.yaml
     target:
       group: policies.kyverno.io
       kind: ValidatingPolicy
-      name: disallow-host-process|disallow-host-process-ephemeralcontainers
+      name: disallow-host-process
   - path: patches/disallow-latest-tag.yaml
     target:
       group: policies.kyverno.io
@@ -87,17 +83,17 @@ patches:
     target:
       group: policies.kyverno.io
       kind: ValidatingPolicy
-      name: disallow-privileged-containers|disallow-privileged-containers-ephemeralcontainers
+      name: disallow-privileged-containers
   - path: patches/disallow-proc-mount.yaml
     target:
       group: policies.kyverno.io
       kind: ValidatingPolicy
-      name: disallow-proc-mount|disallow-proc-mount-ephemeralcontainers
+      name: disallow-proc-mount
   - path: patches/disallow-selinux.yaml
     target:
       group: policies.kyverno.io
       kind: ValidatingPolicy
-      name: disallow-selinux|disallow-selinux-ephemeralcontainers
+      name: disallow-selinux
   - path: patches/require-labels.yaml
     target:
       group: policies.kyverno.io
@@ -118,6 +114,11 @@ patches:
       group: policies.kyverno.io
       kind: ValidatingPolicy
       name: require-ro-rootfs
+  - path: patches/restrict-image-registries.yaml
+    target:
+      group: policies.kyverno.io
+      kind: ValidatingPolicy
+      name: restrict-image-registries
   - path: patches/restrict-nodeport.yaml
     target:
       group: policies.kyverno.io
@@ -128,11 +129,16 @@ patches:
       group: policies.kyverno.io
       kind: ValidatingPolicy
       name: restrict-external-ips
+  - path: patches/restrict-apparmor-profiles.yaml
+    target:
+      group: policies.kyverno.io
+      kind: ValidatingPolicy
+      name: restrict-apparmor-profiles
   - path: patches/restrict-seccomp.yaml
     target:
       group: policies.kyverno.io
       kind: ValidatingPolicy
-      name: restrict-seccomp|restrict-seccomp-ephemeralcontainers
+      name: restrict-seccomp
   - path: patches/restrict-sysctls.yaml
     target:
       group: policies.kyverno.io

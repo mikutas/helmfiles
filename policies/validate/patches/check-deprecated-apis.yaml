@@ -1,9 +1,0 @@
-apiVersion: policies.kyverno.io/v1alpha1
-kind: ValidatingPolicy
-metadata:
-  name: check-deprecated-apis
-  annotations:
-    policies.kyverno.io/category: Reliability
-spec:
-  validationActions:
-    - Audit

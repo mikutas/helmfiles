@@ -38,9 +38,30 @@
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "kindest/node"
+    },
+    {
+      // https://docs.renovatebot.com/modules/datasource/git-refs/
+      // policies/配下でraw.githubusercontent.comから取り込むkyverno/policiesのポリシーを、
+      // mainブランチの最新コミットハッシュに追従させる
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^policies/.+/kustomization\\.yaml$/"
+      ],
+      "matchStrings": [
+        "https://raw\\.githubusercontent\\.com/kyverno/policies/(?<currentDigest>[0-9a-f]{40})/"
+      ],
+      "depNameTemplate": "kyverno/policies",
+      "packageNameTemplate": "https://github.com/kyverno/policies",
+      "currentValueTemplate": "main",
+      "datasourceTemplate": "git-refs"
     }
   ],
   "packageRules": [
+    {
+      // 全kustomization.yamlの参照を1つのPRで更新する
+      "groupName": "kyverno-policies",
+      "matchDepNames": ["kyverno/policies"]
+    },
     {
       "matchDepNames": ["linkerd/linkerd2"],
       // https://docs.renovatebot.com/modules/versioning/
